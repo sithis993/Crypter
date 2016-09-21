@@ -62,12 +62,20 @@ class SymmetricCrypto():
         return file_details
 
       # Process file details
-      file_details = {'full_path': file,
-                           'full_filename': file.split("\\")[-1],
-                           'extension' : str(file.split("\\")[-1]).split(".")[1],
-                           'filename' : str(file.split("\\")[-1]).split(".")[0],
-                           'contents' : contents
-                           }
+      try:
+        file_details = {'full_path': file,
+                        'full_filename': file.split("\\")[-1],
+                        'extension' : str(file.split("\\")[-1]).split(".")[1],
+                        'filename' : str(file.split("\\")[-1]).split(".")[0],
+                        'contents' : contents
+                        }
+      except:
+        file_details = {'full_path': file,
+                        'full_filename': file.split("\\")[-1],
+                        'extension' : None,
+                        'filename' : str(file.split("\\")[-1]),
+                        'contents' : contents
+                        }
 
       # Specify file state depending on action
       if action == "encrypt":
