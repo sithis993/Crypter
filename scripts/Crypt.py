@@ -8,18 +8,19 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from Crypto.Random import random
 import os
-import sys
+
+# Import classes
+import Base
 
 ######################
 ## Symmetric Crypto ##
 ######################
-class SymmetricCrypto():
+class SymmetricCrypto(Base.Base):
   # Class to provide an object for symmetric cryptography interaction
 
   def __init__(self, key=None):
     # Init object
-    self.block_size = 16
-    self.pad = lambda s: s + (self.block_size - len(s) % self.block_size) * chr(self.block_size - len(s) % self.block_size)
+    self.pad = lambda s: s + (self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE) * chr(self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE)
     self.unpad = lambda s : s[0:-ord(s[-1])]
 
     # Attempt to load key and generate one if not available
@@ -52,29 +53,20 @@ class SymmetricCrypto():
   def process_file(self, file, action):
       # Function to process the provided file ready for encryption/decryption
 
-      # Open file and read contents
-      try:
-        fh = open(file, "rb")
-        contents = fh.read()
-        fh.close()
-      except IOError:
-        file_details = {'error': True}
-        return file_details
-
       # Process file details
       try:
         file_details = {'full_path': file,
                         'full_filename': file.split("\\")[-1],
                         'extension' : str(file.split("\\")[-1]).split(".")[1],
                         'filename' : str(file.split("\\")[-1]).split(".")[0],
-                        'contents' : contents
+                        'locked_path': file + self.ENCRYPTED_EXTENSION
                         }
       except:
         file_details = {'full_path': file,
                         'full_filename': file.split("\\")[-1],
                         'extension' : None,
                         'filename' : str(file.split("\\")[-1]),
-                        'contents' : contents
+                        'locked_path': file + self.ENCRYPTED_EXTENSION
                         }
 
       # Specify file state depending on action
@@ -82,12 +74,6 @@ class SymmetricCrypto():
         file_details['state'] = "unencrypted"
       elif action == "decrypt":
         file_details['state'] = "encrypted"
-        # Try to decide, if not possible then file is not encrypted
-        try:
-          file_details['hex'] = contents.decode("hex")
-        except TypeError:
-          file_details['error'] = True
-          return file_details
 
       # Error Checking
       file_details['error'] = False
@@ -99,27 +85,44 @@ class SymmetricCrypto():
   def decrypt_file(self, file):
     # Function to decrypt a dataset
 
-    # Get file details and process content. Check for errors
+    # Get file details and check for errors
     file_details = self.process_file(file, "decrypt")
     if file_details['error']:
       return
-    ciphertext = file_details['hex']
 
-    iv = ciphertext[:16]
-    ciphertext = ciphertext[16:]
-    cipher = AES.new(self.key, AES.MODE_CBC, iv)
-    cleartext = self.unpad(cipher.decrypt(ciphertext))
-
-    # Write decrypted version
+    # Open file reading and writing handles
     try:
-      fh = open("%s" % file_details['full_path'], "wb")
+      fh_read = open(file_details["locked_path"], "rb")
+      fh_write = open(file_details["full_path"], "wb")
     except IOError:
-      return
-    fh.write(cleartext)
-    fh.close()
+      return False
+
+    # Read blocks and decrypt
+    while True:
+      # 4118 for block size + iv + padding
+      block = fh_read.read(self.BLOCK_SIZE_BYTES + 32)
+
+      # Check that block is valid
+      if not block:
+        break
+
+      ciphertext = block
+      iv = ciphertext[:self.IV_SIZE]
+      ciphertext = ciphertext[self.IV_SIZE:]
+      cipher = AES.new(self.key, AES.MODE_CBC, iv)
+      cleartext = self.unpad(cipher.decrypt(ciphertext))
+
+      # Write decrypted block
+      fh_write.write(cleartext)
+
+    # Close file handle
+    fh_write.close()
+    fh_read.close()
 
     # Update state
     file_details['state'] = "unencrypted"
+
+    return file_details["locked_path"]
 
 
   def encrypt_file(self, file):
@@ -130,30 +133,43 @@ class SymmetricCrypto():
     if file_details['error']:
       return False
 
-    # Attempt padding
-    #try:
-    to_encrypt = self.pad(file_details['contents'])
-    #except MemoryError:
-    #  return False
-
-    iv = Random.new().read(AES.block_size)
-    cipher = AES.new(self.key, AES.MODE_CBC, iv)
+    # Open file reading and writing handles
     try:
-      ciphertext = (iv + cipher.encrypt(to_encrypt)).encode("hex")
-    except MemoryError:
-      return False
-
-    # Write encrypted version
-    try:
-      fh = open("%s" % file_details['full_path'], "wb")
+      fh_read = open(file_details["full_path"], "rb")
+      fh_write = open(file_details["locked_path"], "wb")
     except IOError:
       return False
-    fh.write(ciphertext)
-    fh.close()
+
+    # Read blocks and encrypt
+    while True:
+      block = fh_read.read(self.BLOCK_SIZE_BYTES)
+
+      # Check block is valid
+      if not block:
+        break
+
+      # Attempt padding
+      to_encrypt = self.pad(block)
+
+
+      iv = Random.new().read(AES.block_size)
+      cipher = AES.new(self.key, AES.MODE_CBC, iv)
+      try:
+        # Create ciphertext. Length is now 4096 + 32 (block + iv + padding)
+        ciphertext = (iv + cipher.encrypt(to_encrypt))
+      except MemoryError:
+        return False
+
+      # Write encrypted block
+      fh_write.write(ciphertext)
+
+    # Close file handles
+    fh_write.close()
+    fh_read.close()
 
     # Update state
     file_details['state'] = "encrypted"
-    return True
+    return file_details['locked_path']
 
 
 ########################
