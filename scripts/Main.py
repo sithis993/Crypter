@@ -1,7 +1,6 @@
 ## RANSOM
 ## Main Script
 ## author mls
-## TODO Solve issue with decryption failing
 
 # Import libs
 import ctypes
