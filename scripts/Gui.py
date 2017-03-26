@@ -34,12 +34,14 @@ import wx.xrc
 
 class MyFrame1 ( wx.Frame ):
     
-    def __init__( self, parent, image_path, KEY_DESTRUCT_TIME_SECONDS):
+    def __init__( self, parent, image_path, KEY_DESTRUCT_TIME_SECONDS, start_time):
         self.message = "blank"
         self.image_path = image_path
+        # Time if initial encryption
+        self.start_time = start_time
         self.KEY_DESTRUCT_TIME_SECONDS = KEY_DESTRUCT_TIME_SECONDS
         
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 1000,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -89,7 +91,7 @@ class MyFrame1 ( wx.Frame ):
         
         bSizer15.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
         
-        self.m_bitmap5 = wx.StaticBitmap( self.m_panel33, wx.ID_ANY, wx.Bitmap( u"%s\\encrypt_message_yellow.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_bitmap5 = wx.StaticBitmap( self.m_panel33, wx.ID_ANY, wx.Bitmap( u"%s\\encrypt_message.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
         bSizer15.Add( self.m_bitmap5, 0, wx.ALL, 5 )
         
         
@@ -113,7 +115,7 @@ class MyFrame1 ( wx.Frame ):
         
         bSizer11.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
         
-        self.m_bitmap4 = wx.StaticBitmap( self.m_panel12, wx.ID_ANY, wx.Bitmap( u"%s\\crypter_logo.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
+        self.m_bitmap4 = wx.StaticBitmap( self.m_panel12, wx.ID_ANY, wx.Bitmap( u"%s\\crypter_logo_small.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
         bSizer11.Add( self.m_bitmap4, 0, wx.ALL, 5 )
         
         
@@ -157,9 +159,6 @@ class MyFrame1 ( wx.Frame ):
         self.m_bitmap17 = wx.StaticBitmap( self.m_panel121, wx.ID_ANY, wx.Bitmap( u"%s\\key_destruction.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
         bSizer30.Add( self.m_bitmap17, 0, wx.ALL, 5 )
 
-        # Set start_time
-        self.start_time = int(time.time())
-        
         self.m_staticText17 = wx.StaticText( self.m_panel121, wx.ID_ANY, u"%s" % self.time_remaining(), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText17.Wrap( -1 )
         self.m_staticText17.SetFont( wx.Font( 16, 74, 90, 92, True, "Arial" ) )
@@ -202,10 +201,23 @@ class MyFrame1 ( wx.Frame ):
         bSizer9.Add( self.m_panel1211, 1, wx.EXPAND |wx.ALL, 5 )
         
         
-        bSizer9.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        self.m_panel11 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer111 = wx.BoxSizer( wx.HORIZONTAL )
+        
+        self.m_button1 = wx.Button( self.m_panel11, wx.ID_ANY, u"View Encrypted Files", wx.DefaultPosition, wx.Size(-1, 40), 0 )
+        bSizer111.Add( self.m_button1, 0, wx.ALL, 5 )
         
         
-        bSizer9.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        bSizer111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+        
+        self.m_button11 = wx.Button( self.m_panel11, wx.ID_ANY, u"Enter Decryption Key", wx.DefaultPosition, wx.Size(-1, 40), 0 )
+        bSizer111.Add( self.m_button11, 0, wx.ALL, 5 )
+        
+        
+        self.m_panel11.SetSizer( bSizer111 )
+        self.m_panel11.Layout()
+        bSizer111.Fit( self.m_panel11 )
+        bSizer9.Add( self.m_panel11, 1, wx.EXPAND|wx.ALL, 5 )
         
         
         self.m_panel1.SetSizer( bSizer9 )
@@ -239,7 +251,7 @@ class MyFrame1 ( wx.Frame ):
     def time_remaining(self):
         # Get's time remaining until key destruction
         
-        seconds_elapsed = int(time.time() - self.start_time)
+        seconds_elapsed = int(time.time() - int(self.start_time))
     
         _time_remaining = self.KEY_DESTRUCT_TIME_SECONDS - seconds_elapsed
         
@@ -254,10 +266,10 @@ class MyFrame1 ( wx.Frame ):
         
         # Blink Image
         if self.message == "blank":
-            self.m_bitmap5.SetBitmap(wx.Bitmap(u"%s\\encrypt_message_blank.bmp" % self.image_path, wx.BITMAP_TYPE_ANY))
+            self.m_bitmap5.SetBitmap(wx.NullBitmap)
             self.message  = "text"
         else:
-            self.m_bitmap5.SetBitmap(wx.Bitmap(u"%s\\encrypt_message_yellow.bmp" % self.image_path, wx.BITMAP_TYPE_ANY))
+            self.m_bitmap5.SetBitmap(wx.Bitmap(u"%s\\encrypt_message.bmp" % self.image_path, wx.BITMAP_TYPE_ANY))
             self.message  = "blank"
             
         # Update the time remaining
