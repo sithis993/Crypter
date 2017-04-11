@@ -23,11 +23,18 @@ class SymmetricCrypto(Base.Base):
     self.pad = lambda s: s + (self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE) * chr(self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE)
     self.unpad = lambda s : s[0:-ord(s[-1])]
 
-    # Attempt to load key and generate one if not available
-    if not key:
-      self.load_symmetric_key()
-    else:
-      self.key = key
+      
+  def init_keys(self, key=None):
+      '''
+      @summary: initialise the symmetric keys. Uses the provided key, or creates one
+      @param key: If None provided, a new key is generated, otherwise the provided key is used
+      '''
+      
+      if not key:
+        self.load_symmetric_key()
+      else:
+        self.key = key
+      
 
   def load_symmetric_key(self):
       # Function to load a local symmetric key if one is present
@@ -82,7 +89,7 @@ class SymmetricCrypto(Base.Base):
       return file_details
 
 
-  def decrypt_file(self, file):
+  def decrypt_file(self, file, decryption_key):
     # Function to decrypt a dataset
 
     # Get file details and check for errors
@@ -109,7 +116,7 @@ class SymmetricCrypto(Base.Base):
       ciphertext = block
       iv = ciphertext[:self.IV_SIZE]
       ciphertext = ciphertext[self.IV_SIZE:]
-      cipher = AES.new(self.key, AES.MODE_CBC, iv)
+      cipher = AES.new(decryption_key, AES.MODE_CBC, iv)
       cleartext = self.unpad(cipher.decrypt(ciphertext))
 
       # Write decrypted block
