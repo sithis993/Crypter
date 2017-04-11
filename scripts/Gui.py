@@ -44,7 +44,7 @@ class MyFrame1 ( wx.Frame ):
         self.start_time = start_time
         self.KEY_DESTRUCT_TIME_SECONDS = KEY_DESTRUCT_TIME_SECONDS
         
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.CAPTION|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.CLOSE_BOX )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 900,700 ), style = wx.CAPTION|wx.TAB_TRAVERSAL|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.CLOSE_BOX )
         
         # Update the icon
         # todo Add a better icon here
@@ -321,11 +321,11 @@ class MyFrame1 ( wx.Frame ):
 ## Class MyFrame2
 ###########################################################################
 
-class MyFrame2 ( wx.Frame ):
+class MyFrame2 ( wx.Dialog ):
     
     def __init__( self, parent, file_path_list ):
         self.file_path_list = file_path_list
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 600,400 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL|wx.STAY_ON_TOP )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 600,400 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MAXIMIZE_BOX|wx.MINIMIZE_BOX|wx.RESIZE_BORDER)
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -371,7 +371,7 @@ class MyDialog1 ( wx.Dialog ):
     def __init__( self, parent, decrypter ):
         self.decrypter = decrypter
         self.parent = parent
-        wx.Dialog.__init__ ( self, self.parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION|wx.STAY_ON_TOP )
+        wx.Dialog.__init__ ( self, self.parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION )
         
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
         
@@ -457,7 +457,7 @@ class MyDialog1 ( wx.Dialog ):
         # Disable disable buttons
         self.m_sdbSizer1OK.Disable()
         self.m_sdbSizer1Cancel.Disable()
-
+        
         # Get list of encrypted files and update the Gauge max value
         encrypted_file_list = self.decrypter.get_encrypted_file_list()
         self.m_gauge1.SetRange(len(encrypted_file_list))
@@ -465,7 +465,7 @@ class MyDialog1 ( wx.Dialog ):
         # Iterate file list and decrypt
         decrypted_file_list = []
         for encrypted_file in encrypted_file_list:
-            self.decrypter.decrypt_file(encrypted_file)
+            self.decrypter.decrypt_file(encrypted_file, key_contents)
             decrypted_file_list.append(encrypted_file)
             self.m_gauge1.SetValue(len(decrypted_file_list))
             wx.Yield()
