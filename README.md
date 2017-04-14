@@ -17,15 +17,24 @@ Consequently, a permanent and irreversible loss of data could occur. To avoid an
 
 Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you automatically accept and agree to this disclaimer.**
 
-## How does Crypter work?
-Brief overview of how Crypter ransomware works
+## Prerequisites
+Prerequisites for building Crypter
+Once met, proceed the to the [How can I build Crypter](#How-can-I-build-Crypter?) section.
 
 ## How can I build Crypter?
 Instructions on building the executable
 
+## How does Crypter work?
+Brief overview of how Crypter ransomware works. 
+
 ## Why was Crypter created?
-Reasoning and justification
+Given Crypter's malicious capabilities, as well as the disclaimer in this README, you may be wondering why Crypter was created. The primary goal of this project was to provide a proof-of-concept which demonstrated Python's capabilities as a language for malware development. Traditionally, compiled languages like C and C++ have been the chosen platforms of malware authors. Today however, a general advancement of platforms and tools has introduced attractive alternatives which extend these opportunities to other languages. 
 
-## Contact
+As an incredibly popular, beginner-friendly language with an immense wealth of third party support, Python allows developers to quickly create powerful tools without the overhead of a lower-level language. These characteristics are likely responsible for the increase in Python-based malware pieces observed in recent years, and will also likely influence and impact future development trends in the area. Examples of such pieces include:
 
++ [PWOBot](http://researchcenter.paloaltonetworks.com/2016/04/unit42-python-based-pwobot-targets-european-organizations/)
++ [PyCL](https://www.bleepingcomputer.com/news/security/pycl-ransomware-delivered-via-rig-ek-in-distribution-test/)
++ [CryPy](http://www.zdnet.com/article/python-ransomware-encrypts-files-with-unique-keys-one-at-a-time/)
++ [HolyCrypt](https://www.bleepingcomputer.com/news/security/new-python-ransomware-called-holycrypt-discovered/)
 
+Whilst similar projects do exist on GitHub, as of this writing few are actively supported, and none are a complete package. Crypter aims to build upon these by providing a *cryptolocker* style Python-based ransomware piece which can be easily compiled to a standalone executable format.
