@@ -1,6 +1,8 @@
-## SITHIS: Crypt
-## For encryption and decryption of data and Keys
-## author mls
+'''
+@summary: Generic High level encryption library
+@author: MLS
+@version: 1.70
+'''
 
 # Import libs
 from Crypto.PublicKey import RSA
