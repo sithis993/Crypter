@@ -37,14 +37,43 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		# Super
 		GuiAbsBase.MainFrame.__init__( self, parent=None )
 		
-		### Update GUI START
+		# Update GUI visuals
+		self.update_visuals()
 		
+		# Update events
+		self.set_events()
+		
+
+	def set_events(self):
+		'''
+		@summary: Method to define actions for GUI events
+		'''
+
+        # Create timer and bind to event
+        self.key_destruction_timer = wx.Timer()
+        self.key_destruction_timer.SetOwner( self, wx.ID_ANY )
+        self.key_destruction_timer.Start( 500 )
+		self.Bind(wx.EVT_BUTTON, self.blink, self.key_destruction_timer)
+
+		# Bind button events
+		# TODO Continue from here
+		self.Bind(wx.EVT_BUTTON)
+		
+		
+		
+		
+		
+	def update_visuals(self):
+		'''
+		@summary: Method to update the GUI visuals/aesthetics, i.e labels, images etc.
+		'''
+
 		# Set title
 		self.CrypterTitleBitmap.SetBitmap(
 			wx.Bitmap(
-				os.path.join(image_path, self.GUI_IMAGE_TITLE),
+				os.path.join(self.image_path, self.GUI_IMAGE_TITLE),
 				wx.BITMAP_TYPE_ANY))
-
+		
 		# Set flashing text initial label
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED)
 		
@@ -54,9 +83,9 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		# Set Logo
 		self.LockBitmap.SetBitmap(
 			wx.Bitmap(
-				os.path.join(image_path, self.GUI_IMAGE_LOGO),
+				os.path.join(self.image_path, self.GUI_IMAGE_LOGO),
 				wx.BITMAP_TYPE_ANY))
-		
+
 		# Set key destruction label
 		self.KeyDestructionLabel.SetLabel(self.GUI_LABEL_TEXT_KEY_DESTRUCTION)
 
@@ -69,10 +98,5 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		# Set Button Text
 		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES)
 		self.EnterDecryptionKeyButton.SetLabel(self.GUI_BUTTON_TEXT_ENTER_DECRYPTION_KEY)
-		
-		# TODO Continue from here with implementing functions from old Gui.py module
-		
-		### Update GUI END
-		
 		
 		
