@@ -145,3 +145,111 @@ class MainFrame ( wx.Frame ):
 		pass
 	
 
+###########################################################################
+## Class ViewEncryptedFilesDialog
+###########################################################################
+
+class ViewEncryptedFilesDialog ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Encrypted Files", pos = wx.DefaultPosition, size = wx.Size( 600,400 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		BodySizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_panel4 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		TextCtrlSizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_textCtrl2 = wx.TextCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
+		TextCtrlSizer.Add( self.m_textCtrl2, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		self.m_panel4.SetSizer( TextCtrlSizer )
+		self.m_panel4.Layout()
+		TextCtrlSizer.Fit( self.m_panel4 )
+		BodySizer.Add( self.m_panel4, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		self.SetSizer( BodySizer )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+	
+	def __del__( self ):
+		pass
+	
+
+###########################################################################
+## Class EnterDecryptionKeyDialog
+###########################################################################
+
+class EnterDecryptionKeyDialog ( wx.Frame ):
+	
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Decrypt Files", pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
+		
+		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		
+		BodySizer = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		MainSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel5, wx.ID_ANY, u"AES Decyption Key" ), wx.VERTICAL )
+		
+		
+		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		bSizer12 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer12.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.DecryptionKeyTextCtrl = wx.TextCtrl( MainSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 220,-1 ), 0 )
+		self.DecryptionKeyTextCtrl.SetMaxLength( 32 ) 
+		bSizer12.Add( self.DecryptionKeyTextCtrl, 0, wx.ALL, 5 )
+		
+		
+		bSizer12.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		MainSizer.Add( bSizer12, 1, wx.EXPAND, 5 )
+		
+		
+		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		OkCancelSizer = wx.StdDialogButtonSizer()
+		self.OkCancelSizerOK = wx.Button( MainSizer.GetStaticBox(), wx.ID_OK )
+		OkCancelSizer.AddButton( self.OkCancelSizerOK )
+		self.OkCancelSizerCancel = wx.Button( MainSizer.GetStaticBox(), wx.ID_CANCEL )
+		OkCancelSizer.AddButton( self.OkCancelSizerCancel )
+		OkCancelSizer.Realize();
+		
+		MainSizer.Add( OkCancelSizer, 1, wx.EXPAND, 5 )
+		
+		self.StatusText = wx.StaticText( MainSizer.GetStaticBox(), wx.ID_ANY, u"Waiting for input", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.StatusText.Wrap( -1 )
+		MainSizer.Add( self.StatusText, 0, wx.ALL, 5 )
+		
+		self.DecryptionGauge = wx.Gauge( MainSizer.GetStaticBox(), wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
+		self.DecryptionGauge.SetValue( 0 ) 
+		MainSizer.Add( self.DecryptionGauge, 0, wx.ALL, 5 )
+		
+		
+		self.m_panel5.SetSizer( MainSizer )
+		self.m_panel5.Layout()
+		MainSizer.Fit( self.m_panel5 )
+		BodySizer.Add( self.m_panel5, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		self.SetSizer( BodySizer )
+		self.Layout()
+		
+		self.Centre( wx.BOTH )
+	
+	def __del__( self ):
+		pass
+	
+

