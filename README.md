@@ -15,11 +15,28 @@ Once compiled, Crypter WILL encrypt the files on the computer on which it is exe
 
 Consequently, a permanent and irreversible loss of data could occur. To avoid any potential damage, you should only run Crypter on a test machine created for this purpose.
 
-Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you automatically accept and agree to this disclaimer.**
+Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.**
+
+## Roadmap
+Crypter is an ongoing project with a number of updates, changes and improvements planned for the future. Updates actively under development include:
+
++ A Graphical User Interface for building Crypter. This will provide a significantly faster and more convenient method to customise the build and allow you to specify options such as the wallet address, ransom fee etc.
+
+Updates not yet started, but planned for a future release include:
+
++ Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
 
 ## Prerequisites
-Prerequisites for building Crypter
-Once met, proceed the to the [How can I build Crypter](#How-can-I-build-Crypter?) section.
+Before cloning the repository and attempting to build Crypter, it's recommended that you first meet the following prerequisities. You'll then have all of the tools required to produce the binary.
+
+| Requirement | Supported (Tested) | Supported (Not tested) | Recommended |
+| ----------- | ------------------ | ---------------------- | ----------- |
+| Microsoft Windows | 7, 10 | 7, 8, 10, server 2K8 and above | 10 |
+| Python | 2.7 | -- | 2.7 |
+| Pyinstaller | 3.2.1, 3.2.2 | --  | 3.2.1 |
+| Pywin32 | -- | -- | -- |
+
+Once met, proceed to the [How can I build Crypter](#How-can-I-build-Crypter?) section.
 
 ## How can I build Crypter?
 Instructions on building the executable
