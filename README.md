@@ -1,6 +1,6 @@
 # Crypter
 
-Welcome to Crypter, a ransomware piece written entirely in Python and compiled to Windows executable format using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
+Welcome to Crypter, a ransomware piece written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
@@ -27,11 +27,11 @@ Updates not yet started, but planned for a future release include:
 + Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
 
 ## Prerequisites
-Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisities. You'll then have all of the tools required to produce the binary.
+Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisites. You'll then have all the tools required to produce the binary.
 
 **Note:** You should install the software in the exact order shown in the table below, from top to bottom.
 
-| Requirement | Supported (Tested) | Supported (Not tested) | Recommended |
+| Requirement | Supported Version (Tested) | Supported Version (Not tested) | Recommended Version |
 | ----------- | ------------------ | ---------------------- | ----------- |
 | Microsoft Windows | 7, 10 | 7, 8, 10, server 2K8 and above | 10 |
 | Python | 2.7 | -- | 2.7 |
@@ -40,13 +40,31 @@ Before cloning the repository and attempting to build Crypter, you must first me
 | PyCrypto | 2.6.1 | -- | 2.6.1 |
 | WxPython | 3.0 | -- | 3.0 |
 
-Once the above software is installed, You can now build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
+Once the above software is installed you can build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
 
 ## How can I build Crypter?
-Providing you've met the above prerequisites, building Crypter is straightforward. Simply run the *Build.py* script in the *build* directory of this repository. Once PyInstaller finishes compilation, you will find the produced Crypter binary in the *bin* directory, which can be found in the root of the repository.
+Providing you've met the above prerequisites, building Crypter is straightforward:
+
+- Run the *Build.py* script in the *build* directory of this repository.
+- Check the *bin* directory in the root of the repository for the produced binary.
+
+A more detailed guide on building Crypter will be added to the repository's Wiki in the future.
 
 ## How does Crypter work?
-Brief overview of how Crypter ransomware works. 
+Crypter's approach is fairly conventional. Once launched, it takes the following actions:
+
+1. Checks to ensure that a version of Crypter is not already running
+    - If a version is detected, a fake error is presented to the user stating that the file is corrupt
+2. Checks if the machine has already been encrypted by an instance of Crypter
+    - If already encrypted, the ransom GUI is presented to the user
+    - Otherwise, continue with the encryption process
+3. Generate the AES-256 bit encryption key and write it to key.txt
+3. Search the target directories for files matching the types defined in Base.py
+4. Encrypt the matching files
+5. Write the time of encryption to the registry (used for tracking remaining time to pay the ransom)
+6. Presents the ransom GUI to the user
+
+A more in-depth breakdown of these activities will be added to the repository's Wiki in the future.
 
 ## Why was Crypter created?
 Given Crypter's malicious capabilities, as well as the disclaimer in this README, you may be wondering why Crypter was created. The primary goal of this project was to provide a proof-of-concept which demonstrated Python's capabilities as a language for malware development. Traditionally, compiled languages like C and C++ have been the chosen platforms of malware authors. Today however, a general advancement of platforms and tools has introduced attractive alternatives which extend these opportunities to other languages. 
