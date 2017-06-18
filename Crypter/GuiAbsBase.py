@@ -161,8 +161,8 @@ class ViewEncryptedFilesDialog ( wx.Frame ):
 		self.m_panel4 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		TextCtrlSizer = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_textCtrl2 = wx.TextCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
-		TextCtrlSizer.Add( self.m_textCtrl2, 1, wx.ALL|wx.EXPAND, 5 )
+		self.EncryptedFilesTextCtrl = wx.TextCtrl( self.m_panel4, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_DONTWRAP|wx.TE_MULTILINE|wx.TE_READONLY )
+		TextCtrlSizer.Add( self.EncryptedFilesTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		self.m_panel4.SetSizer( TextCtrlSizer )
@@ -190,10 +190,13 @@ class EnterDecryptionKeyDialog ( wx.Frame ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Decrypt Files", pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
 		BodySizer = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel5.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		
 		MainSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel5, wx.ID_ANY, u"AES Decyption Key" ), wx.VERTICAL )
 		
 		
