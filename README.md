@@ -27,16 +27,20 @@ Updates not yet started, but planned for a future release include:
 + Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
 
 ## Prerequisites
-Before cloning the repository and attempting to build Crypter, it's recommended that you first meet the following prerequisities. You'll then have all of the tools required to produce the binary.
+Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisities. You'll then have all of the tools required to produce the binary.
+
+**Note:** You should install the software in the exact order shown in the table below, from top to bottom.
 
 | Requirement | Supported (Tested) | Supported (Not tested) | Recommended |
 | ----------- | ------------------ | ---------------------- | ----------- |
 | Microsoft Windows | 7, 10 | 7, 8, 10, server 2K8 and above | 10 |
 | Python | 2.7 | -- | 2.7 |
-| Pyinstaller | 3.2.1, 3.2.2 | --  | 3.2.1 |
-| Pywin32 | -- | -- | -- |
+| Pyinstaller | 3.2.1, 3.2.2 | 3.2  | 3.2.1 |
+| Microsoft VC++ for Python | 9.0 | -- | 9.0 |
+| PyCrypto | 2.6.1 | -- | 2.6.1 |
+| WxPython | 3.0 | -- | 3.0 |
 
-Once met, proceed to the [How can I build Crypter](#How-can-I-build-Crypter?) section.
+Once the above software is installed, You can now build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
 
 ## How can I build Crypter?
 Instructions on building the executable
