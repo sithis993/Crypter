@@ -43,7 +43,7 @@ Before cloning the repository and attempting to build Crypter, you must first me
 Once the above software is installed, You can now build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
 
 ## How can I build Crypter?
-Instructions on building the executable
+Providing you've met the above prerequisites, building Crypter is straightforward. Simply run the *Build.py* script in the *build* directory of this repository. Once PyInstaller finishes compilation, you will find the produced Crypter binary in the *bin* directory, which can be found in the root of the repository.
 
 ## How does Crypter work?
 Brief overview of how Crypter ransomware works. 
