@@ -76,7 +76,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer20.Add( self.KeyDestructionLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
-		self.KeyDestructionTime = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"72:00:00", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTime = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"00:00:00", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTime.Wrap( -1 )
 		self.KeyDestructionTime.SetFont( wx.Font( 16, 75, 90, 92, True, "Courier New" ) )
 		self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNHIGHLIGHT ) )
@@ -184,20 +184,17 @@ class ViewEncryptedFilesDialog ( wx.Frame ):
 ## Class EnterDecryptionKeyDialog
 ###########################################################################
 
-class EnterDecryptionKeyDialog ( wx.Frame ):
+class EnterDecryptionKeyDialog ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Decrypt Files", pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.TAB_TRAVERSAL )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Decrypt Files", pos = wx.DefaultPosition, size = wx.Size( 500,200 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
-		BodySizer = wx.BoxSizer( wx.VERTICAL )
+		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		self.m_panel5.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
-		
-		MainSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel5, wx.ID_ANY, u"AES Decyption Key" ), wx.VERTICAL )
+		self.m_panel6 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		MainSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel6, wx.ID_ANY, u"AES Decryption Key" ), wx.VERTICAL )
 		
 		
 		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -205,20 +202,20 @@ class EnterDecryptionKeyDialog ( wx.Frame ):
 		
 		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		bSizer12 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		
-		bSizer12.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer13.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.DecryptionKeyTextCtrl = wx.TextCtrl( MainSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 220,-1 ), 0 )
 		self.DecryptionKeyTextCtrl.SetMaxLength( 32 ) 
-		bSizer12.Add( self.DecryptionKeyTextCtrl, 0, wx.ALL, 5 )
+		bSizer13.Add( self.DecryptionKeyTextCtrl, 0, wx.ALL, 5 )
 		
 		
-		bSizer12.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer13.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		
-		MainSizer.Add( bSizer12, 1, wx.EXPAND, 5 )
+		MainSizer.Add( bSizer13, 1, wx.EXPAND, 5 )
 		
 		
 		MainSizer.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -241,13 +238,13 @@ class EnterDecryptionKeyDialog ( wx.Frame ):
 		MainSizer.Add( self.DecryptionGauge, 0, wx.ALL, 5 )
 		
 		
-		self.m_panel5.SetSizer( MainSizer )
-		self.m_panel5.Layout()
-		MainSizer.Fit( self.m_panel5 )
-		BodySizer.Add( self.m_panel5, 1, wx.EXPAND |wx.ALL, 5 )
+		self.m_panel6.SetSizer( MainSizer )
+		self.m_panel6.Layout()
+		MainSizer.Fit( self.m_panel6 )
+		bSizer12.Add( self.m_panel6, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
-		self.SetSizer( BodySizer )
+		self.SetSizer( bSizer12 )
 		self.Layout()
 		
 		self.Centre( wx.BOTH )
