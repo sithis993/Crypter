@@ -1,7 +1,6 @@
 '''
 @summary: Generic High level encryption library
 @author: MLS
-@version: 1.70
 '''
 
 # Import libs

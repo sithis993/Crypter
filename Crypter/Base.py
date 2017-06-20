@@ -1,7 +1,6 @@
 '''
 @summary: Crypter: Base class for inheritence
 @author: MLS
-@version: 1.70
 '''
 
 # Import libs
