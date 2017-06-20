@@ -2,7 +2,6 @@
 '''
 @summary: Crypter: GUI Class
 @author: MLS
-@version: 1.70
 '''
 
 # Import libs
