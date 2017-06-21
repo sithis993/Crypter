@@ -80,6 +80,12 @@ class Base():
                 # COMPRESSION FORMATS
                 "tgz", "zip", "rar"
                 ]
+    
+    
+    FILES_TO_EXCLUDE = [
+        "key.txt"
+        ]
+    
 
     def get_base_dirs(self, home_dir):
       # Function to return a list of base directories to encrypt
