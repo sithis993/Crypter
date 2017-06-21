@@ -32,10 +32,10 @@ class build():
     self.update_base()
 
     # Start build process
-    if not os.path.isfile("upx308w\\upx.exe"):
+    if not os.path.isfile("upx394w\\upx.exe"):
       os.system(r"pyinstaller --noconsole --clean --noupx Main.spec")
     else:
-      os.system(r"pyinstaller --noconsole --clean --upx-dir upx308w Main.spec")
+      os.system(r"pyinstaller --noconsole --clean --upx-dir upx394w Main.spec")
 
     # Copy binary to dev folder
     self.copy_files("binary")
