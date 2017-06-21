@@ -6,7 +6,7 @@ block_cipher = pyi_crypto.PyiBlockCipher(key='0123456789ABCDEF')
 a = Analysis(['..\\Crypter\\Main.py'],
              pathex=['.\\build'],
              binaries=[],
-             datas=[("images/crypter.bmp", "."),
+             datas=[("images/crypter_title.bmp", "."),
 		    ("images/crypter_logo_small.bmp", "."),
 		    ("images/encrypt_message.bmp", "."),
 		    ("images/key_destruction.bmp", "."),
