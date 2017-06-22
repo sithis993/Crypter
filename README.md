@@ -1,6 +1,6 @@
 # Crypter
 
-Welcome to Crypter, a ransomware piece written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
+Welcome to Crypter! a ransomware piece written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
@@ -26,6 +26,8 @@ Updates not yet started, but planned for a future release include:
 
 + Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
 
+Everyone is welcome to contribute ideas, improvements and fixes!
+
 ## Prerequisites
 Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisites. You'll then have all the tools required to produce the binary.
 
@@ -40,7 +42,9 @@ Before cloning the repository and attempting to build Crypter, you must first me
 | PyCrypto | 2.6.1 | -- | 2.6.1 |
 | WxPython | 3.0 | -- | 3.0 |
 
-Once the above software is installed you can build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
+The [UPX Packer](https://upx.github.io/) is an optional, but definitely recommended tool that you can also install for the purpose of building the binary. Whilst PyInstaller provides some great benefits, one inconvenience is that the produced file can sometimes be quite large. UPX will allow you to significantly reduce its size. For example, in some cases UPX can reduce a PyInstaller binary from 8MB to 5MB. The build process will run successfully without UPX, but if you'd like to take advantage of its functionality, simply place the UPX directory at build/upx394.
+
+Finally, once the above software is installed you can build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
 
 ## How can I build Crypter?
 Providing you've met the above prerequisites, building Crypter is straightforward:
@@ -60,7 +64,9 @@ Crypter's approach is fairly conventional. Once launched, it takes the following
     - Otherwise, continue with the encryption process
 3. Generate the AES-256 bit encryption key and write it to key.txt
 3. Search the target directories for files matching the types defined in Base.py
-4. Encrypt the matching files
+    - Currently, the main user directories (Documents, Pictures etc.) are the only locations searched
+    - However, adding any additional directories is straightforward
+4. Encrypt any matching files
 5. Write the time of encryption to the registry (used for tracking remaining time to pay the ransom)
 6. Presents the ransom GUI to the user
 
