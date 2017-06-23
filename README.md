@@ -20,7 +20,7 @@ Once again, **the author accepts no responsibility for any damages that may occu
 ## Roadmap
 Crypter is an ongoing project with a number of updates, changes and improvements planned for the future. Updates actively under development include:
 
-+ A Graphical User Interface for building Crypter. This will provide a significantly faster and more convenient method to customise the build and allow you to specify options such as the wallet address, ransom fee etc. (See issue [#6](/../../issues/36))
++ A Graphical User Interface for building Crypter. This will provide a significantly faster and more convenient method to customise the build and allow you to specify options such as the wallet address, ransom fee etc. (See issue [#6](/../../issues/6))
 
 Updates not yet started, but planned for a future release include:
 
@@ -61,12 +61,12 @@ Finally, once the above software is installed you can build the Crypter binary. 
 Providing you've met the above prerequisites, building Crypter is straightforward:
 
 - Run the *Build.py* script in the *build* directory of this repository.
-- Check the *bin* directory in the root of the repository for the produced binary.
+- Check the *bin* directory (created during the build) in the root of the repository for the produced binary.
 
 A more detailed guide on building Crypter will be added to the repository's Wiki in the future.
 
 ## How does Crypter work?
-Crypter's approach is fairly conventional, but the lack of a CnC component does result in slightly different behaviour that enables you to very easily decrypt the encrypted files. Once executed, the following steps are taken:
+Crypter's approach is fairly conventional, but the lack of a CnC component does result in different behaviour. Rather than sending the key to a remote server, Crypter instead writes it to a local file so that the files can be easily decrypted. Once executed, the following steps are taken:
 
 1. Generates an AES-256 bit key and writes it to key.txt in the current directory
     - You can use this key in the Crypter GUI to decrypt your files
@@ -78,7 +78,7 @@ Crypter's approach is fairly conventional, but the lack of a CnC component does 
     - [USER_HOME_DIR]\Pictures
     - [USER_HOME_DIR]\Videos    
 3. Encrypts all matching files
-4. Opens the Crypter GUI and displays the ransom
+4. Opens the Crypter GUI and displays the ransom note
 
 A more in-depth breakdown of these activities will be added to the repository's Wiki in the future.
 
@@ -92,4 +92,4 @@ As an incredibly popular, beginner-friendly language with an immense wealth of t
 + [CryPy](http://www.zdnet.com/article/python-ransomware-encrypts-files-with-unique-keys-one-at-a-time/)
 + [HolyCrypt](https://www.bleepingcomputer.com/news/security/new-python-ransomware-called-holycrypt-discovered/)
 
-Whilst similar projects do exist on GitHub, few are structured in the same way. Crypter aims to expand upon these by providing a *cryptolocker* style Python-based ransomware piece which can be easily compiled to a standalone executable format.
+Whilst similar projects do exist on GitHub, few are structured in the same way. Crypter aims to expand upon these by providing a *cryptolocker* style Python-based ransomware piece, which can be easily compiled to a standalone executable format.
