@@ -46,12 +46,12 @@ Before cloning the repository and attempting to build Crypter, you must first me
 | Requirement | Supported Version (Tested) | Supported Version (Not tested) | Recommended Version |
 | ----------- | ------------------ | ---------------------- | ----------- |
 | Microsoft Windows | 7, 10 | 7, 8, 10, server 2K8 and above | 10 |
-| Python | 2.7 | -- | 2.7 |
-| Pyinstaller | 3.2.1, 3.2.2 | 3.2  | 3.2.1 |
-| Microsoft VC++ for Python | 9.0 | -- | 9.0 |
-| PyCrypto | 2.6.1 | -- | 2.6.1 |
-| WxPython | 3.0 | -- | 3.0 |
-| \*UPX | 3.94 | -- | 3.94 |
+| Python | 2.7.13 (x86) | -- | [2.7.13 (x86)](https://www.python.org/downloads/release/python-2713/) |
+| Pyinstaller | 3.1.1, 3.2.1 |  3.2 | [3.1.1](https://github.com/pyinstaller/pyinstaller/releases/tag/v3.1.1) |
+| Microsoft VC++ for Python | 9.0 | -- | [9.0](https://www.microsoft.com/en-gb/download/details.aspx?id=44266) |
+| PyCrypto | 2.6.1 | -- | 2.6.1 (install via Pip) |
+| WxPython | 3.0 | -- | [3.0](https://wxpython.org/download.php#msw) |
+| \*UPX | 3.94w | -- | [3.94w](https://github.com/upx/upx/releases/tag/v3.94) |
 
 \*The [UPX Packer](https://upx.github.io/) is an optional, but highly recommended tool that you can also install for the purpose of building Crypter. UPX will allow you to significantly reduce the size of the binary that PyInstaller produces. For example, in some cases UPX can reduce a PyInstaller binary from 8MB to 5MB. The build process will run successfully without UPX, but if you'd like to take advantage of its functionality, simply place the UPX directory at build/upx394.
 
