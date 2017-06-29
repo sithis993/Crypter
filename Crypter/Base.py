@@ -43,6 +43,7 @@ class Base():
     GUI_DECRYPTION_DIALOG_LABEL_TEXT_WAITING = "Waiting for input"
     GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING = "Decrypting! Please Wait"
     GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED = "Decryption Complete!"
+    GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT = "Encrypted Files: "
     GUI_ENCRYPTED_FILES_DIALOG_NO_FILES_FOUND = "A list of encrypted files was not found"
     
     GUI_RANSOM_MESSAGE = (
