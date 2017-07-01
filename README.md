@@ -4,6 +4,7 @@ Welcome to Crypter! a ransomware piece written entirely in Python and compiled t
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
+[Crypter video demonstration](https://youtu.be/r3jaNHmkkXE)
 
  ![Crypter GUI](sample_images/crypter_gui.PNG)
  
@@ -26,7 +27,7 @@ Updates not yet started, but planned for a future release include:
 
 + Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
 
-Everyone is welcome to contribute ideas, improvements and fixes!
+Everyone is welcome to contribute ideas, improvements and fixes! See the [Issues](/../../issues) for a more in-depth view of current problems and features being addressed.
 
 ## Repository Structure
 If you're unsure of the components that make up this repository, the following explanation should give you some insight:
@@ -66,7 +67,7 @@ Providing you've met the above prerequisites, building Crypter is straightforwar
 A more detailed guide on building Crypter will be added to the repository's Wiki in the future.
 
 ## How does Crypter work?
-Crypter's approach is fairly conventional, but the lack of a CnC component does result in different behaviour. Rather than sending the key to a remote server, Crypter instead writes it to a local file so that the files can be easily decrypted. Once executed, the following steps are taken:
+Crypter's approach is fairly conventional, but the lack of a CnC component does result in different behaviour (see the [Crypter video demonstration](https://youtu.be/r3jaNHmkkXE)). Rather than sending the key to a remote server, Crypter instead writes it to a local file so that the files can be easily decrypted. Once executed, the following steps are taken:
 
 1. Generates an AES-256 bit key and writes it to key.txt in the current directory
     - You can use this key in the Crypter GUI to decrypt your files
