@@ -29,15 +29,23 @@ class DecryptionThread(Thread):
 	@summary: Performs threaded decryption of the encrypted files
 	'''
 	
-	def __init__(self, encrypted_files_list, decrypted_files_list, gui):
+	def __init__(self, encrypted_files_list, decrypted_files_list, gui, 
+				decrypter, decryption_key):
 		'''
 		@summary: Constructor: Starts the thread
+		@param encrypted_files_list: The list of encrypted files
+		@param decrypted_files_list: The list of files that were decrypted, but have now been decrypted
+		@param gui: Handle to the GUI object
+		@param decrypted: Handle to the decrypter (Main object)
+		@param decryption_key: AES 256 bit decryption key to be used for file decryption
 		'''
 		self.gui = gui
 		self.encrypted_files_list = encrypted_files_list
 		self.decrypted_files_list = decrypted_files_list
+		self.decrypter = decrypter
+		self.decryption_key = decryption_key
 		self.__in_progress = False
-		self.__decryption_complete = False
+		self.decryption_complete = False
 		self._stop_event = Event()
 		
 		Thread.__init__(self)
@@ -57,21 +65,40 @@ class DecryptionThread(Thread):
 			# Check for thread termination signal and break if set
 			if self._stop_event.is_set():
 				break
-			
-			# Decrypt file and add to list of decrypted files. Update progress
-			self.decrypted_files_list.append(self.encrypted_files_list[i])
-			time.sleep(0.1)
-			wx.CallAfter(Publisher.sendMessage, "update", "")
+			else:
+			  # Decrypt file and add to list of decrypted files. Update progress
+			  self.decrypter.decrypt_file(self.encrypted_files_list[i], self.decryption_key)
+			  self.decrypted_files_list.append(self.encrypted_files_list[i])
+			  wx.CallAfter(Publisher.sendMessage, "update", "")
 			
 		
+		# TODO Should be EQUAL!
+		print("Decryption complete. encrypted files: %s, decrypted files: %s" %
+			(len(self.encrypted_files_list),
+			len(self.decrypted_files_list)
+				))
 		self.__in_progress = False
 		# Check if decryption was completed
 		if len(self.decrypted_files_list) == len(self.encrypted_files_list):
-			self.__decryption_complete = True
+			self.decryption_complete = True
+
+		# Remove decrypted files from the list of encrypted files
+		# TODO This is where the problem is... the decrypted file list is increased in size, 
+		# But at the same time the encrypted file list is still increasing!!
+		for file in self.decrypted_files_list:
+			if file in self.encrypted_files_list:
+			  self.encrypted_files_list.remove(file)
+		# Clear decrypted file list
+		self.decrypted_files_list = []
+		self.gui.decrypted_files_list = []
+		self.gui.encrypted_files_list = self.encrypted_files_list
 			
-		# TODO Some of these actions should only be taken if the process was completed 100%
 		# Restore GUI
-		if self.__decryption_complete:
+		if self.decryption_complete:
+			
+		  # Cleanup decrypter and change dialog message
+		  self.decrypter.cleanup()
+			
 		# Update main window
 		  self.gui.key_destruction_timer.Stop()
 		  self.gui.FlashingMessageText.SetLabel(self.gui.GUI_LABEL_TEXT_FLASHING_DECRYPTED)
@@ -93,7 +120,7 @@ class DecryptionThread(Thread):
 		'''
 		
 		# If complete or not in progress, and event is already set, close forcefully
-		if  self.__decryption_complete or not self.__in_progress:
+		if  self.decryption_complete or not self.__in_progress:
 		  self.gui.decryption_dialog.Destroy()
 		# Otherwise, only set signal
 		else:
@@ -147,32 +174,33 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		encrypted files remaining)
 		'''
 		# Calculate percentage completion
-		percentage_completion = len(self.decrypted_files_list) * 100 / len(self.encrypted_files_list)
+		if len(self.encrypted_files_list) == 0:
+		  percentage_completion = 100
+		else:
+		  percentage_completion = len(self.decrypted_files_list) * 100 / len(self.encrypted_files_list)
 		
 		# Update number of encrypted files remaining
+		if not self.decryption_thread.decryption_complete or len(self.encrypted_files_list) > len(self.decrypted_files_list):
+		  encrypted_files_remaining = len(self.encrypted_files_list) - len(self.decrypted_files_list)
+	 	else:
+	 	  encrypted_files_remaining = 0
+
+		# Set encrypted files number in GUI
 		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
-			"Encrypted Files: %s" % (
-				len(self.encrypted_files_list) - len(self.decrypted_files_list)
-				)
-			)
+		  "Encrypted Files: %s" % encrypted_files_remaining)
 		
 		# Update Decryption percentage completion
-		self.decryption_dialog.StatusText.SetLabelText(
-			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING + " (%s%%)" % percentage_completion
-			)
+		if percentage_completion != 100:
+		  self.decryption_dialog.StatusText.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING + " (%s%%)" % percentage_completion
+			  )
+		else:
+		  self.decryption_dialog.StatusText.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED + " (%s%%)" % percentage_completion
+			  )
 		
 		# Update decryption gauge
 		self.decryption_dialog.DecryptionGauge.SetValue(len(self.decrypted_files_list))
-		
-
-	def start_decryption_thread(self, event):
-		'''
-		@summary: Called when the Decryption dialog "OK" button is hit. Starts
-		the decrypter thread
-		'''
-		
-		# Get list of encrypted files and start the decryption thread
-		self.decryption_thread = DecryptionThread(self.encrypted_files_list, self.decrypted_files_list)
 		
 
 	def set_events(self):
@@ -204,11 +232,12 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		else:
 		  self.decryption_dialog.Destroy()
 		  
+		# TODO Solve issue here with the lists being out of sync
 		# Remove decrypted files from the list of encrypted files
-		for file in self.decrypted_files_list:
-			self.encrypted_files_list.remove(file)
+		#for file in self.decrypted_files_list:
+		#	self.encrypted_files_list.remove(file)
 		# Clear decrypted file list
-		self.decrypted_files_list = []
+		#self.decrypted_files_list = []
 		
 	
 	def show_decryption_dialog(self, event):
@@ -225,9 +254,16 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Set gauge size
 		self.decryption_dialog.DecryptionGauge.SetRange(len(self.encrypted_files_list))
 		# Set encrypted file number
-		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
-			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(len(self.encrypted_files_list))
-			)
+		if not self.decryption_thread:
+		  self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(len(self.encrypted_files_list))
+			  )
+		else:
+		  self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(
+				len(self.decryption_thread.encrypted_files_list) - len(self.decryption_thread.decrypted_files_list)
+				)
+			  )
 		
 		# Bind OK button to decryption process
 		self.decryption_dialog.Bind(wx.EVT_BUTTON, self.start_decryption_thread, self.decryption_dialog.OkCancelSizerOK)
@@ -256,7 +292,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Start the decryption thread
 		self.decryption_thread = DecryptionThread(self.encrypted_files_list, self.decrypted_files_list,
-												self)
+												self, self.decrypter, key_contents)
 	
 
 	def show_encrypted_files(self, event):
@@ -300,7 +336,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		time_remaining = self.get_time_remaining()
 		
 		# If the key has been destroyed, update the menu text
-		# TODO Test
 		if not time_remaining:
 			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED)
 			# Set timer colour to black
