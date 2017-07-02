@@ -54,8 +54,6 @@ class Builder():
             
         return config_dict
             
-    
-        
         
     def validate(self, config_dict):
         '''

