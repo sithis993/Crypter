@@ -233,9 +233,21 @@ class EnterDecryptionKeyDialog ( wx.Dialog ):
 		self.StatusText.Wrap( -1 )
 		MainSizer.Add( self.StatusText, 0, wx.ALL, 5 )
 		
+		bSizer121 = wx.BoxSizer( wx.HORIZONTAL )
+		
 		self.DecryptionGauge = wx.Gauge( MainSizer.GetStaticBox(), wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
 		self.DecryptionGauge.SetValue( 0 ) 
-		MainSizer.Add( self.DecryptionGauge, 0, wx.ALL, 5 )
+		bSizer121.Add( self.DecryptionGauge, 0, wx.ALL, 5 )
+		
+		
+		bSizer121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.EncryptedFilesNumberLabel = wx.StaticText( MainSizer.GetStaticBox(), wx.ID_ANY, u"Encrypted Files: 0", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptedFilesNumberLabel.Wrap( -1 )
+		bSizer121.Add( self.EncryptedFilesNumberLabel, 0, wx.ALL, 5 )
+		
+		
+		MainSizer.Add( bSizer121, 1, wx.EXPAND, 5 )
 		
 		
 		self.m_panel6.SetSizer( MainSizer )
