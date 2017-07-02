@@ -184,11 +184,9 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Update decryption gauge
 		if self.encrypted_files_list:
-			self.decryption_dialog.DecryptionGauge.SetValue(len(self.decrypted_files_list))
+			self.decryption_dialog.DecryptionGauge.SetValue(percentage_completion)
 		else:
-			self.decryption_dialog.DecryptionGauge.SetValue(
-				self.decryption_dialog.DecryptionGauge.GetRange()
-				)
+			self.decryption_dialog.DecryptionGauge.SetValue(100)
 			
 		# If the decryption has successfully finished, update the GUI
 		if not self.decryption_thread.in_progress and self.decryption_thread.decryption_complete:
@@ -226,7 +224,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		signal to the decryption thread if it exists
 		'''
 		
-		# TODO Test
 		# Send stop event to the decryption thread if it exists
 		if self.decryption_thread and self.decryption_thread.in_progress:
 		  self.decryption_thread.stop()
@@ -247,7 +244,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Create dialog object
 		self.decryption_dialog = EnterDecryptionKeyDialog(self)
 		# Set gauge size
-		self.decryption_dialog.DecryptionGauge.SetRange(len(self.encrypted_files_list))
+		self.decryption_dialog.DecryptionGauge.SetRange(100)
 		# Set encrypted file number
 		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
 			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(
