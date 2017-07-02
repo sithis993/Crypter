@@ -69,7 +69,8 @@ class DecryptionThread(Thread):
 			  # Decrypt file and add to list of decrypted files. Update progress
 			  self.decrypter.decrypt_file(self.encrypted_files_list[i], self.decryption_key)
 			  self.decrypted_files_list.append(self.encrypted_files_list[i])
-			  wx.CallAfter(Publisher.sendMessage, "update", "")
+			  #wx.CallAfter(Publisher.sendMessage, "update", "")
+			  Publisher.sendMessage("update", "")
 			
 		
 		# Encryption stopped or finished
@@ -78,6 +79,9 @@ class DecryptionThread(Thread):
 		# Check if decryption was completed
 		if len(self.decrypted_files_list) == len(self.encrypted_files_list):
 			self.decryption_complete = True
+			
+		# Run a final progress update
+		Publisher.sendMessage("update", "")
 
 		# Remove decrypted files from the list of encrypted files
 		# Update the GUIs encrypted and decrypted file lists
@@ -199,6 +203,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			
 		# If the decryption has successfully finished, update the GUI
 		if not self.decryption_thread.in_progress and self.decryption_thread.decryption_complete:
+		  print("Cleaning up")
 		  # Cleanup decrypter and change dialog message
 		  self.decrypter.cleanup()
 		  # Update main window
@@ -209,6 +214,8 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		  self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
 		  # Disable decryption dialog button
 		  self.EnterDecryptionKeyButton.Disable()
+		else:
+		  print("Not cleaning up")
 		
 
 	def set_events(self):
