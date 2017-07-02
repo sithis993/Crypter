@@ -69,7 +69,6 @@ class DecryptionThread(Thread):
 			  # Decrypt file and add to list of decrypted files. Update progress
 			  self.decrypter.decrypt_file(self.encrypted_files_list[i], self.decryption_key)
 			  self.decrypted_files_list.append(self.encrypted_files_list[i])
-			  #wx.CallAfter(Publisher.sendMessage, "update", "")
 			  Publisher.sendMessage("update", "")
 			
 		
@@ -158,22 +157,12 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 
 		# Calculate percentage completion
-		#if len(self.encrypted_files_list) <= len(self.decrypted_files_list):
 		if len(self.encrypted_files_list) == 0:
 		  percentage_completion = 100
 		else:
-		  print("Setting percentage. dec file: %s enc files: %s" % (
-			len(self.decrypted_files_list),
-			len(self.encrypted_files_list)
-			))
-		  #try:
 		  percentage_completion = float(len(self.decrypted_files_list)) * 100.0 / float(len(self.encrypted_files_list))
-		  #except ZeroDivisionError:
-		  #	raise Exception(len(self.encrypted_files_list))
-		  print("percent complete: %s" % percentage_completion)
 		
 		# Update number of encrypted files remaining
-		#if not self.decryption_thread.decryption_complete or len(self.encrypted_files_list) > len(self.decrypted_files_list):
 		if not self.decryption_thread.decryption_complete:
 		  encrypted_files_remaining = len(self.encrypted_files_list) - len(self.decrypted_files_list)
 	 	else:
@@ -203,7 +192,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			
 		# If the decryption has successfully finished, update the GUI
 		if not self.decryption_thread.in_progress and self.decryption_thread.decryption_complete:
-		  print("Cleaning up")
 		  # Cleanup decrypter and change dialog message
 		  self.decrypter.cleanup()
 		  # Update main window
@@ -214,8 +202,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		  self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
 		  # Disable decryption dialog button
 		  self.EnterDecryptionKeyButton.Disable()
-		else:
-		  print("Not cleaning up")
 		
 
 	def set_events(self):

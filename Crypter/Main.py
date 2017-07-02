@@ -106,7 +106,7 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
-    sys._MEIPASS = "..\\build\\images"
+    #sys._MEIPASS = "..\\build\\images"
     crypter_gui = Gui.Gui(
         image_path=sys._MEIPASS, 
         start_time=start_time,
