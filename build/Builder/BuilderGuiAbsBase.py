@@ -47,7 +47,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer202.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		BuilderLanguageChoiceChoices = [ u"English", u"Русский" ]
+		BuilderLanguageChoiceChoices = [ u"English" ]
 		self.BuilderLanguageChoice = wx.Choice( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, BuilderLanguageChoiceChoices, 0 )
 		self.BuilderLanguageChoice.SetSelection( 0 )
 		bSizer202.Add( self.BuilderLanguageChoice, 0, wx.ALL, 5 )
@@ -67,7 +67,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2011.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		CrypterBinaryLanguageChoiceChoices = [ u"English", u"Русский" ]
+		CrypterBinaryLanguageChoiceChoices = [ u"English" ]
 		self.CrypterBinaryLanguageChoice = wx.Choice( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, CrypterBinaryLanguageChoiceChoices, 0 )
 		self.CrypterBinaryLanguageChoice.SetSelection( 0 )
 		bSizer2011.Add( self.CrypterBinaryLanguageChoice, 0, wx.ALL, 5 )

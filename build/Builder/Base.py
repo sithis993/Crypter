@@ -136,8 +136,8 @@ CONFIG_FILE_NAME = "BuildConfig.new"
 
 ## LANGUAGE
 SUPPORTED_LANGUAGES = [
-    u"English",
-    u"Русский"
+    u"English"
+    #u"Русский"
     ]
 
 DEFAULT_LANGUAGE = "English"
