@@ -1,6 +1,6 @@
 {
     "maj" : "1",
-    "min" : "02",
+    "min" : "03",
     "ico_file" : "pdf.ico",
     "filename" : "invoice",
     "extension": "pdf",
