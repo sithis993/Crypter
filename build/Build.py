@@ -6,6 +6,7 @@ import os
 import sys
 import json
 import re
+import codecs
 from time import strftime
 
 #################
@@ -54,7 +55,7 @@ class build():
 
     # Update encrypted extension
     # Read base file
-    fh = open(self.base, "r")
+    fh = codecs.open(self.base, "r", encoding='utf8')
     contents = fh.read()
     fh.close()
 
@@ -67,7 +68,7 @@ class build():
     new_contents = re.sub("MAX_FILE_SIZE_BYTES = (.*)", replacement, new_contents)
     
     # Write out new contents
-    fh = open(self.base, "w")
+    fh = codecs.open(self.base, "w", encoding='utf8')
     fh.write(new_contents)
     fh.close()
 
