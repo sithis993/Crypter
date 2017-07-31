@@ -20,6 +20,7 @@ class MainFrame ( wx.Frame ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.Size( -1,-1 ) )
+		self.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
 		self.SetBackgroundColour( wx.Colour( 177, 7, 14 ) )
 		
 		MainSizer = wx.BoxSizer( wx.VERTICAL )
@@ -28,15 +29,19 @@ class MainFrame ( wx.Frame ):
 		self.HeaderPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		HeaderSizer = wx.BoxSizer( wx.VERTICAL )
 		
-		self.CrypterTitleBitmap = wx.StaticBitmap( self.HeaderPanel, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		HeaderSizer.Add( self.CrypterTitleBitmap, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10 )
+		self.TitleLabel = wx.StaticText( self.HeaderPanel, wx.ID_ANY, u"CRYPTER", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.TitleLabel.Wrap( -1 )
+		self.TitleLabel.SetFont( wx.Font( 48, 75, 90, 92, True, "Courier New" ) )
+		self.TitleLabel.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
+		
+		HeaderSizer.Add( self.TitleLabel, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 20 )
 		
 		self.FlashingMessageText = wx.StaticText( self.HeaderPanel, wx.ID_ANY, u"YOUR FILES HAVE BEEN ENCRYPTED!", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.FlashingMessageText.Wrap( -1 )
 		self.FlashingMessageText.SetFont( wx.Font( 18, 75, 90, 92, False, "Courier New" ) )
 		self.FlashingMessageText.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
 		
-		HeaderSizer.Add( self.FlashingMessageText, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10 )
+		HeaderSizer.Add( self.FlashingMessageText, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		
 		self.HeaderPanel.SetSizer( HeaderSizer )
