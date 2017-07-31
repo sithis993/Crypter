@@ -329,7 +329,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings_GetColour(
 				wx.SYS_COLOUR_CAPTIONTEXT))
 			# Disable decryption button
-			self.EnterDecryptionKeyButton.Disable()
+			#self.EnterDecryptionKeyButton.Disable()
 		else:
 			self.KeyDestructionTime.SetLabelText(time_remaining)
 		
