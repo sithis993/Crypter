@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-@summary: Crypter Builder: Base schema and config
+@summary: Crypter Exe Builder: Base schema and config
 @author: MLS
 '''
 
@@ -131,6 +131,10 @@ OPTIONAL_CONFIG_ITEMS = {
         "default": ENCRYPTABLE_FILETYPES
         }
     }
+
+ALL_CONFIG_ITEMS = {}
+ALL_CONFIG_ITEMS.update(MANDATORY_CONFIG_ITEMS)
+ALL_CONFIG_ITEMS.update(OPTIONAL_CONFIG_ITEMS)
 
 CONFIG_FILE_NAME = "BuildConfig.new"
 
