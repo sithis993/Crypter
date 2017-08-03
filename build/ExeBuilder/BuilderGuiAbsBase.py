@@ -55,26 +55,6 @@ class MainFrame ( wx.Frame ):
 		
 		LanguageSettingsSizer.Add( bSizer202, 1, wx.EXPAND, 5 )
 		
-		bSizer2011 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.CrypterLanguageLabel = wx.StaticText( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Crypter Binary Language", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.CrypterLanguageLabel.Wrap( -1 )
-		self.CrypterLanguageLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.CrypterLanguageLabel.SetToolTipString( u"Minor version number. This will be included in the filename of the produced Crypter binary" )
-		
-		bSizer2011.Add( self.CrypterLanguageLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer2011.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		CrypterBinaryLanguageChoiceChoices = [ u"English" ]
-		self.CrypterBinaryLanguageChoice = wx.Choice( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, CrypterBinaryLanguageChoiceChoices, 0 )
-		self.CrypterBinaryLanguageChoice.SetSelection( 0 )
-		bSizer2011.Add( self.CrypterBinaryLanguageChoice, 0, wx.ALL, 5 )
-		
-		
-		LanguageSettingsSizer.Add( bSizer2011, 1, wx.EXPAND, 5 )
-		
 		
 		self.m_panel31.SetSizer( LanguageSettingsSizer )
 		self.m_panel31.Layout()
@@ -400,7 +380,7 @@ class MainFrame ( wx.Frame ):
 		
 		ConsoleBoxSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel411, wx.ID_ANY, u"Console" ), wx.VERTICAL )
 		
-		self.ConsoleTextCtrl = wx.TextCtrl( ConsoleBoxSizer.GetStaticBox(), wx.ID_ANY, u"Ready...", wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.TE_MULTILINE|wx.TE_READONLY )
+		self.ConsoleTextCtrl = wx.TextCtrl( ConsoleBoxSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.TE_MULTILINE|wx.TE_READONLY )
 		self.ConsoleTextCtrl.SetForegroundColour( wx.Colour( 24, 249, 0 ) )
 		self.ConsoleTextCtrl.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_INFOTEXT ) )
 		

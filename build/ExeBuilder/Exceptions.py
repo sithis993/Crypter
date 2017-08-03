@@ -1,5 +1,5 @@
 '''
-@summary: Crypter Builder: Package exceptions
+@summary: Crypter Exe Builder: Package exceptions
 @author: MLS
 '''
 

