@@ -10,6 +10,7 @@ from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 
 # Import package modules
+from .Base import *
 
 
 #########################
@@ -69,16 +70,19 @@ class BuilderThread(Thread):
         )
         
         
-    def __is_valid_input(self):
+    def __is_valid_input(self, input_field, input_value):
         '''
         @summary: Validates the value of the specified input field
         @return: True if input is valid, otherwise False
+        @todo: Continue with field validation
         '''
 
         # If empty, 
-        #if not ALL_CONFIG_ITEMS[key]["regex"].match(value):
-        #    raise Exception("%s value does not match regex" % key)
-        pass
+        if not ALL_CONFIG_ITEMS[input_field]["regex"].match(input_value):
+            self.__console_log(
+                msg="Invalid value submitted for '%s'" % input_field,
+                debug_level=0
+                )
         
         
 
@@ -103,8 +107,7 @@ class BuilderThread(Thread):
 
             # Validate input field
             self.__console_log(msg="Checking %s" % input_field, debug_level=1)
-            self.__is_valid_input()
-            time.sleep(1)
+            self.__is_valid_input(input_field, self.user_input_dict[input_field])
             
         # FINISHED
         self.__in_progress = False
