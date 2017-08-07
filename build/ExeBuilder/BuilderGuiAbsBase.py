@@ -17,14 +17,14 @@ import wx.xrc
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 580,700 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 580,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer1.SetMinSize( wx.Size( 580,700 ) ) 
+		bSizer1.SetMinSize( wx.Size( 580,800 ) ) 
 		self.m_panel1 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel1.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
@@ -33,7 +33,7 @@ class MainFrame ( wx.Frame ):
 		bSizer31 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.m_panel31 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		LanguageSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel31, wx.ID_ANY, u"Language Settings" ), wx.HORIZONTAL )
+		LanguageSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel31, wx.ID_ANY, u"Language" ), wx.HORIZONTAL )
 		
 		bSizer202 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -60,6 +60,35 @@ class MainFrame ( wx.Frame ):
 		self.m_panel31.Layout()
 		LanguageSettingsSizer.Fit( self.m_panel31 )
 		bSizer31.Add( self.m_panel31, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_panel311 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		DebugSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel311, wx.ID_ANY, u"Debug" ), wx.HORIZONTAL )
+		
+		bSizer2021 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.DebugLevelLabel = wx.StaticText( DebugSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Debug Level", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DebugLevelLabel.Wrap( -1 )
+		self.DebugLevelLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
+		self.DebugLevelLabel.SetToolTipString( u"Major version number. This will be included in the filename of the produced Crypter binary" )
+		
+		bSizer2021.Add( self.DebugLevelLabel, 0, wx.ALL|wx.TOP, 7 )
+		
+		
+		bSizer2021.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		DebugLevelChoiceChoices = [ u"0 - Minimal", u"1 - Low", u"2 - Medium", u"3 - High" ]
+		self.DebugLevelChoice = wx.Choice( DebugSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, DebugLevelChoiceChoices, 0 )
+		self.DebugLevelChoice.SetSelection( 0 )
+		bSizer2021.Add( self.DebugLevelChoice, 0, wx.ALL, 5 )
+		
+		
+		DebugSettingsSizer.Add( bSizer2021, 1, wx.EXPAND, 5 )
+		
+		
+		self.m_panel311.SetSizer( DebugSettingsSizer )
+		self.m_panel311.Layout()
+		DebugSettingsSizer.Fit( self.m_panel311 )
+		bSizer31.Add( self.m_panel311, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
 		bSizer2.Add( bSizer31, 1, wx.EXPAND, 5 )
@@ -393,7 +422,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel411.SetSizer( bSizer17 )
 		self.m_panel411.Layout()
 		bSizer17.Fit( self.m_panel411 )
-		bSizer1.Add( self.m_panel411, 2, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_panel411, 3, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )

@@ -51,7 +51,7 @@ MANDATORY_CONFIG_ITEMS = {
         },
     "maj_version": {
         "label": "Major Version",
-        "regex": re.compile("^.*$"),
+        "regex": re.compile("^.+$"),
         "example": "5",
         "config_area": "Version Information"
         },

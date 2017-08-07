@@ -9,6 +9,8 @@ from threading import Thread, Event
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 
+# Import package modules
+
 
 #########################
 ## BUILDERTHREAD CLASS ##
@@ -23,15 +25,14 @@ class BuilderThread(Thread):
         @summary: Constructor. Starts the thread
         @param user_input_dict: The GUI Form user submitted config
         '''
-        # TODO Continue with config dict catch
-        self.__console_log(msg="Constructor")
+        self.__console_log(msg="Constructor", debug_level=3)
         self.__in_progress = False
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
         
         
         # Start the thread
-        self.__console_log(msg="Starting Thread")
+        self.__console_log(msg="Starting Thread", debug_level=3)
         Thread.__init__(self)
         self.start()
         
@@ -52,18 +53,34 @@ class BuilderThread(Thread):
         return "BuilderThread"
     
     
-    def __console_log(self, msg=None):
+    def __console_log(self, msg=None, debug_level=0):
         '''
         @summary: Private Console logger method. Logs the Builders progress to the GUI Console
         using wx Publisher update
         @param msg: The msg to print to the console
+        @param debug_level: The debug level of the message being logged
         '''
         
         Publisher.sendMessage("update", {
             "_class": str(self),
-            "msg": msg
+            "msg": msg,
+            "debug_level": debug_level
             }
         )
+        
+        
+    def __is_valid_input(self):
+        '''
+        @summary: Validates the value of the specified input field
+        @return: True if input is valid, otherwise False
+        '''
+
+        # If empty, 
+        #if not ALL_CONFIG_ITEMS[key]["regex"].match(value):
+        #    raise Exception("%s value does not match regex" % key)
+        pass
+        
+        
 
         
     def run(self):
@@ -72,17 +89,28 @@ class BuilderThread(Thread):
         '''
         self.__in_progress = True
         
-        # Run validation
-        self.__console_log(msg="Validating user input...")
-        #for field in self.user_input_dict:
-        while True:
-            # If stop event is set, cancel and exit
+        # Starting validation
+        self.__console_log(msg="Checking configuration...", debug_level=1)
+        
+        # Iterate input fields and validate
+        for input_field in self.user_input_dict:
+            
+            # Break if STOP set
             if self.__stop_event.is_set():
-                self.__console_log(msg="Force stop detected. Halting build")
+                self.__in_progress = False
+                self.__console_log(msg="Force stop detected. Halting build", debug_level=0)
                 break
-            else:
-                self.__console_log(msg="Running")
-                time.sleep(1)
+
+            # Validate input field
+            self.__console_log(msg="Checking %s" % input_field, debug_level=1)
+            self.__is_valid_input()
+            time.sleep(1)
+            
+        # FINISHED
+        self.__in_progress = False
+        self.__console_log("Build Complete")
+                
+                
             
 
             

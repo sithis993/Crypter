@@ -27,6 +27,7 @@ class Gui(MainFrame):
         '''
         @summary: Constructor
         @param config_dict: The build configuration, if present
+        @todo: Catch Frame close event and ensure thread stop is run too
         '''
         self.language = DEFAULT_LANGUAGE
         self.__builder = None
@@ -125,34 +126,22 @@ class Gui(MainFrame):
                 self.language = "English"
                 #print("Changing language to English")
                 
-    def __get_timestamp(self):
-        '''
-        @summary: Return timestamp string
-        '''
-        
-        current_time = datetime.datetime.now()
-        time_output = "%s-%s-%s %s:%s:%s" % (
-            current_time.year,
-            current_time.month if current_time.month >= 10 else "0%s" % current_time.month,
-            current_time.day if current_time.day >= 10 else "0%s" % current_time.day,
-            current_time.hour if current_time.hour >= 10 else "0%s" % current_time.hour,
-            current_time.minute if current_time.minute >= 10 else "0%s" % current_time.minute,
-            current_time.second if current_time.second >= 10 else "0%s" % current_time.second
-            )
-                
-        return time_output
-
 
     def __update_progress(self, msg):
         '''
         @summary: Updates the GUI with the build progress and status
-        @todo: Create logger method
         '''
             
         #self.ConsoleTextCtrl.AppendText((msg.data))
-        self.__console_log(_class=msg.data["_class"], msg=msg.data["msg"])
+        self.console.log(debug_level=msg.data["debug_level"],
+                         _class=msg.data["_class"], 
+                         msg=msg.data["msg"])
         
-        # TODO If it's the thread update before the thread ends, set the Button back to "Build"
+        # If build is not in progress, Reset BUILD Button
+        if self.__builder and not self.__builder.is_in_progress():
+            self.BuildButton.SetLabel("BUILD")
+            self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
+
         
 
     def __stop_build(self, event):
@@ -195,9 +184,17 @@ class Gui(MainFrame):
         user_input_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
         # Max file size to encrypt
         user_input_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+        # Debug Level
+        user_input_dict["debug_level"] = self.DebugLevelChoice.GetString(
+            self.DebugLevelChoice.GetSelection()
+            )
         
-        # TODO Clear the Console
-        
+        # Clear the Console and setup debug
+        self.console.clear()
+        self.console.log(msg="Build Launched")
+        self.console.log(msg="DEBUG Level: %s" % user_input_dict["debug_level"])
+        self.console.set_debug_level(user_input_dict["debug_level"])
+
         
         # Create listener and Launch the Build thread
         Publisher.subscribe(self.__update_progress, "update")
@@ -222,21 +219,76 @@ class Console():
         @param console: Handle to the wxPython console TextCtrl
         '''
         self.__console_box = console
+        self.__debug_level = "0 - Minimal"
 
 
-    def log(self, _class=None, msg=None):
+    def log(self, debug_level=0, _class=None, msg=None):
         '''
         @summary: Logs output to the Console
-        @todo: What params to pass here? ... is there another way of doing this? can we inherit from this...
-        There may be a better way so that everyone has access to this class and it's methods
+        @param debug_level: The debug level of the message
+        @param _class: The class that is performing the log
+        @param msg: The message to log to the Console Text screen
         '''
         
+        # Format log message
+        # Add class if specified
+        if _class:
+            to_log = "[%s]: %s: %s\n" % (
+                self.__get_timestamp(),
+                _class,
+                msg
+                )
+        else:
+            to_log = "[%s]: %s\n" % (
+                self.__get_timestamp(),
+                msg
+                )
+        
         # Add the message to the Console box
-        self.ConsoleTextCtrl.AppendText("[%s]: %s: %s\n" % (self.__get_timestamp(),
-                                                            _class, 
-                                                            msg))
+        if msg and debug_level <= int(self.__debug_level[0]):
+            self.__console_box.AppendText(to_log)
+        
 
-            
+    def clear(self):
+        '''
+        @summary: Clears the Console output screen
+        '''
+        
+        self.__console_box.SetValue("")
+        
+
+    def __get_timestamp(self):
+        '''
+        @summary: Return timestamp string
+        '''
+        
+        current_time = datetime.datetime.now()
+        time_output = "%s-%s-%s %s:%s:%s" % (
+            current_time.year,
+            current_time.month if current_time.month >= 10 else "0%s" % current_time.month,
+            current_time.day if current_time.day >= 10 else "0%s" % current_time.day,
+            current_time.hour if current_time.hour >= 10 else "0%s" % current_time.hour,
+            current_time.minute if current_time.minute >= 10 else "0%s" % current_time.minute,
+            current_time.second if current_time.second >= 10 else "0%s" % current_time.second
+            )
+                
+        return time_output
+
+
+    def set_debug_level(self, level):
+        '''
+        @summary: Sets the console logging debug level. Messages below the debug level
+        will be ignored, and won't be logged to the console.
+        @param level: The debug level to set to console to. Should be one of the following:
+            "0 - Minimal"
+            "1 - Low"
+            "2 - Medium"
+            "3 - High"
+        '''
+        
+        self.__debug_level = level
+
+        
     
     
     
