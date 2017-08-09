@@ -60,6 +60,11 @@ class Gui(MainFrame):
                     self.BuilderLanguageChoice.SetString(0, config_dict["builder_language"])
                     if config_dict["builder_language"] != self.language:
                         self.update_language(None, language=config_dict["builder_language"])
+            # Debug Level
+            if "debug_level" in config_dict:
+                self.DebugLevelChoice.SetSelection(
+                    self.DebugLevelChoice.FindString(config_dict["debug_level"])
+                    )
             # Major Version
             if "maj_version" in config_dict:
                 self.MajorVersionTextCtrl.SetValue(config_dict["maj_version"])
@@ -72,9 +77,6 @@ class Gui(MainFrame):
             # Extension
             if "extension" in config_dict:
                 self.ExtensionTextCtrl.SetValue(config_dict["extension"])
-            # PyInstaller AES Key
-            if "pyinstaller_aes_key" in config_dict:
-                self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
             # PyInstaller AES Key
             if "pyinstaller_aes_key" in config_dict:
                 self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
@@ -145,12 +147,6 @@ class Gui(MainFrame):
             label_object_name = CONFIG_ITEMS[msg.data["invalid_input_field"]]["label_object_name"]
             self.set_label_colour(label_object_name, colour="red")
 
-            # TODO Determine what to do here. This call is not working as expected and the FG colour
-            # is not being updated. It's becoming quite convoluted and may be worth scrapping the idea
-            #self.MajorVersionLabel.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
-            #self.MajorVersionLabel.Hide()
-            #self.MajorVersionLabel.Show()
-        
         # If build is not in progress, Reset BUILD Button and set outcome message
         if self.__builder and not self.__builder.is_in_progress():
             # Set final output message and destroy the thread
@@ -182,9 +178,6 @@ class Gui(MainFrame):
         exec("self.%s.Show()" % label_object_name)
 
         
-        
-        
-
     def __stop_build(self, event):
         '''
         @summary: Method to terminate the build process
@@ -198,7 +191,7 @@ class Gui(MainFrame):
         '''
         @summary: Launches the validate and build processes
         '''
-        user_input_dict = {}
+        user_input_dict = OrderedDict()
         
         # Read the form contents and pass to Builder validate
         # Major Version

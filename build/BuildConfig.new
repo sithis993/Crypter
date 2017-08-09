@@ -1,6 +1,5 @@
 {
-    "builder_language": "Русский",
-	"binary_language": "Русский",
+    "builder_language": "English",
 	"maj_version": "5",
 	"min_version": "25",
 	"filename": "hello",
@@ -12,6 +11,7 @@
 	"bitcoin_fee": "0.5",
 	"key_destruction_time": "500",
 	"max_file_size_to_encrypt": "500",
+	"debug_level": "3 - High",
 	"filetypes_to_encrypt": [
 		"jpg",
 		"mp3",

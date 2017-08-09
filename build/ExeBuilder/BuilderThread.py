@@ -124,6 +124,8 @@ class BuilderThread(Thread):
                 self.__build_error = True
                 break
             
+        # TODO If all fields are valid, write the new config to the file
+            
         # If not error, set success
         if not self.__build_error:
             self.__build_success = True
