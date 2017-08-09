@@ -4,13 +4,13 @@
 '''
 
 # Import libs
-import time
 from threading import Thread, Event
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 
 # Import package modules
 from .Base import *
+from .Exceptions import *
 
 
 #########################
@@ -26,14 +26,16 @@ class BuilderThread(Thread):
         @summary: Constructor. Starts the thread
         @param user_input_dict: The GUI Form user submitted config
         '''
-        self.__console_log(msg="Constructor", debug_level=3)
         self.__in_progress = False
+        self.__build_error = False
+        self.__build_success = False
+        self.__console_log(msg="Constructor()", debug_level=3)
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
         
         
         # Start the thread
-        self.__console_log(msg="Starting Thread", debug_level=3)
+        self.__console_log(msg="Starting build thread", debug_level=3)
         Thread.__init__(self)
         self.start()
         
@@ -51,10 +53,10 @@ class BuilderThread(Thread):
         '''
         @summary: Return Class name for logging purposes
         '''
-        return "BuilderThread"
+        return "Builder"
     
     
-    def __console_log(self, msg=None, debug_level=0):
+    def __console_log(self, msg=None, debug_level=0, ccode=0, **kwargs):
         '''
         @summary: Private Console logger method. Logs the Builders progress to the GUI Console
         using wx Publisher update
@@ -62,29 +64,30 @@ class BuilderThread(Thread):
         @param debug_level: The debug level of the message being logged
         '''
         
-        Publisher.sendMessage("update", {
+        # Define update data dict and add any kwarg items
+        update_data_dict = {
             "_class": str(self),
             "msg": msg,
-            "debug_level": debug_level
+            "debug_level": debug_level,
+            "ccode": ccode
             }
-        )
+        for key, value in kwargs.iteritems():
+            update_data_dict[key] = value
+        
+        # Send update data
+        Publisher.sendMessage("update", update_data_dict)
         
         
-    def __is_valid_input(self, input_field, input_value):
+    def validate_input(self, input_field, input_value):
         '''
         @summary: Validates the value of the specified input field
-        @return: True if input is valid, otherwise False
-        @todo: Continue with field validation
+        @raise ValidationException: If validation of the input field fails
         '''
 
-        # If empty, 
-        if not ALL_CONFIG_ITEMS[input_field]["regex"].match(input_value):
-            self.__console_log(
-                msg="Invalid value submitted for '%s'" % input_field,
-                debug_level=0
-                )
-        
-        
+        # If input matches expected regex, return True
+        # TODO If a field input is invalid, change font to red
+        if not CONFIG_ITEMS[input_field]["regex"].match(input_value):
+            raise ValidationException
 
         
     def run(self):
@@ -106,17 +109,54 @@ class BuilderThread(Thread):
                 break
 
             # Validate input field
+            # If invalid input, log to console and set input field to red
             self.__console_log(msg="Checking %s" % input_field, debug_level=1)
-            self.__is_valid_input(input_field, self.user_input_dict[input_field])
+            try:
+                self.validate_input(input_field, self.user_input_dict[input_field])
+            except ValidationException:
+                self.__console_log(
+                    msg="Invalid value submitted for '%s'" % input_field,
+                    debug_level=0,
+                    ccode=ERROR_INVALID_DATA,
+                    invalid_input_field=input_field
+                    )
+                self.__in_progress = False
+                self.__build_error = True
+                break
             
-        # FINISHED
+        # If not error, set success
+        if not self.__build_error:
+            self.__build_success = True
+            
+        # Build thread finished. Log and Reset build status to prevent furhter console updates
         self.__in_progress = False
-        self.__console_log("Build Complete")
+        self.__console_log("Build process thread finished", debug_level=3)
+        self.__build_error = False
+        self.__build_success = False
                 
                 
+    def finished_with_error(self):
+        '''
+        @summary: Determines whether the build process finished with an error
+        @return: True if finished with an error. False if finished successfully
+        '''
+        if self.__build_error:
+            return True
+        else:
+            return False
+        
+    
+    def finished_with_success(self):
+        '''
+        @summary: Determines whether the build process finished successfully
+        @return: True if finished successfully. False is finished with an error
+        '''
+        if self.__build_success:
+            return True
+        else:
+            return False
             
 
-            
     def stop(self):
         '''
         @summary: To be called to set the stop event and end the build process
