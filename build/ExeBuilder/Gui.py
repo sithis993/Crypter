@@ -148,14 +148,21 @@ class Gui(MainFrame):
             self.set_label_colour(label_object_name, colour="red")
 
         # If build is not in progress, Reset BUILD Button and set outcome message
-        if self.__builder and not self.__builder.is_in_progress():
-            # Set final output message and destroy the thread
-            if self.__builder.finished_with_error():
-                self.console.log(msg="Build finished with error")
-            elif self.__builder.finished_with_success():
-                self.console.log(msg="Build successful")
-            self.BuildButton.SetLabel("BUILD")
-            self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
+        if (
+            (self.__builder and not self.__builder.is_in_progress()) and
+            (self.__builder.finished_with_error() or self.__builder.finished_with_success())
+            ):
+                # Set final output message and destroy the thread
+                if self.__builder.finished_with_error():
+                    self.console.log(msg="Build finished with error")
+                elif self.__builder.finished_with_success():
+                    self.console.log(msg="Build successful")
+                self.BuildButton.SetLabel("BUILD")
+                self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
+
+                # Update gauge to completion
+                for percentage in range(100):
+                    self.BuildProgressGauge.SetValue(percentage)
 
 
     def set_label_colour(self, label_object_name, colour="red"):
@@ -191,9 +198,12 @@ class Gui(MainFrame):
         '''
         @summary: Launches the validate and build processes
         '''
-        user_input_dict = OrderedDict()
+        # Set progress gauge to zero and start progress pulse
+        self.BuildProgressGauge.SetValue(0)
+        self.BuildProgressGauge.Pulse()
         
         # Read the form contents and pass to Builder validate
+        user_input_dict = OrderedDict()
         # Major Version
         user_input_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
         # Minor Version
