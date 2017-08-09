@@ -9,6 +9,7 @@ import wx
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 import datetime
+import time
 
 # Import package modules
 from .BuilderGuiAbsBase import MainFrame
@@ -132,16 +133,56 @@ class Gui(MainFrame):
         @summary: Updates the GUI with the build progress and status
         '''
             
-        #self.ConsoleTextCtrl.AppendText((msg.data))
+        # Log output message to the Console
         self.console.log(debug_level=msg.data["debug_level"],
                          _class=msg.data["_class"], 
                          msg=msg.data["msg"])
+
+        # CHECK FOR ERRORS
+        # If there was a validation error, highlight culprit field label
+        if msg.data["ccode"] == ERROR_INVALID_DATA:
+            # Set input field label FG to red
+            label_object_name = CONFIG_ITEMS[msg.data["invalid_input_field"]]["label_object_name"]
+            self.set_label_colour(label_object_name, colour="red")
+
+            # TODO Determine what to do here. This call is not working as expected and the FG colour
+            # is not being updated. It's becoming quite convoluted and may be worth scrapping the idea
+            #self.MajorVersionLabel.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+            #self.MajorVersionLabel.Hide()
+            #self.MajorVersionLabel.Show()
         
-        # If build is not in progress, Reset BUILD Button
+        # If build is not in progress, Reset BUILD Button and set outcome message
         if self.__builder and not self.__builder.is_in_progress():
+            # Set final output message and destroy the thread
+            if self.__builder.finished_with_error():
+                self.console.log(msg="Build finished with error")
+            elif self.__builder.finished_with_success():
+                self.console.log(msg="Build successful")
             self.BuildButton.SetLabel("BUILD")
             self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
 
+
+    def set_label_colour(self, label_object_name, colour="red"):
+        '''
+        @summary: Sets the specified label text colour and refreshes the object
+        '''
+        
+        # Set colour string
+        if colour == "red":
+            colour_object = "wx.Colour (255,0,0)"
+        elif colour == "default":
+            colour_object = "wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT )"
+        
+        # Change foreground colour
+        exec("self.%s.SetForegroundColour( %s )" %
+             (label_object_name, colour_object)
+            )
+        # Refresh object appearance
+        exec("self.%s.Hide()" % label_object_name)
+        exec("self.%s.Show()" % label_object_name)
+
+        
+        
         
 
     def __stop_build(self, event):
@@ -189,8 +230,16 @@ class Gui(MainFrame):
             self.DebugLevelChoice.GetSelection()
             )
         
+        # Reset all labels to standard foreground colour
+        for input_field in CONFIG_ITEMS:
+            label_object_name = CONFIG_ITEMS[input_field]["label_object_name"]
+            self.set_label_colour(label_object_name, colour="default")
+            
+            
         # Clear the Console and setup debug
         self.console.clear()
+        self.Bind(wx.EVT_BUTTON, self.__stop_build, self.BuildButton)
+        self.BuildButton.SetLabel("STOP")
         self.console.log(msg="Build Launched")
         self.console.log(msg="DEBUG Level: %s" % user_input_dict["debug_level"])
         self.console.set_debug_level(user_input_dict["debug_level"])
@@ -200,9 +249,6 @@ class Gui(MainFrame):
         Publisher.subscribe(self.__update_progress, "update")
         self.__builder = BuilderThread(user_input_dict)
         
-        # Change GUI BUILD button to STOP and bind to Stop method
-        self.BuildButton.SetLabel("STOP")
-        self.Bind(wx.EVT_BUTTON, self.__stop_build, self.BuildButton)
         
         
 ###################
@@ -254,7 +300,7 @@ class Console():
         @summary: Clears the Console output screen
         '''
         
-        self.__console_box.SetValue("")
+        self.__console_box.Clear()
         
 
     def __get_timestamp(self):
