@@ -31,7 +31,6 @@ class BuilderThread(Thread):
         self.__in_progress = False
         self.__build_error = False
         self.__build_success = False
-        self.__build_stage = 1
         self.__console_log(msg="Constructor()", debug_level=3)
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
@@ -72,7 +71,6 @@ class BuilderThread(Thread):
             "_class": str(self),
             "msg": msg,
             "debug_level": debug_level,
-            "build_stage": self.__build_stage,
             "ccode": ccode
             }
         for key, value in kwargs.iteritems():
@@ -102,7 +100,6 @@ class BuilderThread(Thread):
         
         # Starting validation
         self.__console_log(msg="Checking configuration...", debug_level=1)
-        self.__build_stage = 2
         
         # Iterate input fields and validate
         for input_field in self.user_input_dict:
@@ -112,7 +109,6 @@ class BuilderThread(Thread):
             if self.__stop_event.is_set():
                 self.__in_progress = False
                 self.__console_log(msg="Force stop detected. Halting build", debug_level=0)
-                self.__build_stage = 2
                 break
 
             # Validate input field
@@ -132,7 +128,6 @@ class BuilderThread(Thread):
                 break
             
         # TODO If all fields are valid, write the new config to the file
-        self.__build_stage = 3
             
         # If not error, set success
         if not self.__build_error:
@@ -140,7 +135,6 @@ class BuilderThread(Thread):
             
         # Build thread finished. Log and Reset build status to prevent furhter console updates
         self.__in_progress = False
-        self.__build_stage = 4
         self.__console_log("Build process thread finished", debug_level=3)
         self.__build_error = False
         self.__build_success = False
