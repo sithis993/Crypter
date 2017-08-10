@@ -36,7 +36,7 @@ class Gui(MainFrame):
         # Init super - MainFrame
         MainFrame.__init__( self, parent=None )
         self.console = Console(self.ConsoleTextCtrl)
-        self.StatusBar.SetStatusText("Ready...")
+        self.StatusBar.SetStatusText("READY...")
         
         # Set initial event handlers
         self.set_events()
@@ -159,7 +159,7 @@ class Gui(MainFrame):
                 elif self.__builder.finished_with_success():
                     self.console.log(msg="Build successful")
                 self.BuildButton.SetLabel("BUILD")
-                self.StatusBar.SetStatusText("Ready")
+                self.StatusBar.SetStatusText("READY...")
                 self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
 
                 # Update gauge to completion
@@ -203,7 +203,7 @@ class Gui(MainFrame):
         # Set progress gauge to zero and start progress pulse
         self.BuildProgressGauge.SetValue(0)
         self.BuildProgressGauge.Pulse()
-        self.StatusBar.SetStatusText("Running build...")
+        self.StatusBar.SetStatusText("RUNNING BUILD...")
         
         # Read the form contents and pass to Builder validate
         user_input_dict = OrderedDict()
