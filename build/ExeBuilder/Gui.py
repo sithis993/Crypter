@@ -205,8 +205,12 @@ class Gui(MainFrame):
         self.BuildProgressGauge.Pulse()
         self.StatusBar.SetStatusText("RUNNING BUILD...")
         
-        # Read the form contents and pass to Builder validate
+        # Read the form contents and pass to Builder validate.
         user_input_dict = OrderedDict()
+        # Builder Language
+        user_input_dict["builder_language"] = self.BuilderLanguageChoice.GetString(
+            self.BuilderLanguageChoice.GetSelection()
+            )
         # Major Version
         user_input_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
         # Minor Version

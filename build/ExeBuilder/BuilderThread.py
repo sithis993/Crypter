@@ -88,6 +88,7 @@ class BuilderThread(Thread):
 
         # If input matches expected regex, return True
         # TODO If a field input is invalid, change font to red
+        print(CONFIG_ITEMS[input_field]["regex"].pattern.encode("utf-8"))
         if not CONFIG_ITEMS[input_field]["regex"].match(input_value):
             raise ValidationException
 

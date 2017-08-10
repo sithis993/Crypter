@@ -8,6 +8,20 @@
 import re
 from ordereddict import OrderedDict
 
+## LANGUAGE
+SUPPORTED_LANGUAGES = [
+    u"English",
+    #u"Русский"
+    ]
+
+DEFAULT_LANGUAGE = "English"
+
+# English Form text
+english_language_form_labels = {
+    "language_settings_sizer": "Language"
+    }
+
+
 ## DEFAULT FILETYPES TO ENCRYPT
 # The default list of filetypes which can be encrypted
 ENCRYPTABLE_FILETYPES = [
@@ -42,11 +56,11 @@ field to this dictionary
 '''
 CONFIG_ITEMS = OrderedDict([
     (
-        "builder_langauge", {
+        "builder_language", {
             "label": "Builder Language",
             "label_object_name": "BuilderLanguageLabel",
             "input_object_name": "BuilderLanguageChoice",
-            "regex": re.compile("^.*$"),
+            "regex": re.compile(ur"^%s$" % "|".join(SUPPORTED_LANGUAGES)),
             "example": "English or Русский",
             "config_area": "Language",
             "default": "English"
@@ -192,19 +206,6 @@ CONFIG_ITEMS = OrderedDict([
     ])
 
 CONFIG_FILE_NAME = "BuildConfig.new"
-
-## LANGUAGE
-SUPPORTED_LANGUAGES = [
-    u"English"
-    #u"Русский"
-    ]
-
-DEFAULT_LANGUAGE = "English"
-
-# English Form text
-english_language_form_labels = {
-    "language_settings_sizer": "Language"
-    }
 
 # ERRORS
 ERROR_INVALID_DATA = 13
