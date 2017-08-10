@@ -1,10 +1,11 @@
 '''
 @summary: Crypter Exe Builder: Main
 @author: MLS
-@todo: Create appropriate regex patterns for input validation
-    @todo: Solve issue with UTF8/unicode regex matching
+@todo: Create appropriate regex patterns for input validation of each field
+@todo: Look at moving the build config files to a separate conf/ or etc/ directory
 @todo: Write config out to file
 @todo: Run the pyinstaller subprocess
+@todo: Look into adding an "open containing folder" button which opens the folder that the ransomware was created in
 '''
 
 # Import libs

@@ -152,15 +152,19 @@ class Gui(MainFrame):
         # If build is not in progress, Reset BUILD Button and set outcome message
         if (
             (self.__builder and not self.__builder.is_in_progress()) and
-            (self.__builder.finished_with_error() or self.__builder.finished_with_success())
+            (self.__builder.finished_with_error() or self.__builder.finished_with_success() or self.__builder.finished_with_stop())
             ):
                 # Set final output message and destroy the thread
                 if self.__builder.finished_with_error():
                     self.console.log(msg="Build finished with error")
+                    self.StatusBar.SetStatusText("BUILD FAILED...")
                 elif self.__builder.finished_with_success():
                     self.console.log(msg="Build successful")
+                    self.StatusBar.SetStatusText("BUILD SUCCESSFUL...")
+                elif self.__builder.finished_with_stop():
+                    self.console.log(msg="Build terminated by user")
+                    self.StatusBar.SetStatusText("BUILD TERMINATED...")
                 self.BuildButton.SetLabel("BUILD")
-                self.StatusBar.SetStatusText("READY...")
                 self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
 
                 # Update gauge to completion
