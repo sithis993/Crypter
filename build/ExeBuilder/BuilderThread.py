@@ -87,8 +87,6 @@ class BuilderThread(Thread):
         '''
 
         # If input matches expected regex, return True
-        # TODO If a field input is invalid, change font to red
-        print(CONFIG_ITEMS[input_field]["regex"].pattern.encode("utf-8"))
         if not CONFIG_ITEMS[input_field]["regex"].match(input_value):
             raise ValidationException
 
@@ -119,7 +117,12 @@ class BuilderThread(Thread):
                 self.validate_input(input_field, self.user_input_dict[input_field])
             except ValidationException:
                 self.__console_log(
-                    msg="Invalid value submitted for '%s'" % input_field,
+                    msg="Invalid value submitted for '%s'. Expected '%s', such as '%s' but received '%s'" % (
+                        CONFIG_ITEMS[input_field]["label"],
+                        CONFIG_ITEMS[input_field]["input_requirement"],
+                        CONFIG_ITEMS[input_field]["example"],
+                        self.user_input_dict[input_field]
+                        ),
                     debug_level=0,
                     ccode=ERROR_INVALID_DATA,
                     invalid_input_field=input_field

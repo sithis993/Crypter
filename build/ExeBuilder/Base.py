@@ -21,7 +21,6 @@ english_language_form_labels = {
     "language_settings_sizer": "Language"
     }
 
-
 ## DEFAULT FILETYPES TO ENCRYPT
 # The default list of filetypes which can be encrypted
 ENCRYPTABLE_FILETYPES = [
@@ -62,6 +61,7 @@ CONFIG_ITEMS = OrderedDict([
             "input_object_name": "BuilderLanguageChoice",
             "regex": re.compile(ur"^%s$" % "|".join(SUPPORTED_LANGUAGES)),
             "example": "English or Русский",
+            "input_requirement": "one of the supported languages",
             "config_area": "Language",
             "default": "English"
             }
@@ -71,8 +71,9 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Debug verbosity level",
             "label_object_name": "DebugLevelLabel",
             "input_object_name": "DebugLevelChoice",
-            "regex": re.compile("^.*$"),
+            "regex": re.compile("^.*$"), # Choice box so validation not required
             "example": "0 - Minimal",
+            "input_requirement": "Build process debug level",
             "config_area": "Debug",
             "default": "English"
             }
@@ -82,18 +83,20 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Major Version",
             "label_object_name": "MajorVersionLabel",
             "input_object_name": "MajorVersionTextCtrl",
-            "regex": re.compile("^.+$"),
+            "regex": re.compile("^[0-9]+$"),
             "example": "5",
+            "input_requirement": "A series of integer(s)",
             "config_area": "Version Information"
             }
     ),
     (
         "min_version", {
             "label": "Minor Version",
-            "regex": re.compile("^.*$"),
+            "regex": re.compile("^[0-9]+$"),
             "label_object_name": "MinorVersionLabel",
             "input_object_name": "MinorVersionTextCtrl",
             "example": "20",
+            "input_requirement": "A series of integer(s)",
             "config_area": "Version Information"
             }
     ),
