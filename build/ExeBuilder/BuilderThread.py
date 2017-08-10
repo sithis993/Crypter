@@ -5,6 +5,7 @@
 
 # Import libs
 import time
+import os
 from threading import Thread, Event
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
@@ -31,6 +32,7 @@ class BuilderThread(Thread):
         self.__in_progress = False
         self.__build_error = False
         self.__build_success = False
+        self.__build_stopped = False
         self.__console_log(msg="Constructor()", debug_level=3)
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
@@ -89,6 +91,10 @@ class BuilderThread(Thread):
         # If input matches expected regex, return True
         if not CONFIG_ITEMS[input_field]["regex"].match(input_value):
             raise ValidationException
+        # If icon_file, check file exists
+        elif input_field == "icon_file":
+            if not os.path.isfile(input_value):
+                raise ValidationException
 
         
     def run(self):
@@ -108,6 +114,7 @@ class BuilderThread(Thread):
             if self.__stop_event.is_set():
                 self.__in_progress = False
                 self.__console_log(msg="Force stop detected. Halting build", debug_level=0)
+                self.__build_stopped = True
                 break
 
             # Validate input field
@@ -134,13 +141,14 @@ class BuilderThread(Thread):
         # TODO If all fields are valid, write the new config to the file
             
         # If not error, set success
-        if not self.__build_error:
+        if not self.__build_error and not self.__build_stopped:
             self.__build_success = True
             
         # Build thread finished. Log and Reset build status to prevent furhter console updates
         self.__in_progress = False
         self.__console_log("Build process thread finished", debug_level=3)
         self.__build_error = False
+        self.__build_stopped = False
         self.__build_success = False
                 
                 
@@ -164,7 +172,19 @@ class BuilderThread(Thread):
             return True
         else:
             return False
-            
+        
+        
+    def finished_with_stop(self):
+        '''
+        @summary: Determines if the build finished because it was halted
+        by the user
+        @return: True if force halted. False if not force halted
+        '''
+        if self.__build_stopped:
+            return True
+        else:
+            return False
+        
 
     def stop(self):
         '''
