@@ -1,6 +1,9 @@
 '''
 @summary: Crypter Exe Builder: Main
 @author: MLS
+@todo: Create appropriate regex patterns for input validation
+@todo: Write config out to file
+@todo: Run the pyinstaller subprocess
 '''
 
 # Import libs
