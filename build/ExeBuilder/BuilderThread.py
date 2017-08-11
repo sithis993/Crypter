@@ -1,4 +1,5 @@
 '''
+
 @summary: Crypter Exe Builder: Build Thread
 @author: MLS
 '''
@@ -90,12 +91,16 @@ class BuilderThread(Thread):
         '''
 
         # If input matches expected regex, return True
-        if not CONFIG_ITEMS[input_field]["regex"].match(input_value):
+        if not BUILDER_CONFIG_ITEMS[input_field]["regex"].match(input_value):
             raise ValidationException
         # If icon_file, check file exists
-        elif input_field == "icon_file":
+        elif input_field == "icon_file" and input_value:
             if not os.path.isfile(input_value):
                 raise ValidationException
+            
+        # TODO If field is empty, set it to the defined default value (if there is one, else blank)
+        if not input_value and "default" in BUILDER_CONFIG_ITEMS[input_field]:
+            return BUILDER_CONFIG_ITEMS[input_field]["default"]
 
         
     def run(self):
@@ -122,13 +127,23 @@ class BuilderThread(Thread):
             # If invalid input, log to console and set input field to red
             self.__console_log(msg="Checking %s" % input_field, debug_level=1)
             try:
-                self.validate_input(input_field, self.user_input_dict[input_field])
+                # Update field value to default if one set
+                default_value = self.validate_input(input_field, self.user_input_dict[input_field])
+                if default_value:
+                    self.user_input_dict[input_field] = default_value
+                    self.__console_log("No value provided for %s. Setting to default '%s'" % (
+                        input_field,
+                        default_value,
+                        ),
+                        debug_level=2
+                    )
+            # Validation failed. Provide field description and expectations
             except ValidationException:
                 self.__console_log(
                     msg="Invalid value submitted for '%s'. Expected '%s', such as '%s' but received '%s'" % (
-                        CONFIG_ITEMS[input_field]["label"],
-                        CONFIG_ITEMS[input_field]["input_requirement"],
-                        CONFIG_ITEMS[input_field]["example"],
+                        BUILDER_CONFIG_ITEMS[input_field]["label"],
+                        BUILDER_CONFIG_ITEMS[input_field]["input_requirement"],
+                        BUILDER_CONFIG_ITEMS[input_field]["example"],
                         self.user_input_dict[input_field]
                         ),
                     debug_level=0,
