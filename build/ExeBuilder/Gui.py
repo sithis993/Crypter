@@ -41,8 +41,43 @@ class Gui(MainFrame):
         self.console = Console(self.ConsoleTextCtrl)
         self.StatusBar.SetStatusText("Ready...")
         
+        # Update GUI Visuals
+        self.update_gui_visuals()
+        
         # Set initial event handlers
         self.set_events()
+        
+    
+    def update_gui_visuals(self):
+        '''
+        @summary: Updates the GUI with any aesthetic changes following initialising. This
+        inludes updating labels and other widgets
+        '''
+        
+        pass
+                             
+        # Asterisk Mandatory fields
+        '''
+        @deprecated: Unnecessary overcomplication. No fields should be mandatory.
+        They should simply use a default
+        '''
+   
+        # Set debug to default level
+        self.DebugLevelChoice.SetSelection(
+            self.DebugLevelChoice.FindString(
+                BUILDER_CONFIG_ITEMS["debug_level"]["default"]
+                )
+            )
+   
+        # TODO Set tooltip of each field here too
+        #for input_field in BUILDER_CONFIG_ITEMS:
+            #if BUILDER_CONFIG_ITEMS[input_field]["mandatory"]:
+            #    exec("self.%s.SetLabelText( '%s' )" % (
+            #        BUILDER_CONFIG_ITEMS[input_field]["label_object_name"],
+            #        BUILDER_CONFIG_ITEMS[input_field]["label"] + "*"
+            #        )
+            #    )
+                
         
     
     def update_config_values(self, config_dict):
@@ -172,6 +207,8 @@ class Gui(MainFrame):
         '''
         config_dict = {}
         self.config_file_path = self.LoadFilePicker.GetPath()
+        self.__reset_label_warnings()
+
 
         # Try to load config file and update the GUI
         try:
@@ -240,8 +277,8 @@ class Gui(MainFrame):
         # If there was a validation error, highlight culprit field label
         if msg.data["ccode"] == ERROR_INVALID_DATA:
             # Set input field label FG to red
-            label_object_name = CONFIG_ITEMS[msg.data["invalid_input_field"]]["label_object_name"]
-            self.set_label_colour(label_object_name, colour="red")
+            label_object_name = BUILDER_CONFIG_ITEMS[msg.data["invalid_input_field"]]["label_object_name"]
+            self.__set_label_colour(label_object_name, colour="red")
 
         # If build is not in progress, Reset BUILD Button and set outcome message
         if (
@@ -266,7 +303,7 @@ class Gui(MainFrame):
                     self.BuildProgressGauge.SetValue(percentage)
 
 
-    def set_label_colour(self, label_object_name, colour="red"):
+    def __set_label_colour(self, label_object_name, colour="red"):
         '''
         @summary: Sets the specified label text colour and refreshes the object
         '''
@@ -336,6 +373,17 @@ class Gui(MainFrame):
             )
         
         return user_input_dict
+    
+
+    def __reset_label_warnings(self):
+        '''
+        @summary: Reset any red label warnings back to their default
+        '''
+
+        # Reset all labels to standard foreground colour
+        for input_field in BUILDER_CONFIG_ITEMS:
+            label_object_name = BUILDER_CONFIG_ITEMS[input_field]["label_object_name"]
+            self.__set_label_colour(label_object_name, colour="default")
 
         
     def __start_build(self, event):
@@ -346,13 +394,10 @@ class Gui(MainFrame):
         self.BuildProgressGauge.SetValue(0)
         self.BuildProgressGauge.Pulse()
         self.StatusBar.SetStatusText("Running Build...")
+        self.__reset_label_warnings()
         
         user_input_dict = self.__get_input_data()
         
-        # Reset all labels to standard foreground colour
-        for input_field in CONFIG_ITEMS:
-            label_object_name = CONFIG_ITEMS[input_field]["label_object_name"]
-            self.set_label_colour(label_object_name, colour="default")
             
         # Clear the Console and setup debug
         self.console.clear()
@@ -362,21 +407,6 @@ class Gui(MainFrame):
         self.console.log(msg="DEBUG Level: %s" % user_input_dict["debug_level"])
         self.console.set_debug_level(user_input_dict["debug_level"])
         
-        # ERROR if the config has not yet been saved
-        if not self.config_file_path:
-            self.console.log(msg="The configuration must be manually saved, or an existing configuration"
-                             " loaded, before the build can proceed",
-                             ccode=ERROR_FILE_NOT_FOUND
-                             )
-            self.console.log(msg="Build finished with error")
-            self.StatusBar.SetStatusText("Build Failed...")
-            self.BuildButton.SetLabel("BUILD")
-            self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
-            for percentage in range(100):
-                self.BuildProgressGauge.SetValue(percentage)
-            return
-        else:
-           self.__save_config(None) 
         
         # Create listeners and Launch the Build thread
         Publisher.subscribe(self.__update_progress, "update")
