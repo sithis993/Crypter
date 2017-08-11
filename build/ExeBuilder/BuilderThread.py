@@ -139,16 +139,15 @@ class BuilderThread(Thread):
                 self.__build_error = True
                 break
             
-        # Validation success. Write config
+        # Validation success
         if not self.__build_error and not self.__build_stopped:
             self.__console_log(msg="Validation successful", debug_level=1)
-            self.__save_config_to_file()
             
         # If not error, set success
         if not self.__build_error and not self.__build_stopped:
             self.__build_success = True
             
-        # Build thread finished. Log and Reset build status to prevent furhter console updates
+        # Build thread finished. Log and Reset build status to prevent further console updates
         self.__in_progress = False
         self.__console_log("Build process thread finished", debug_level=3)
         self.__build_error = False
@@ -156,21 +155,6 @@ class BuilderThread(Thread):
         self.__build_success = False
         
     
-    def __save_config_to_file(self):
-        '''
-        @summary: Saves the user's input configuration to the build config file
-        '''
-        
-        # Clone dict and update filetypes to encrypt to be a list
-        dict_to_write = self.user_input_dict.copy()
-        dict_to_write["filetypes_to_encrypt"] = dict_to_write["filetypes_to_encrypt"].split(",")
-        
-        with open(CONFIG_FILE_NAME, "w") as build_config_file:
-            json.dump(dict_to_write, 
-                      build_config_file,
-                      indent=4)
-                
-                
     def finished_with_error(self):
         '''
         @summary: Determines whether the build process finished with an error

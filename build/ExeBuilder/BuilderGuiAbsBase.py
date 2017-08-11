@@ -17,22 +17,52 @@ import wx.xrc
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 580,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 600,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer1.SetMinSize( wx.Size( 580,800 ) ) 
-		self.m_panel1 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		self.m_panel1.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		bSizer1.SetMinSize( wx.Size( 600,800 ) ) 
+		bSizer311 = wx.BoxSizer( wx.HORIZONTAL )
 		
+		self.m_panel312 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer48 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer49 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.LoadConfigFileLabel = wx.StaticText( self.m_panel312, wx.ID_ANY, u"Load Config file", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.LoadConfigFileLabel.Wrap( -1 )
+		self.LoadConfigFileLabel.SetFont( wx.Font( 9, 74, 90, 92, False, "Arial" ) )
+		
+		bSizer49.Add( self.LoadConfigFileLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.TOP, 5 )
+		
+		self.LoadFilePicker = wx.FilePickerCtrl( self.m_panel312, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
+		bSizer49.Add( self.LoadFilePicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer48.Add( bSizer49, 0, wx.EXPAND, 5 )
+		
+		
+		self.m_panel312.SetSizer( bSizer48 )
+		self.m_panel312.Layout()
+		bSizer48.Fit( self.m_panel312 )
+		bSizer311.Add( self.m_panel312, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		bSizer1.Add( bSizer311, 0, wx.EXPAND, 5 )
+		
+		self.m_staticline2 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer1.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_scrolledWindow2 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.VSCROLL )
+		self.m_scrolledWindow2.SetScrollRate( 5, 5 )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer31 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_panel31 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel31 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		LanguageSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel31, wx.ID_ANY, u"Language" ), wx.HORIZONTAL )
 		
 		bSizer202 = wx.BoxSizer( wx.HORIZONTAL )
@@ -61,7 +91,7 @@ class MainFrame ( wx.Frame ):
 		LanguageSettingsSizer.Fit( self.m_panel31 )
 		bSizer31.Add( self.m_panel31, 1, wx.EXPAND |wx.ALL, 5 )
 		
-		self.m_panel311 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel311 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		DebugSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel311, wx.ID_ANY, u"Debug" ), wx.HORIZONTAL )
 		
 		bSizer2021 = wx.BoxSizer( wx.HORIZONTAL )
@@ -95,7 +125,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_panel3 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel3 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		VersionInfoSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, u"Version Information" ), wx.HORIZONTAL )
 		
 		bSizer20 = wx.BoxSizer( wx.HORIZONTAL )
@@ -145,7 +175,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_panel41 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel41 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		BinarySettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel41, wx.ID_ANY, u"Binary Settings" ), wx.VERTICAL )
 		
 		bSizer391 = wx.BoxSizer( wx.VERTICAL )
@@ -243,7 +273,7 @@ class MainFrame ( wx.Frame ):
 		BinarySettingsSizer.Fit( self.m_panel41 )
 		bSizer12.Add( self.m_panel41, 1, wx.EXPAND |wx.ALL, 5 )
 		
-		self.m_panel4 = wx.Panel( self.m_panel1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel4 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		RansomwareSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel4, wx.ID_ANY, u"Ransomware Settings" ), wx.VERTICAL )
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
@@ -385,11 +415,28 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2.Add( bSizer12, 0, wx.EXPAND, 5 )
 		
+		bSizer50 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_panel1.SetSizer( bSizer2 )
-		self.m_panel1.Layout()
-		bSizer2.Fit( self.m_panel1 )
-		bSizer1.Add( self.m_panel1, 4, wx.EXPAND |wx.ALL, 5 )
+		self.SaveConfigurationLabel = wx.StaticText( self.m_scrolledWindow2, wx.ID_ANY, u"Save configuration", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.SaveConfigurationLabel.Wrap( -1 )
+		self.SaveConfigurationLabel.SetFont( wx.Font( 9, 74, 90, 92, False, "Arial" ) )
+		
+		bSizer50.Add( self.SaveConfigurationLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.SaveFilePicker = wx.FilePickerCtrl( self.m_scrolledWindow2, wx.ID_ANY, wx.EmptyString, u"Save Configuration", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		bSizer50.Add( self.SaveFilePicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer2.Add( bSizer50, 0, wx.EXPAND, 5 )
+		
+		
+		self.m_scrolledWindow2.SetSizer( bSizer2 )
+		self.m_scrolledWindow2.Layout()
+		bSizer2.Fit( self.m_scrolledWindow2 )
+		bSizer1.Add( self.m_scrolledWindow2, 6, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_staticline21 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer1.Add( self.m_staticline21, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_panel4112 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel4112.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
@@ -405,6 +452,9 @@ class MainFrame ( wx.Frame ):
 		self.m_panel4112.Layout()
 		bSizer172.Fit( self.m_panel4112 )
 		bSizer1.Add( self.m_panel4112, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_staticline211 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer1.Add( self.m_staticline211, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_panel411 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel411.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
@@ -426,7 +476,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel411.SetSizer( bSizer17 )
 		self.m_panel411.Layout()
 		bSizer17.Fit( self.m_panel411 )
-		bSizer1.Add( self.m_panel411, 3, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_panel411, 4, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
