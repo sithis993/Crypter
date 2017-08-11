@@ -1,11 +1,16 @@
 '''
 @summary: Crypter Exe Builder: Main
 @author: MLS
-@todo: Create appropriate regex patterns for input validation of each field
 @todo: Look at moving the build config files to a separate conf/ or etc/ directory
-@todo: Write config out to file
 @todo: Run the pyinstaller subprocess
-@todo: Look into adding an "open containing folder" button which opens the folder that the ransomware was created in
+@todo: Look into adding an "open containing folder" button which opens the folder that the ransomware binary was written to
+@todo: Additional config items
+    @todo: colour picker option for choosing the backgroung colour
+    @todo: Specifying the ransomware name (e.g Crypter)
+@todo Add ability to load config files, but load a "Buildconfig.default" if one isn't provided. This should be stored
+in the ExeBuilder package dir (in a conf/ or etc/)
+@todo: Ship with a default/template config file with predefined defaults 
+@todo: Future: Migrate Crypter process to read behaviour and appearence options from a bundled config file
 '''
 
 # Import libs

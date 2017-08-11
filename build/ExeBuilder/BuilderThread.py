@@ -6,6 +6,7 @@
 # Import libs
 import time
 import os
+import json
 from threading import Thread, Event
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
@@ -138,7 +139,10 @@ class BuilderThread(Thread):
                 self.__build_error = True
                 break
             
-        # TODO If all fields are valid, write the new config to the file
+        # Validation success. Write config
+        if not self.__build_error and not self.__build_stopped:
+            self.__console_log(msg="Validation successful", debug_level=1)
+            self.__save_config_to_file()
             
         # If not error, set success
         if not self.__build_error and not self.__build_stopped:
@@ -150,6 +154,21 @@ class BuilderThread(Thread):
         self.__build_error = False
         self.__build_stopped = False
         self.__build_success = False
+        
+    
+    def __save_config_to_file(self):
+        '''
+        @summary: Saves the user's input configuration to the build config file
+        '''
+        
+        # Clone dict and update filetypes to encrypt to be a list
+        dict_to_write = self.user_input_dict.copy()
+        dict_to_write["filetypes_to_encrypt"] = dict_to_write["filetypes_to_encrypt"].split(",")
+        
+        with open(CONFIG_FILE_NAME, "w") as build_config_file:
+            json.dump(dict_to_write, 
+                      build_config_file,
+                      indent=4)
                 
                 
     def finished_with_error(self):
