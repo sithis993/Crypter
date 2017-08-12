@@ -20,7 +20,7 @@ class MainFrame ( wx.Frame ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 600,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -439,7 +439,7 @@ class MainFrame ( wx.Frame ):
 		bSizer1.Add( self.m_staticline21, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_panel4112 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		self.m_panel4112.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.m_panel4112.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
 		bSizer172 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -457,7 +457,7 @@ class MainFrame ( wx.Frame ):
 		bSizer1.Add( self.m_staticline211, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_panel411 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		self.m_panel411.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.m_panel411.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
 		bSizer17 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -482,7 +482,7 @@ class MainFrame ( wx.Frame ):
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_panel4111 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.DOUBLE_BORDER|wx.TAB_TRAVERSAL )
-		self.m_panel4111.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.m_panel4111.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
 		bSizer171 = wx.BoxSizer( wx.VERTICAL )
 		
