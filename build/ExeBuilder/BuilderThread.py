@@ -171,7 +171,8 @@ class BuilderThread(Thread):
         # TODO Perhaps spec should be a separate object.... Actually map this one out with methods
         # Have an add data/resource method, set encryption, write spec, set icon etc. etc.
         
-        # TODO Invoke Pyinstaller via subprocess
+        
+        # TODO Invoke Pyinsta:wller via subprocess
         
             
         # If not error, set success

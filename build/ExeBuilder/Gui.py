@@ -62,6 +62,12 @@ class Gui(MainFrame):
         They should simply use a default
         '''
    
+        # Set Logo Image
+        self.LogoBitmap.SetBitmap(
+            wx.Bitmap(
+                "ExeBuilder\\static\\lock.bmp"
+                )
+            )
         # Set debug to default level
         self.DebugLevelChoice.SetSelection(
             self.DebugLevelChoice.FindString(

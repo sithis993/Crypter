@@ -17,14 +17,14 @@ import wx.xrc
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 600,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 640,850 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer1.SetMinSize( wx.Size( 600,800 ) ) 
+		bSizer1.SetMinSize( wx.Size( 640,850 ) ) 
 		bSizer311 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.m_panel312 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -59,6 +59,42 @@ class MainFrame ( wx.Frame ):
 		self.m_scrolledWindow2 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.VSCROLL )
 		self.m_scrolledWindow2.SetScrollRate( 5, 5 )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer43 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_panel10 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.STATIC_BORDER|wx.TAB_TRAVERSAL )
+		self.m_panel10.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		
+		bSizer44 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.TitleLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"Ransomware Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.TitleLabel.Wrap( -1 )
+		self.TitleLabel.SetFont( wx.Font( 22, 75, 90, 92, False, "Courier" ) )
+		self.TitleLabel.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
+		self.TitleLabel.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		
+		bSizer44.Add( self.TitleLabel, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
+		
+		self.SubtitleLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"Created by Sithis993", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.SubtitleLabel.Wrap( -1 )
+		self.SubtitleLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
+		
+		bSizer44.Add( self.SubtitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.LogoBitmap = wx.StaticBitmap( self.m_panel10, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer44.Add( self.LogoBitmap, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		
+		
+		self.m_panel10.SetSizer( bSizer44 )
+		self.m_panel10.Layout()
+		bSizer44.Fit( self.m_panel10 )
+		bSizer43.Add( self.m_panel10, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.m_staticline5 = wx.StaticLine( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer43.Add( self.m_staticline5, 0, wx.EXPAND |wx.ALL, 5 )
+		
+		
+		bSizer2.Add( bSizer43, 0, wx.EXPAND, 10 )
 		
 		bSizer31 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -366,7 +402,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2032121 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.MaxFileSizeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Max File Size to Encrypt", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MaxFileSizeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Max File Size to Encrypt (MB)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.MaxFileSizeLabel.Wrap( -1 )
 		self.MaxFileSizeLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
 		self.MaxFileSizeLabel.SetToolTipString( u"The maximum fille size, in megabytes, to encrypt. Files larger than this limit will not be encrypted" )
@@ -476,7 +512,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel411.SetSizer( bSizer17 )
 		self.m_panel411.Layout()
 		bSizer17.Fit( self.m_panel411 )
-		bSizer1.Add( self.m_panel411, 4, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_panel411, 3, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
