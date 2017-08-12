@@ -49,7 +49,7 @@ ENCRYPTABLE_FILETYPES = [
 
 ## CONFIGURATION
 '''
-@summary: The configuration dictionary containing the configuration options for the ransomware
+@summary: The builder configuration dictionary containing the configuration options loaded into the GUI
 @note: To add a new field, adjust the GUI form appropriately and add the settings for the new
 field to this dictionary
 '''
@@ -222,6 +222,22 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
         }
     )
     ])
+
+'''
+@summary: Runtime configuration items. To be written to the Ransomware's runtime config file
+'''
+RUNTIME_CONFIG_ITEMS = [
+    "maj_version",
+    "min_version",
+    "encrypted_file_extension",
+    "wallet_address",
+    "bitcoin_fee",
+    "key_destruction_time",
+    "max_file_size_to_encrypt",
+    "filetypes_to_encrypt"
+    ]
+
+RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"
 
 # ERRORS
 ERROR_INVALID_DATA = 13
