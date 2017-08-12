@@ -89,6 +89,13 @@ class BuilderThread(Thread):
         @summary: Validates the value of the specified input field
         @raise ValidationException: If validation of the input field fails
         '''
+        self.__console_log(msg="%s input should match regex '%s'. Got '%s'" % (
+            BUILDER_CONFIG_ITEMS[input_field]["label"],
+            BUILDER_CONFIG_ITEMS[input_field]["regex"].pattern,
+            input_value
+            ),
+            debug_level=3
+        )
 
         # If input matches expected regex, return True
         if not BUILDER_CONFIG_ITEMS[input_field]["regex"].match(input_value):
@@ -97,8 +104,10 @@ class BuilderThread(Thread):
         elif input_field == "icon_file" and input_value:
             if not os.path.isfile(input_value):
                 raise ValidationException
-            
-        # TODO If field is empty, set it to the defined default value (if there is one, else blank)
+            else:
+                self.__console_log(msg="Icon file at '%s' is a valid file" % input_value, debug_level=3)
+
+        # If field is empty, set it to the defined default value (if there is one, else blank)
         if not input_value and "default" in BUILDER_CONFIG_ITEMS[input_field]:
             return BUILDER_CONFIG_ITEMS[input_field]["default"]
 
@@ -146,7 +155,6 @@ class BuilderThread(Thread):
                         BUILDER_CONFIG_ITEMS[input_field]["example"],
                         self.user_input_dict[input_field]
                         ),
-                    debug_level=0,
                     ccode=ERROR_INVALID_DATA,
                     invalid_input_field=input_field
                     )
