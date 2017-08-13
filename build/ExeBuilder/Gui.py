@@ -253,6 +253,21 @@ class Gui(MainFrame):
         # BUILD button
         self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
         
+        # Mainframe close
+        self.Bind(wx.EVT_CLOSE, self.__close_builder, self)
+        
+        
+    
+    def __close_builder(self, event):
+        '''
+        @summary: Method to catch close events and close the builder gracefully
+        '''
+        
+        # Stop builder and exit
+        self.__stop_build(None)
+        self.Destroy()
+        
+        
         
     def update_language(self, event, language=None):
         '''
