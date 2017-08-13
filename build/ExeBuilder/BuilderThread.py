@@ -172,7 +172,7 @@ class BuilderThread(Thread):
         # Have an add data/resource method, set encryption, write spec, set icon etc. etc.
         
         
-        # TODO Invoke Pyinsta:wller via subprocess
+        # TODO Invoke Pyinstaller via subprocess
         
             
         # If not error, set success

@@ -268,7 +268,6 @@ class Gui(MainFrame):
         self.Destroy()
         
         
-        
     def update_language(self, event, language=None):
         '''
         @summary: Updates the Builder GUI language to the selected choice
