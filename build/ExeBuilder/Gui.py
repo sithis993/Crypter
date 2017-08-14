@@ -319,7 +319,7 @@ class Gui(MainFrame):
                 self.Bind(wx.EVT_BUTTON, self.__start_build, self.BuildButton)
 
                 # Update gauge to completion
-                for percentage in range(100):
+                for percentage in range(0, 150, 50):
                     self.BuildProgressGauge.SetValue(percentage)
 
 
