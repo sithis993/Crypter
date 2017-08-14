@@ -83,6 +83,42 @@ class MainFrame ( wx.Frame ):
 		self.LogoBitmap = wx.StaticBitmap( self.m_scrolledWindow4, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer44.Add( self.LogoBitmap, 0, wx.ALL|wx.EXPAND, 5 )
 		
+		self.QuickBuildTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Quick Build", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.QuickBuildTitleLabel.Wrap( 359 )
+		self.QuickBuildTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
+		
+		bSizer44.Add( self.QuickBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.QuickBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binay with the default settings", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.QuickBuildDescriptionLabel.Wrap( 359 )
+		self.QuickBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
+		
+		bSizer44.Add( self.QuickBuildDescriptionLabel, 0, wx.ALL|wx.EXPAND, 10 )
+		
+		self.CustomisingBuildTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Customising the ransomware", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildTitleLabel.Wrap( 359 )
+		self.CustomisingBuildTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
+		
+		bSizer44.Add( self.CustomisingBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label.\n\nFields left blank will be set to the default configuration.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel.Wrap( 359 )
+		self.CustomisingBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
+		
+		bSizer44.Add( self.CustomisingBuildDescriptionLabel, 0, wx.ALL, 10 )
+		
+		self.ManagingConfigurationsTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Managing Configurations", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ManagingConfigurationsTitleLabel.Wrap( 359 )
+		self.ManagingConfigurationsTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
+		
+		bSizer44.Add( self.ManagingConfigurationsTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.CustomisingBuildDescriptionLabel1 = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label.\n\nFields left blank will be set to the default configuration.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel1.Wrap( 359 )
+		self.CustomisingBuildDescriptionLabel1.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
+		
+		bSizer44.Add( self.CustomisingBuildDescriptionLabel1, 0, wx.ALL, 10 )
+		
 		
 		self.m_scrolledWindow4.SetSizer( bSizer44 )
 		self.m_scrolledWindow4.Layout()
