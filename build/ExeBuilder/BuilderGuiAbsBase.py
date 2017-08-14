@@ -60,14 +60,13 @@ class MainFrame ( wx.Frame ):
 		self.m_scrolledWindow2.SetScrollRate( 5, 5 )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer43 = wx.BoxSizer( wx.VERTICAL )
-		
-		self.m_panel10 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.STATIC_BORDER|wx.TAB_TRAVERSAL )
-		self.m_panel10.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.m_scrolledWindow4 = wx.ScrolledWindow( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.STATIC_BORDER|wx.VSCROLL )
+		self.m_scrolledWindow4.SetScrollRate( 5, 5 )
+		self.m_scrolledWindow4.SetBackgroundColour( wx.Colour( 255, 255, 255 ) )
 		
 		bSizer44 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.TitleLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"Ransomware Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.TitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Ransomware Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
 		self.TitleLabel.Wrap( -1 )
 		self.TitleLabel.SetFont( wx.Font( 22, 75, 90, 92, False, "Courier" ) )
 		self.TitleLabel.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
@@ -75,26 +74,23 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.TitleLabel, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
 		
-		self.SubtitleLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"Created by Sithis993", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.SubtitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Created by Sithis993", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
 		self.SubtitleLabel.Wrap( -1 )
 		self.SubtitleLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.SubtitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.LogoBitmap = wx.StaticBitmap( self.m_panel10, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer44.Add( self.LogoBitmap, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		self.LogoBitmap = wx.StaticBitmap( self.m_scrolledWindow4, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer44.Add( self.LogoBitmap, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		self.m_panel10.SetSizer( bSizer44 )
-		self.m_panel10.Layout()
-		bSizer44.Fit( self.m_panel10 )
-		bSizer43.Add( self.m_panel10, 1, wx.EXPAND |wx.ALL, 5 )
+		self.m_scrolledWindow4.SetSizer( bSizer44 )
+		self.m_scrolledWindow4.Layout()
+		bSizer44.Fit( self.m_scrolledWindow4 )
+		bSizer2.Add( self.m_scrolledWindow4, 6, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticline5 = wx.StaticLine( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer43.Add( self.m_staticline5, 0, wx.EXPAND |wx.ALL, 5 )
-		
-		
-		bSizer2.Add( bSizer43, 0, wx.EXPAND, 10 )
+		self.m_staticline6 = wx.StaticLine( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer2.Add( self.m_staticline6, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		bSizer31 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -119,13 +115,13 @@ class MainFrame ( wx.Frame ):
 		bSizer202.Add( self.BuilderLanguageChoice, 0, wx.ALL, 5 )
 		
 		
-		LanguageSettingsSizer.Add( bSizer202, 1, wx.EXPAND, 5 )
+		LanguageSettingsSizer.Add( bSizer202, 1, 0, 5 )
 		
 		
 		self.m_panel31.SetSizer( LanguageSettingsSizer )
 		self.m_panel31.Layout()
 		LanguageSettingsSizer.Fit( self.m_panel31 )
-		bSizer31.Add( self.m_panel31, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer31.Add( self.m_panel31, 1, wx.ALL, 5 )
 		
 		self.m_panel311 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		DebugSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel311, wx.ID_ANY, u"Debug" ), wx.HORIZONTAL )
@@ -148,16 +144,16 @@ class MainFrame ( wx.Frame ):
 		bSizer2021.Add( self.DebugLevelChoice, 0, wx.ALL, 5 )
 		
 		
-		DebugSettingsSizer.Add( bSizer2021, 1, wx.EXPAND, 5 )
+		DebugSettingsSizer.Add( bSizer2021, 1, 0, 5 )
 		
 		
 		self.m_panel311.SetSizer( DebugSettingsSizer )
 		self.m_panel311.Layout()
 		DebugSettingsSizer.Fit( self.m_panel311 )
-		bSizer31.Add( self.m_panel311, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer31.Add( self.m_panel311, 1, wx.ALL, 5 )
 		
 		
-		bSizer2.Add( bSizer31, 1, wx.EXPAND, 5 )
+		bSizer2.Add( bSizer31, 0, wx.EXPAND, 5 )
 		
 		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -204,10 +200,10 @@ class MainFrame ( wx.Frame ):
 		self.m_panel3.SetSizer( VersionInfoSizer )
 		self.m_panel3.Layout()
 		VersionInfoSizer.Fit( self.m_panel3 )
-		bSizer3.Add( self.m_panel3, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer3.Add( self.m_panel3, 1, wx.ALL|wx.FIXED_MINSIZE, 5 )
 		
 		
-		bSizer2.Add( bSizer3, 1, wx.EXPAND, 5 )
+		bSizer2.Add( bSizer3, 0, wx.EXPAND, 5 )
 		
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -236,7 +232,7 @@ class MainFrame ( wx.Frame ):
 		bSizer203213.Add( self.FilenameTextCtrl, 0, wx.ALL, 5 )
 		
 		
-		bSizer412.Add( bSizer203213, 1, wx.EXPAND, 5 )
+		bSizer412.Add( bSizer203213, 1, 0, 5 )
 		
 		bSizer2032112 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -254,7 +250,7 @@ class MainFrame ( wx.Frame ):
 		bSizer2032112.Add( self.ExtensionTextCtrl, 0, wx.ALL, 5 )
 		
 		
-		bSizer412.Add( bSizer2032112, 1, wx.EXPAND, 5 )
+		bSizer412.Add( bSizer2032112, 1, 0, 5 )
 		
 		
 		bSizer391.Add( bSizer412, 1, wx.EXPAND, 5 )
@@ -301,13 +297,13 @@ class MainFrame ( wx.Frame ):
 		bSizer391.Add( bSizer41111, 1, wx.EXPAND, 5 )
 		
 		
-		BinarySettingsSizer.Add( bSizer391, 1, wx.EXPAND, 5 )
+		BinarySettingsSizer.Add( bSizer391, 0, wx.EXPAND, 5 )
 		
 		
 		self.m_panel41.SetSizer( BinarySettingsSizer )
 		self.m_panel41.Layout()
 		BinarySettingsSizer.Fit( self.m_panel41 )
-		bSizer12.Add( self.m_panel41, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer12.Add( self.m_panel41, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_panel4 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		RansomwareSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel4, wx.ID_ANY, u"Ransomware Settings" ), wx.VERTICAL )
@@ -463,13 +459,13 @@ class MainFrame ( wx.Frame ):
 		bSizer50.Add( self.SaveFilePicker, 0, wx.ALL, 5 )
 		
 		
-		bSizer2.Add( bSizer50, 0, wx.EXPAND, 5 )
+		bSizer2.Add( bSizer50, 1, wx.EXPAND, 5 )
 		
 		
 		self.m_scrolledWindow2.SetSizer( bSizer2 )
 		self.m_scrolledWindow2.Layout()
 		bSizer2.Fit( self.m_scrolledWindow2 )
-		bSizer1.Add( self.m_scrolledWindow2, 6, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_scrolledWindow2, 8, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_staticline21 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline21, 0, wx.EXPAND |wx.ALL, 5 )
@@ -512,7 +508,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel411.SetSizer( bSizer17 )
 		self.m_panel411.Layout()
 		bSizer17.Fit( self.m_panel411 )
-		bSizer1.Add( self.m_panel411, 3, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_panel411, 4, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )

@@ -1,5 +1,4 @@
 '''
-
 @summary: Crypter Exe Builder: Build Thread
 @author: MLS
 '''
@@ -15,7 +14,7 @@ from wx.lib.pubsub import pub as Publisher
 # Import package modules
 from .Base import *
 from .Exceptions import *
-from distutils.command.build import build
+from .Spec import Spec
 
 
 #########################
@@ -168,9 +167,7 @@ class BuilderThread(Thread):
             
         # Write runtime config and spec
         self.__create_runtime_config()
-        # TODO Perhaps spec should be a separate object.... Actually map this one out with methods
-        # Have an add data/resource method, set encryption, write spec, set icon etc. etc.
-        
+        spec = Spec(self.__console_log) 
         
         # TODO Invoke Pyinstaller via subprocess
         
