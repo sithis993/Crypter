@@ -164,12 +164,12 @@ class BuilderThread(Thread):
         # Validation success
         if not self.__build_error and not self.__build_stopped:
             self.__console_log(msg="Validation successful", debug_level=1)
-            
-        # Write runtime config and spec
-        self.__create_runtime_config()
-        spec = Spec(self.__console_log) 
+
+            # Write runtime config and spec
+            self.__create_runtime_config()
+            self.__create_spec_file()
         
-        # TODO Invoke Pyinstaller via subprocess
+            # TODO Invoke Pyinstaller via subprocess
         
             
         # If not error, set success
@@ -182,6 +182,26 @@ class BuilderThread(Thread):
         self.__build_error = False
         self.__build_stopped = False
         self.__build_success = False
+        
+    
+    def __create_spec_file(self):
+        '''
+        @summary: Create the binaries SPEC file
+        @todo: Create and catch SpecFailure/SpecErrors etc.
+        '''
+
+        self.__console_log(msg="Creating PyInstaller SPEC file")
+        spec = Spec()
+        # PI AES key
+        if self.user_input_dict["pyinstaller_aes_key"]:
+            spec.set_cipher_key(self.user_input_dict["pyinstaller_aes_key"])
+        # Binary Icon
+        if self.user_input_dict["icon_file"]:
+            spec.set_icon(self.user_input_dict["icon_file"])
+            
+        # Write the SPEC
+        spec.save_spec()
+        self.__console_log(msg="SPEC file successfully created")
         
     
     def __create_runtime_config(self):
