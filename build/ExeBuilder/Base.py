@@ -129,10 +129,9 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "PyInstaller AES Key",
             "label_object_name": "PyinstallerAesKeyLabel",
             "input_object_name": "PyinstallerAesKeyTextCtrl",
-            "regex": re.compile("^([A-Za-z0-9]{32})?$"),
+            "regex": re.compile("^([A-Za-z0-9]{16})?$"),
             "example": "093AC769F6557577452E9DB2C74B984A",
-            "input_requirement": "A 32 byte(character) string of alphanumeric characters",
-            "default": "0123456789abcdef",
+            "input_requirement": "A 16 byte(character) string of alphanumeric characters",
             "config_area": "Binary Settings"
             }
     ),
