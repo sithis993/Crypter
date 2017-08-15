@@ -113,7 +113,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.ManagingConfigurationsTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.CustomisingBuildDescriptionLabel1 = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label.\n\nFields left blank will be set to the default configuration.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel1 = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Optionally, if you'd like to save your ransomware configuration click the Save button at the bottom of this form. Existing configurations can be loaded by clicking the Load button at the top of the interface.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.CustomisingBuildDescriptionLabel1.Wrap( 359 )
 		self.CustomisingBuildDescriptionLabel1.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
