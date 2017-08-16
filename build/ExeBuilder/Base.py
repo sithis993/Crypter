@@ -136,6 +136,18 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "upx_dir", {
+            "label": "UPX Packer Directory",
+            "label_object_name": "UpxDirLabel",
+            "input_object_name": "UpxDirPicker",
+            "regex": re.compile("^.*$"),
+            "example": "C:\\Program Files\\upx394w",
+            "input_requirement": "A path pointing to the UPX Packer directory",
+            "default": "",
+            "config_area": "Binary Settings"
+            }
+    ),
+    (
         "icon_file", {
             "label": "Icon",
             "label_object_name": "IconLabel",

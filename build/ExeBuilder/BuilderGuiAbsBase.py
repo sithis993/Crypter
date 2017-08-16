@@ -332,6 +332,34 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer391.Add( bSizer41111, 1, wx.EXPAND, 5 )
 		
+		bSizer411111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer20321111111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer411111.Add( bSizer20321111111, 1, wx.EXPAND, 5 )
+		
+		bSizer2032111111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.UpxDirLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"UPX Packer Directory", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.UpxDirLabel.Wrap( -1 )
+		self.UpxDirLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
+		self.UpxDirLabel.SetToolTipString( u"The icon (.ico) file to use for the binary" )
+		
+		bSizer2032111111.Add( self.UpxDirLabel, 0, wx.ALL|wx.TOP, 7 )
+		
+		
+		bSizer2032111111.AddSpacer( ( 0, 0), 1, wx.ALIGN_LEFT|wx.EXPAND, 5 )
+		
+		self.UpxDirPicker = wx.DirPickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select UPX Directory", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE )
+		bSizer2032111111.Add( self.UpxDirPicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer411111.Add( bSizer2032111111, 1, wx.ALIGN_LEFT, 5 )
+		
+		
+		bSizer391.Add( bSizer411111, 1, wx.EXPAND, 5 )
+		
 		
 		BinarySettingsSizer.Add( bSizer391, 0, wx.EXPAND, 5 )
 		

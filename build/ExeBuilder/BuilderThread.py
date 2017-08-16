@@ -164,12 +164,9 @@ class BuilderThread(Thread):
         # Validation success
         if not self.__build_error and not self.__build_stopped:
             self.__console_log(msg="Validation successful", debug_level=1)
-
-            # Write runtime config and spec
             self.__create_runtime_config()
-            self.__create_spec_file()
-        
-            # TODO Invoke Pyinstaller via subprocess
+            spec_path = self.__create_spec_file()
+            self.__run_pyinstaller(spec_path)
         
             
         # If not error, set success
@@ -183,11 +180,25 @@ class BuilderThread(Thread):
         self.__build_stopped = False
         self.__build_success = False
         
+        
+    def __run_pyinstaller(self, spec_path):
+        '''
+        @summary: Invokes PyInstaller with the generated SPEC file
+        @param spec_path: The path the the created PyInstaller SPEC file
+        '''
+        
+        '''
+        @todo: Before moving onto this, make sure the other new methods are in order
+        '''
+        pass
+        
+        
     
     def __create_spec_file(self):
         '''
         @summary: Create the binaries SPEC file
-        @todo: Create and catch SpecFailure/SpecErrors etc.
+        @todo: Create and catch SpecFailure/SpecErrors etc. Will these even be generated
+        though?
         '''
 
         self.__console_log(msg="Creating PyInstaller SPEC file")
@@ -198,10 +209,20 @@ class BuilderThread(Thread):
         # Binary Icon
         if self.user_input_dict["icon_file"]:
             spec.set_icon(self.user_input_dict["icon_file"])
+        # UPX
+        if self.user_input_dict["upx_dir"]:
+            spec.enable_upx()
+        else:
+            self.__console_log(msg="(Warning): UPX path not specified. The PyInstaller binary will not be packed."
+                               " It is recommended that UPX is used as this can reduce the binary size by several"
+                               " Megabytes"
+                               )
             
         # Write the SPEC
-        spec.save_spec()
+        spec_path = spec.save_spec()
         self.__console_log(msg="SPEC file successfully created")
+        
+        return spec_path
         
     
     def __create_runtime_config(self):
