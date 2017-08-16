@@ -7,6 +7,7 @@
 import time
 import os
 import json
+import subprocess
 from threading import Thread, Event
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
@@ -187,11 +188,17 @@ class BuilderThread(Thread):
         @param spec_path: The path the the created PyInstaller SPEC file
         '''
         
-        '''
-        @todo: Before moving onto this, make sure the other new methods are in order
-        '''
-        pass
-        
+        # TODO If UPX, specify the provided path
+        build = subprocess.Popen(["pyinstaller", "--noconsole", "--clean",  "-F", spec_path],
+                      stdout=subprocess.PIPE,
+                      stderr=subprocess.STDOUT
+                      )
+        while True:
+            line = build.stdout.readline()
+            if line:
+                self.__console_log(msg=line)
+            else:
+                break
         
     
     def __create_spec_file(self):
