@@ -375,6 +375,8 @@ class Gui(MainFrame):
         user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
         # PyInstaller AES Key
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
+        # UPX Packer Dir
+        user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
         # Encrypted File Extension
         user_input_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
         # Wallet Address

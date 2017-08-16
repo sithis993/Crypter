@@ -63,14 +63,29 @@ class Spec():
 
         self.__console_log(msg="SPEC file written to '%s'" % path,
                            debug_level=2)
+        
+        return path
     
+    
+    def enable_upx(self):
+        '''
+        @summary: Enables the UPX packer SPEC option
+        '''
+        
+        self.__console_log(msg="UPX Packer specified. UPX will be used",
+                           debug_level=1)
+        self.contents = self.contents.replace("upx=False",
+                                              "upx=True")
+        self.__console_log(msg="UPX Set to True in SPEC file", debug_level=3)
+
     
     def set_icon(self, file_path):
         '''
         @summary: Sets the Binary Icon file path
         '''
         
-        self.__console_log(msg="PyInstaller binary Icon file specified. Custom icon will be added")
+        self.__console_log(msg="PyInstaller binary Icon file specified. Custom icon will be added",
+                           debug_level=1)
         self.__console_log(msg="Adding Icon file at '%s'" % file_path,
                            debug_level=2
                            )
@@ -84,7 +99,8 @@ class Spec():
         @param key: The 16 Byte AES key to add to the SPEC file
         '''
         
-        self.__console_log(msg="PyInstaller AES key provided. Script files will be encrypted")
+        self.__console_log(msg="PyInstaller AES key provided. Script files will be encrypted",
+                           debug_level=1)
         self.__console_log(msg="Setting PyInstaller AES key to '%s'" % key,
                            debug_level=2)
         self.contents = self.contents.replace("block_cipher=None",
