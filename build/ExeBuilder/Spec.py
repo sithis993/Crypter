@@ -115,7 +115,7 @@ class Spec():
         return "Spec"
 
 
-    def __console_log(self, msg=None, debug_level=0, ccode=0, **kwargs):
+    def __console_log(self, msg=None, debug_level=0, ccode=0, timestamp=True, **kwargs):
         '''
         @summary: Private Console logger method. Logs the SPEC progress to the GUI Console
         using wx Publisher update
@@ -128,7 +128,8 @@ class Spec():
             "_class": str(self),
             "msg": msg,
             "debug_level": debug_level,
-            "ccode": ccode
+            "ccode": ccode,
+            "timestamp": timestamp
             }
         for key, value in kwargs.iteritems():
             update_data_dict[key] = value
