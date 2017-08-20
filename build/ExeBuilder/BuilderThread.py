@@ -39,7 +39,6 @@ class BuilderThread(Thread):
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
         
-        
         # Start the thread
         self.__console_log(msg="Starting build thread", debug_level=3)
         Thread.__init__(self)
@@ -62,7 +61,7 @@ class BuilderThread(Thread):
         return "Builder"
     
     
-    def __console_log(self, msg=None, debug_level=0, ccode=0, **kwargs):
+    def __console_log(self, msg=None, debug_level=0, ccode=0, timestamp=True, _class=None, **kwargs):
         '''
         @summary: Private Console logger method. Logs the Builders progress to the GUI Console
         using wx Publisher update
@@ -72,10 +71,11 @@ class BuilderThread(Thread):
         
         # Define update data dict and add any kwarg items
         update_data_dict = {
-            "_class": str(self),
+            "_class": str(self) if not _class else _class,
             "msg": msg,
             "debug_level": debug_level,
-            "ccode": ccode
+            "ccode": ccode,
+            "timestamp": timestamp
             }
         for key, value in kwargs.iteritems():
             update_data_dict[key] = value
@@ -121,58 +121,62 @@ class BuilderThread(Thread):
         # Starting validation
         self.__console_log(msg="Checking configuration...", debug_level=1)
         
-        # Iterate input fields and validate
-        for input_field in self.user_input_dict:
-            time.sleep(0.1)
+        # Catch build halts
+        try:
+            # Iterate input fields and validate
+            for input_field in self.user_input_dict:
+                time.sleep(0.1)
             
-            # Break if STOP set
-            if self.__stop_event.is_set():
-                self.__in_progress = False
-                self.__console_log(msg="Force stop detected. Halting build", debug_level=0)
-                self.__build_stopped = True
-                break
+                # Break if STOP set
+                if self.__stop_event.is_set():
+                    raise UserHalt
 
-            # Validate input field
-            # If invalid input, log to console and set input field to red
-            self.__console_log(msg="Checking %s" % input_field, debug_level=1)
-            try:
-                # Update field value to default if one set
-                default_value = self.validate_input(input_field, self.user_input_dict[input_field])
-                if default_value:
-                    self.user_input_dict[input_field] = default_value
-                    self.__console_log("No value provided for %s. Setting to default '%s'" % (
-                        input_field,
-                        default_value,
-                        ),
-                        debug_level=2
-                    )
-            # Validation failed. Provide field description and expectations
-            except ValidationException:
-                self.__console_log(
-                    msg="Invalid value submitted for '%s'. Expected '%s', such as '%s' but received '%s'" % (
-                        BUILDER_CONFIG_ITEMS[input_field]["label"],
-                        BUILDER_CONFIG_ITEMS[input_field]["input_requirement"],
-                        BUILDER_CONFIG_ITEMS[input_field]["example"],
-                        self.user_input_dict[input_field]
-                        ),
-                    ccode=ERROR_INVALID_DATA,
-                    invalid_input_field=input_field
-                    )
-                self.__in_progress = False
-                self.__build_error = True
-                break
+                # Validate input field
+                # If invalid input, log to console and set input field to red
+                self.__console_log(msg="Checking %s" % input_field, debug_level=1)
+                try:
+                    # Update field value to default if one set
+                    default_value = self.validate_input(input_field, self.user_input_dict[input_field])
+                    if default_value:
+                        self.user_input_dict[input_field] = default_value
+                        self.__console_log("No value provided for %s. Setting to default '%s'" % (
+                            input_field,
+                            default_value,
+                            ),
+                            debug_level=2
+                            )
+                # Validation failed. Provide field description and expectations
+                except ValidationException:
+                    self.__console_log(
+                        msg="Invalid value submitted for '%s'. Expected '%s', such as '%s' but received '%s'" % (
+                            BUILDER_CONFIG_ITEMS[input_field]["label"],
+                            BUILDER_CONFIG_ITEMS[input_field]["input_requirement"],
+                            BUILDER_CONFIG_ITEMS[input_field]["example"],
+                            self.user_input_dict[input_field]
+                            ),
+                            ccode=ERROR_INVALID_DATA,
+                            invalid_input_field=input_field
+                            )
+                    self.__in_progress = False
+                    self.__build_error = True
+                    break
             
-        # Validation success
-        if not self.__build_error and not self.__build_stopped:
-            self.__console_log(msg="Validation successful", debug_level=1)
-            self.__create_runtime_config()
-            spec_path = self.__create_spec_file()
-            self.__run_pyinstaller(spec_path)
-        
-            
-        # If not error, set success
-        if not self.__build_error and not self.__build_stopped:
-            self.__build_success = True
+            # Validation success
+            if not self.__build_error and not self.__build_stopped:
+                self.__console_log(msg="Validation successful", debug_level=1)
+                self.__create_runtime_config()
+                spec_path = self.__create_spec_file()
+                self.__run_pyinstaller(spec_path)
+
+            # If not error, set success
+            if not self.__build_error and not self.__build_stopped:
+                self.__build_success = True
+                
+        # Build manually halted by user
+        except UserHalt:
+            self.__in_progress = False
+            self.__console_log(msg="Force stop detected. Halting build at next opportunity")
+            self.__build_stopped = True
             
         # Build thread finished. Log and Reset build status to prevent further console updates
         self.__in_progress = False
@@ -186,17 +190,45 @@ class BuilderThread(Thread):
         '''
         @summary: Invokes PyInstaller with the generated SPEC file
         @param spec_path: The path the the created PyInstaller SPEC file
+        @todo: Handling of STOP event
         '''
+        self.__console_log(msg="Calling PyInstaller. Please wait...")
         
-        # TODO If UPX, specify the provided path
-        build = subprocess.Popen(["pyinstaller", "--noconsole", "--clean",  "-F", spec_path],
+        # Build command
+        # TODO Test that UPX dir works
+        cmd = [
+            "pyinstaller",
+            "--noconsole",
+            "-F"
+            ]
+        if self.user_input_dict["upx_dir"]:
+            cmd.append("--upx-dir")
+            cmd.append(self.user_input_dict["upx_dir"])
+        else:
+            cmd.append("--noupx")
+        cmd.append(spec_path)
+        
+        self.__console_log(msg="Running command: %s" % " ".join(cmd),
+                           debug_level=2)
+                           
+        
+        # Call PyInstaller subprocess
+        build = subprocess.Popen(cmd,
                       stdout=subprocess.PIPE,
                       stderr=subprocess.STDOUT
                       )
         while True:
+            
+            # Check for stop
+            if self.__stop_event.isSet():
+                build.kill()
+                raise UserHalt
+            
             line = build.stdout.readline()
             if line:
-                self.__console_log(msg=line)
+                self.__console_log(msg=line.rstrip(), 
+                                   _class="PyInstaller",
+                                   debug_level=1)
             else:
                 break
         
@@ -207,18 +239,27 @@ class BuilderThread(Thread):
         @todo: Create and catch SpecFailure/SpecErrors etc. Will these even be generated
         though?
         '''
+        # Check for stop
+        if self.__stop_event.isSet():
+            raise UserHalt
 
         self.__console_log(msg="Creating PyInstaller SPEC file")
         spec = Spec()
         # PI AES key
-        if self.user_input_dict["pyinstaller_aes_key"]:
+        if self.user_input_dict["pyinstaller_aes_key"] and not self.__stop_event.isSet():
             spec.set_cipher_key(self.user_input_dict["pyinstaller_aes_key"])
+        elif self.__stop_event.isSet():
+            raise UserHalt
         # Binary Icon
-        if self.user_input_dict["icon_file"]:
+        if self.user_input_dict["icon_file"] and not self.__stop_event.isSet():
             spec.set_icon(self.user_input_dict["icon_file"])
+        elif self.__stop_event.isSet():
+            raise UserHalt
         # UPX
-        if self.user_input_dict["upx_dir"]:
+        if self.user_input_dict["upx_dir"] and not self.__stop_event.isSet():
             spec.enable_upx()
+        elif self.__stop_event.isSet():
+            raise UserHalt
         else:
             self.__console_log(msg="(Warning): UPX path not specified. The PyInstaller binary will not be packed."
                                " It is recommended that UPX is used as this can reduce the binary size by several"
@@ -226,8 +267,11 @@ class BuilderThread(Thread):
                                )
             
         # Write the SPEC
-        spec_path = spec.save_spec()
-        self.__console_log(msg="SPEC file successfully created")
+        if not self.__stop_event.isSet():
+            spec_path = spec.save_spec()
+            self.__console_log(msg="SPEC file successfully created")
+        else:
+            raise UserHalt
         
         return spec_path
         
@@ -236,6 +280,10 @@ class BuilderThread(Thread):
         '''
         @summary: Creates and writes ransomware's runtime config file
         '''
+        # Check for stop
+        if self.__stop_event.isSet():
+            raise UserHalt
+        
         self.__console_log(msg="Creating binary runtime config at %s" % RUNTIME_CONFIG_PATH,
                            debug_level=1)
         config_dict = {}
@@ -291,4 +339,5 @@ class BuilderThread(Thread):
         '''
         
         self.__stop_event.set()
+        
         

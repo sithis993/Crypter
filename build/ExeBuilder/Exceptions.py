@@ -20,3 +20,11 @@ class ConfigFileNotFound(Exception):
     could not be found, or could not be read
     '''
 
+####################
+## USERHALT CLASS ##
+####################
+class UserHalt(Exception):
+    '''
+    @summary: UserHalt: To be raised in the event that the user manually stops
+    the build process
+    '''

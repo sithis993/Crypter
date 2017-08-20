@@ -291,7 +291,8 @@ class Gui(MainFrame):
         self.console.log(debug_level=msg.data["debug_level"],
                          _class=msg.data["_class"], 
                          msg=msg.data["msg"],
-                         ccode=msg.data["ccode"])
+                         ccode=msg.data["ccode"],
+                         timestamp=msg.data["timestamp"])
 
         # CHECK FOR ERRORS
         # If there was a validation error, highlight culprit field label
@@ -453,33 +454,33 @@ class Console():
         self.__debug_level = "0 - Minimal"
 
 
-    def log(self, debug_level=0, _class=None, msg=None, ccode=0):
+    def log(self, debug_level=0, _class=None, msg=None, ccode=0, timestamp=True):
         '''
         @summary: Logs output to the Console
         @param debug_level: The debug level of the message
         @param _class: The class that is performing the log
         @param msg: The message to log to the Console Text screen
         '''
+        to_log = ""
         
-        # Format log message
-        # Add class if specified
+        # Add timestamp
+        if timestamp:
+            to_log += "[%s]: " % self.__get_timestamp()
+        
+        # Add status message
+        if ccode:
+            to_log += "(ERROR): "
+        
+        # Add class
         if _class:
-            to_log = "[%s]:%s %s: %s\n" % (
-                self.__get_timestamp(),
-                " (ERROR)" if ccode else "",
-                _class,
-                msg
-                )
-        else:
-            to_log = "[%s]:%s %s\n" % (
-                self.__get_timestamp(),
-                " (ERROR)" if ccode else "",
-                msg
-                )
+            to_log += "%s: " % _class
+        
+        # Add message
+        to_log += "%s" % msg
         
         # Add the message to the Console box
         if msg and debug_level <= int(self.__debug_level[0]):
-            self.__console_box.AppendText(to_log)
+            self.__console_box.AppendText(to_log + "\n")
         
 
     def clear(self):
