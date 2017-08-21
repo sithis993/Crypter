@@ -167,6 +167,7 @@ class BuilderThread(Thread):
                 self.__create_runtime_config()
                 spec_path = self.__create_spec_file()
                 self.__run_pyinstaller(spec_path)
+                self.__move_binary()
 
             # If not error, set success
             if not self.__build_error and not self.__build_stopped:
@@ -174,9 +175,12 @@ class BuilderThread(Thread):
                 
         # Build manually halted by user
         except UserHalt:
-            self.__in_progress = False
             self.__console_log(msg="Force stop detected. Halting build at next opportunity")
             self.__build_stopped = True
+        # Build failed
+        except BuildFailure as be:
+            self.__build_error = True
+            self.__console_log(msg=be[0]["message"], ccode=be[0]["ccode"])
             
         # Build thread finished. Log and Reset build status to prevent further console updates
         self.__in_progress = False
@@ -184,18 +188,48 @@ class BuilderThread(Thread):
         self.__build_error = False
         self.__build_stopped = False
         self.__build_success = False
+
+
+    def __move_binary(self):
+        '''
+        @summary: Move the produced PyInstaller binary to the correct directory
+        and rename the file appropriately
+        @todo: If the file does not exist, throw a build error and tell the user to check the output
+        for any PyInstaller errors
+        '''
+        # Check for stop
+        if self.__stop_event.isSet():
+            raise UserHalt
+        
+        # Check target binary filename
+        
+        # Check Binary was produced
+        if not os.path.isfile("dist\\Main.exe"):
+            raise BuildFailure({
+                "message": "PyInstaller produced binary was not found. The PyInstaller build probably failed."
+                            " Check The PyInstaller output for more details",
+                "ccode": ERROR_FILE_NOT_FOUND}
+            )
+        # Otherwise move the file to the correct location
+        # TODO Continue from here
+        else:
+            o.rename("dist\\Main.exe",)
+          
         
         
     def __run_pyinstaller(self, spec_path):
         '''
         @summary: Invokes PyInstaller with the generated SPEC file
         @param spec_path: The path the the created PyInstaller SPEC file
-        @todo: Handling of STOP event
+        @todo: Check for errors in the subprocess output
         '''
+        # Check for stop
+        if self.__stop_event.isSet():
+            raise UserHalt
+
         self.__console_log(msg="Calling PyInstaller. Please wait...")
         
         # Build command
-        # TODO Test that UPX dir works
         cmd = [
             "pyinstaller",
             "--noconsole",
@@ -217,8 +251,8 @@ class BuilderThread(Thread):
                       stdout=subprocess.PIPE,
                       stderr=subprocess.STDOUT
                       )
+        
         while True:
-            
             # Check for stop
             if self.__stop_event.isSet():
                 build.kill()
