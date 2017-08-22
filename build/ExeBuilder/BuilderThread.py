@@ -256,7 +256,8 @@ class BuilderThread(Thread):
         # Call PyInstaller subprocess
         build = subprocess.Popen(cmd,
                       stdout=subprocess.PIPE,
-                      stderr=subprocess.STDOUT
+                      stderr=subprocess.STDOUT,
+                      creationflags=0x08000000
                       )
         
         while True:
