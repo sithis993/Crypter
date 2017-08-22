@@ -28,5 +28,6 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           console=False,
+		  uac_admin=True,
 		  icon=None
 		  )
