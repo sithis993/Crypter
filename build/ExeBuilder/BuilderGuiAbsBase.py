@@ -66,7 +66,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.TitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Ransomware Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.TitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Crypter Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
 		self.TitleLabel.Wrap( -1 )
 		self.TitleLabel.SetFont( wx.Font( 22, 75, 90, 92, False, "Courier" ) )
 		self.TitleLabel.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
@@ -344,7 +344,7 @@ class MainFrame ( wx.Frame ):
 		self.UpxDirLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"UPX Packer Directory", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.UpxDirLabel.Wrap( -1 )
 		self.UpxDirLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.UpxDirLabel.SetToolTipString( u"The icon (.ico) file to use for the binary" )
+		self.UpxDirLabel.SetToolTipString( u"The path to the UPX Packer directory" )
 		
 		bSizer2032111111.Add( self.UpxDirLabel, 0, wx.ALL|wx.TOP, 7 )
 		
