@@ -335,7 +335,7 @@ class BuilderThread(Thread):
         self.__console_log(msg="Runtime config: %s" % config_dict, debug_level=3)
             
         with open(RUNTIME_CONFIG_PATH, "w") as runtime_config_file:
-            json.dump(config_dict, runtime_config_file)
+            json.dump(config_dict, runtime_config_file, indent=4)
             
         self.__console_log(msg="Runtime config successfully written", debug_level=1)
 
