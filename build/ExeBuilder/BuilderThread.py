@@ -257,7 +257,7 @@ class BuilderThread(Thread):
         build = subprocess.Popen(cmd,
                       stdout=subprocess.PIPE,
                       stderr=subprocess.STDOUT,
-                      creationflags=0x08000000
+                      creationflags=0x08000000 # To prevent console window opening
                       )
         
         while True:
