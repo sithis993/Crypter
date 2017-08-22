@@ -42,6 +42,7 @@ class BuilderThread(Thread):
         # Start the thread
         self.__console_log(msg="Starting build thread", debug_level=3)
         Thread.__init__(self)
+        self.setDaemon(True)
         self.start()
         
     
@@ -194,14 +195,18 @@ class BuilderThread(Thread):
         '''
         @summary: Move the produced PyInstaller binary to the correct directory
         and rename the file appropriately
-        @todo: If the file does not exist, throw a build error and tell the user to check the output
-        for any PyInstaller errors
         '''
         # Check for stop
         if self.__stop_event.isSet():
             raise UserHalt
         
-        # Check target binary filename
+        # Create target binary filename
+        dest_filename = "%s" % self.user_input_dict["filename"]
+        if self.user_input_dict["maj_version"] and self.user_input_dict["min_version"]:
+            dest_filename += "-%s.%s" % (self.user_input_dict["maj_version"], self.user_input_dict["min_version"])
+        dest_filename += ".%s.exe" % (
+            self.user_input_dict["extension"]
+            )
         
         # Check Binary was produced
         if not os.path.isfile("dist\\Main.exe"):
@@ -211,11 +216,12 @@ class BuilderThread(Thread):
                 "ccode": ERROR_FILE_NOT_FOUND}
             )
         # Otherwise move the file to the correct location
-        # TODO Continue from here
         else:
-            o.rename("dist\\Main.exe",)
+            if os.path.isfile("..\\bin\\%s" % dest_filename):
+                os.remove("..\\bin\\%s" % dest_filename)
+            os.rename("dist\\Main.exe",
+                      "..\\bin\\%s" % dest_filename)
           
-        
         
     def __run_pyinstaller(self, spec_path):
         '''
@@ -233,6 +239,7 @@ class BuilderThread(Thread):
         cmd = [
             "pyinstaller",
             "--noconsole",
+            "--clean",
             "-F"
             ]
         if self.user_input_dict["upx_dir"]:
