@@ -1,9 +1,0 @@
-{
-    "maj" : "1",
-    "min" : "03",
-    "ico_file" : "pdf.ico",
-    "filename" : "invoice",
-    "extension": "pdf",
-    "encrypted_extension": "locked",
-    "max_file_size_mb": "512"
-}
