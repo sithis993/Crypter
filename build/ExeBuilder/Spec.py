@@ -19,8 +19,8 @@ class Spec():
     @summary: Provides a SPEC file object
     '''
     
-    SPEC_TEMPLATE_PATH = "ExeBuilder/static/Template.SPEC"
-    SPEC_OUT_PATH = "Main.SPEC"
+    SPEC_TEMPLATE_PATH = "ExeBuilder/static/Template.spec"
+    SPEC_OUT_PATH = "Main.spec"
     
     def __init__(self):
         '''
@@ -90,7 +90,7 @@ class Spec():
                            debug_level=2
                            )
         self.contents = self.contents.replace("icon=None",
-                                              "icon='%s'" % file_path)
+                                              "icon=r'%s'" % file_path)
     
     
     def set_cipher_key(self, key):
@@ -104,7 +104,7 @@ class Spec():
         self.__console_log(msg="Setting PyInstaller AES key to '%s'" % key,
                            debug_level=2)
         self.contents = self.contents.replace("block_cipher=None",
-                                "pyi_crypto.PyiBlockCipher(key='%s')" % key)
+                                "block_cipher=pyi_crypto.PyiBlockCipher(key='%s')" % key)
         
     
     def __str__(self):
