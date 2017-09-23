@@ -58,8 +58,12 @@ class SymmetricCrypto(Base.Base):
 
     return key
 
-  def process_file(self, file, action):
-      # Function to process the provided file ready for encryption/decryption
+  def process_file(self, file, action, extension):
+      '''
+      @summary: Processes the specified file ready for encryption/decryption
+      @param file: The absolute path to the target file
+      @param extension: The extension of the encrypted file
+      '''
 
       # Process file details
       try:
@@ -67,14 +71,14 @@ class SymmetricCrypto(Base.Base):
                         'full_filename': file.split("\\")[-1],
                         'extension' : str(file.split("\\")[-1]).split(".")[1],
                         'filename' : str(file.split("\\")[-1]).split(".")[0],
-                        'locked_path': file + self.ENCRYPTED_EXTENSION
+                        'locked_path': file + "." + extension
                         }
       except:
         file_details = {'full_path': file,
                         'full_filename': file.split("\\")[-1],
                         'extension' : None,
                         'filename' : str(file.split("\\")[-1]),
-                        'locked_path': file + self.ENCRYPTED_EXTENSION
+                        'locked_path': file + "." + extension
                         }
 
       # Specify file state depending on action
@@ -90,11 +94,15 @@ class SymmetricCrypto(Base.Base):
       return file_details
 
 
-  def decrypt_file(self, file, decryption_key):
-    # Function to decrypt a dataset
+  def decrypt_file(self, file, decryption_key, extension):
+    '''
+    @summary: Decrypts the target file
+    @param file: Absolute path to the file to decrypt
+    @param extension: The extension that was added to the encrypted file
+    '''
 
     # Get file details and check for errors
-    file_details = self.process_file(file, "decrypt")
+    file_details = self.process_file(file, "decrypt", extension)
     if file_details['error']:
       return
 
@@ -133,11 +141,15 @@ class SymmetricCrypto(Base.Base):
     return file_details["locked_path"]
 
 
-  def encrypt_file(self, file):
-    # Function to encrypt a dataset
+  def encrypt_file(self, file, extension):
+    '''
+    @summary: Encrypts the target file
+    @param file: Absolute path to the file to encrypt
+    @param extension: The extension to add to the encrypted file
+    '''
 
     # Get file details and process content
-    file_details = self.process_file(file, "encrypt")
+    file_details = self.process_file(file, "encrypt", extension)
     if file_details['error']:
       return False
 

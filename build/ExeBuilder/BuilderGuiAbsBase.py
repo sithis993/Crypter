@@ -323,7 +323,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer203211111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.IconFilePicker = wx.FilePickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.ico", wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE|wx.FLP_FILE_MUST_EXIST )
+		self.IconFilePicker = wx.FilePickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.ico", wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE|wx.FLP_FILE_MUST_EXIST|wx.FLP_SMALL )
 		bSizer203211111.Add( self.IconFilePicker, 0, wx.ALL, 5 )
 		
 		
@@ -333,11 +333,6 @@ class MainFrame ( wx.Frame ):
 		bSizer391.Add( bSizer41111, 1, wx.EXPAND, 5 )
 		
 		bSizer411111 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer20321111111 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		
-		bSizer411111.Add( bSizer20321111111, 1, wx.EXPAND, 5 )
 		
 		bSizer2032111111 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -351,11 +346,19 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2032111111.AddSpacer( ( 0, 0), 1, wx.ALIGN_LEFT|wx.EXPAND, 5 )
 		
-		self.UpxDirPicker = wx.DirPickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select UPX Directory", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE )
+		self.UpxDirPicker = wx.DirPickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select UPX Directory", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_SMALL )
 		bSizer2032111111.Add( self.UpxDirPicker, 0, wx.ALL, 5 )
 		
 		
-		bSizer411111.Add( bSizer2032111111, 1, wx.ALIGN_LEFT, 5 )
+		bSizer411111.Add( bSizer2032111111, 1, wx.EXPAND, 5 )
+		
+		bSizer2032111112 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer2032111112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		bSizer411111.Add( bSizer2032111112, 1, wx.EXPAND, 5 )
 		
 		
 		bSizer391.Add( bSizer411111, 1, wx.EXPAND, 5 )

