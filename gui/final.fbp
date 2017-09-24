@@ -89,7 +89,7 @@
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
             <object class="wxBoxSizer" expanded="1">
-                <property name="minimum_size">940,710</property>
+                <property name="minimum_size">940,750</property>
                 <property name="name">MainSizer</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
@@ -538,11 +538,11 @@
                                                                 <property name="name">bSizer192</property>
                                                                 <property name="orient">wxVERTICAL</property>
                                                                 <property name="permission">none</property>
-                                                                <object class="sizeritem" expanded="0">
+                                                                <object class="sizeritem" expanded="1">
                                                                     <property name="border">7</property>
                                                                     <property name="flag">wxALIGN_CENTER_HORIZONTAL|wxALL</property>
                                                                     <property name="proportion">0</property>
-                                                                    <object class="wxStaticBitmap" expanded="0">
+                                                                    <object class="wxStaticBitmap" expanded="1">
                                                                         <property name="BottomDockable">1</property>
                                                                         <property name="LeftDockable">1</property>
                                                                         <property name="RightDockable">1</property>
@@ -553,7 +553,7 @@
                                                                         <property name="aui_row"></property>
                                                                         <property name="best_size"></property>
                                                                         <property name="bg"></property>
-                                                                        <property name="bitmap">Load From File; ../build/Resources/new_lock.bmp</property>
+                                                                        <property name="bitmap"></property>
                                                                         <property name="caption"></property>
                                                                         <property name="caption_visible">1</property>
                                                                         <property name="center_pane">0</property>
@@ -584,7 +584,7 @@
                                                                         <property name="pane_size"></property>
                                                                         <property name="permission">protected</property>
                                                                         <property name="pin_button">1</property>
-                                                                        <property name="pos">-1,-1</property>
+                                                                        <property name="pos"></property>
                                                                         <property name="resize">Resizable</property>
                                                                         <property name="show">1</property>
                                                                         <property name="size"></property>
@@ -925,7 +925,7 @@
                                                             <property name="minimize_button">0</property>
                                                             <property name="minimum_size">-1,-1</property>
                                                             <property name="moveable">1</property>
-                                                            <property name="name">RansomNoteText</property>
+                                                            <property name="name">RansomMessageText</property>
                                                             <property name="pane_border">1</property>
                                                             <property name="pane_position"></property>
                                                             <property name="pane_size"></property>
@@ -943,7 +943,7 @@
                                                             <property name="validator_style">wxFILTER_NONE</property>
                                                             <property name="validator_type">wxDefaultValidator</property>
                                                             <property name="validator_variable"></property>
-                                                            <property name="value">The important files on your computer have been encrypted with military grade AES-256 bit encryption.&#x0A;&#x0A;Your documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.&#x0A;&#x0A;To acquire this key, transfer a total of 1 BTC to the Bitcoin wallet address below within 72 hours.&#x0A;&#x0A;If you fail to take action within this time window, the decryption key will be destoyed and access to your files will be permanently lost.</property>
+                                                            <property name="value">The important files on your computer have been encrypted with military grade AES-256 bit encryption.&#x0A;&#x0A;Your documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.&#x0A;&#x0A;To acquire this key, transfer the Bitcoin fee to the Bitcoin wallet address before the time runs out.&#x0A;&#x0A;If you fail to take action within this time window, the decryption key will be destoyed and access to your files will be permanently lost.&#x0A;&#x0A;For more information on what Bitcoin is, and to learn where you can buy Bitcoins, click the Bitcoin button directly below the timer.</property>
                                                             <property name="window_extra_style"></property>
                                                             <property name="window_name"></property>
                                                             <property name="window_style"></property>
@@ -1166,7 +1166,7 @@
                                                 <property name="aui_row"></property>
                                                 <property name="best_size"></property>
                                                 <property name="bg"></property>
-                                                <property name="bitmap">Load From File; ../../../Users/Administrator/Desktop/baccepted.bmp</property>
+                                                <property name="bitmap"></property>
                                                 <property name="caption"></property>
                                                 <property name="caption_visible">1</property>
                                                 <property name="center_pane">0</property>
@@ -1188,7 +1188,7 @@
                                                 <property name="hidden">0</property>
                                                 <property name="hover"></property>
                                                 <property name="id">wxID_ANY</property>
-                                                <property name="label">Bitcoin</property>
+                                                <property name="label">MyButton</property>
                                                 <property name="max_size"></property>
                                                 <property name="maximize_button">0</property>
                                                 <property name="maximum_size"></property>
@@ -1259,7 +1259,7 @@
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
                                     <event name="OnUpdateUI"></event>
-                                    <object class="sizeritem" expanded="1">
+                                    <object class="sizeritem" expanded="0">
                                         <property name="border">5</property>
                                         <property name="flag">wxALL|wxEXPAND</property>
                                         <property name="proportion">1</property>
@@ -1699,7 +1699,7 @@
                                                 <object class="sizeritem" expanded="0">
                                                     <property name="border">5</property>
                                                     <property name="flag">wxALIGN_RIGHT|wxEXPAND</property>
-                                                    <property name="proportion">1</property>
+                                                    <property name="proportion">2</property>
                                                     <object class="wxBoxSizer" expanded="0">
                                                         <property name="minimum_size"></property>
                                                         <property name="name">bSizer19</property>

