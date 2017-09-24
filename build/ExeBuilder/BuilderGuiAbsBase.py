@@ -81,7 +81,7 @@ class MainFrame ( wx.Frame ):
 		bSizer44.Add( self.SubtitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.LogoBitmap = wx.StaticBitmap( self.m_scrolledWindow4, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer44.Add( self.LogoBitmap, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer44.Add( self.LogoBitmap, 0, wx.ALL|wx.EXPAND, 10 )
 		
 		self.QuickBuildTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Quick Build", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.QuickBuildTitleLabel.Wrap( 359 )
@@ -190,56 +190,6 @@ class MainFrame ( wx.Frame ):
 		
 		
 		bSizer2.Add( bSizer31, 0, wx.EXPAND, 5 )
-		
-		bSizer3 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.m_panel3 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		VersionInfoSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel3, wx.ID_ANY, u"Version Information" ), wx.HORIZONTAL )
-		
-		bSizer20 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.MajorVersionLabel = wx.StaticText( VersionInfoSizer.GetStaticBox(), wx.ID_ANY, u"Major Version", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.MajorVersionLabel.Wrap( -1 )
-		self.MajorVersionLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.MajorVersionLabel.SetToolTipString( u"Major version number. This will be included in the filename of the produced Crypter binary" )
-		
-		bSizer20.Add( self.MajorVersionLabel, 0, wx.ALL, 5 )
-		
-		
-		bSizer20.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.MajorVersionTextCtrl = wx.TextCtrl( VersionInfoSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer20.Add( self.MajorVersionTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		VersionInfoSizer.Add( bSizer20, 1, wx.EXPAND, 5 )
-		
-		bSizer201 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.MinorVersionLabel = wx.StaticText( VersionInfoSizer.GetStaticBox(), wx.ID_ANY, u"Minor Version", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.MinorVersionLabel.Wrap( -1 )
-		self.MinorVersionLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.MinorVersionLabel.SetToolTipString( u"Minor version number. This will be included in the filename of the produced Crypter binary" )
-		
-		bSizer201.Add( self.MinorVersionLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer201.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.MinorVersionTextCtrl = wx.TextCtrl( VersionInfoSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer201.Add( self.MinorVersionTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		VersionInfoSizer.Add( bSizer201, 1, wx.EXPAND, 5 )
-		
-		
-		self.m_panel3.SetSizer( VersionInfoSizer )
-		self.m_panel3.Layout()
-		VersionInfoSizer.Fit( self.m_panel3 )
-		bSizer3.Add( self.m_panel3, 1, wx.ALL|wx.FIXED_MINSIZE, 5 )
-		
-		
-		bSizer2.Add( bSizer3, 0, wx.EXPAND, 5 )
 		
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -501,6 +451,14 @@ class MainFrame ( wx.Frame ):
 		
 		
 		bSizer39.Add( bSizer4111, 1, wx.EXPAND, 5 )
+		
+		sbSizer10 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Ransom Message" ), wx.VERTICAL )
+		
+		self.RansomMessageTextCtrl = wx.TextCtrl( sbSizer10.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
+		sbSizer10.Add( self.RansomMessageTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer39.Add( sbSizer10, 3, wx.EXPAND, 5 )
 		
 		
 		RansomwareSettingsSizer.Add( bSizer39, 1, wx.EXPAND, 5 )

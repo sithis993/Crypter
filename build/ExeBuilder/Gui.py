@@ -54,18 +54,14 @@ class Gui(MainFrame):
         inludes updating labels and other widgets
         '''
         
-        pass
-                             
-        # Asterisk Mandatory fields
-        '''
-        @deprecated: Unnecessary overcomplication. No fields should be mandatory.
-        They should simply use a default
-        '''
+        # Version
+        self.TitleLabel.SetLabel(TITLE)
+        self.SetTitle(TITLE)
    
         # Set Logo Image
         self.LogoBitmap.SetBitmap(
             wx.Bitmap(
-                "ExeBuilder\\static\\lock.bmp"
+                "ExeBuilder\\static\\builder_logo.bmp"
                 )
             )
         # Set debug to default level
@@ -111,16 +107,6 @@ class Gui(MainFrame):
                 )
         else:
             self.DebugLevelChoice.SetSelection(0)
-        # Major Version
-        if "maj_version" in config_dict:
-            self.MajorVersionTextCtrl.SetValue(config_dict["maj_version"])
-        else:
-            self.MajorVersionTextCtrl.SetValue("")
-        # Minor Version
-        if "min_version" in config_dict:
-            self.MinorVersionTextCtrl.SetValue(config_dict["min_version"])
-        else:
-            self.MinorVersionTextCtrl.SetValue("")
         # Filename
         if "filename" in config_dict:
             self.FilenameTextCtrl.SetValue(config_dict["filename"])
@@ -172,6 +158,11 @@ class Gui(MainFrame):
             self.FiletypesToEncryptTextCtrl.SetValue(filetypes)
         else:
             self.FiletypesToEncryptTextCtrl.SetValue("")
+        # Ransom Message
+        if "ransom_message" in config_dict:
+            self.RansomMessageTextCtrl.SetValue(config_dict["ransom_message"])
+        else:
+            self.RansomMessageTextCtrl.SetValue("")
             
             
     def __save_config(self, event):
@@ -191,7 +182,7 @@ class Gui(MainFrame):
         # Try to write the config to file
         try:
             with open(self.config_file_path, "w") as config_file_handle:
-                json.dump(user_input_dict, config_file_handle, indent=4)
+                json.dump(user_input_dict, config_file_handle, indent=6)
                 self.console.log(msg="Build configuration successfully saved to file %s"
                                  % self.config_file_path)
                 self.StatusBar.SetStatusText("Config Saved To %s" % self.config_file_path)
@@ -364,10 +355,6 @@ class Gui(MainFrame):
         user_input_dict["builder_language"] = self.BuilderLanguageChoice.GetString(
             self.BuilderLanguageChoice.GetSelection()
             )
-        # Major Version
-        user_input_dict["maj_version"] = self.MajorVersionTextCtrl.GetValue()
-        # Minor Version
-        user_input_dict["min_version"] = self.MinorVersionTextCtrl.GetValue()
         # Filename
         user_input_dict["filename"] = self.FilenameTextCtrl.GetValue()
         # Filename
@@ -390,6 +377,8 @@ class Gui(MainFrame):
         user_input_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
         # Max file size to encrypt
         user_input_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+        # Ransom Message
+        user_input_dict["ransom_message"] = self.RansomMessageTextCtrl.GetValue()
         # Debug Level
         user_input_dict["debug_level"] = self.DebugLevelChoice.GetString(
             self.DebugLevelChoice.GetSelection()
@@ -405,8 +394,9 @@ class Gui(MainFrame):
 
         # Reset all labels to standard foreground colour
         for input_field in BUILDER_CONFIG_ITEMS:
-            label_object_name = BUILDER_CONFIG_ITEMS[input_field]["label_object_name"]
-            self.__set_label_colour(label_object_name, colour="default")
+            if "label_object_name" in BUILDER_CONFIG_ITEMS[input_field]:
+                label_object_name = BUILDER_CONFIG_ITEMS[input_field]["label_object_name"]
+                self.__set_label_colour(label_object_name, colour="default")
 
         
     def __start_build(self, event):
