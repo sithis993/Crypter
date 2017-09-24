@@ -202,8 +202,6 @@ class BuilderThread(Thread):
         
         # Create target binary filename
         dest_filename = "%s" % self.user_input_dict["filename"]
-        if self.user_input_dict["maj_version"] and self.user_input_dict["min_version"]:
-            dest_filename += "-%s.%s" % (self.user_input_dict["maj_version"], self.user_input_dict["min_version"])
         dest_filename += ".%s.exe" % (
             self.user_input_dict["extension"]
             )
@@ -328,7 +326,8 @@ class BuilderThread(Thread):
         
         self.__console_log(msg="Creating binary runtime config at %s" % RUNTIME_CONFIG_PATH,
                            debug_level=1)
-        config_dict = {}
+        config_dict = {"maj_version": MAJ_VERSION,
+                       "min_version": MIN_VERSION}
         
         for config_item in RUNTIME_CONFIG_ITEMS:
             config_dict[config_item] = self.user_input_dict[config_item]

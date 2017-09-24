@@ -264,7 +264,7 @@ class Crypter(Base.Base):
 
     # Get extension and check if valid
     extension = components[-1]
-    if extension.lower() in self.FILETYPES:
+    if extension.lower() in self.__config["filetypes_to_encrypt"]:
       return True
     else:
       return False

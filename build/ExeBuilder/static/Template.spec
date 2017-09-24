@@ -6,7 +6,8 @@ block_cipher=None
 a = Analysis(['..\\Crypter\\Main.py'],
              pathex=['.\\build'],
              binaries=None,
-             datas=[("Resources/new_lock.bmp", "."),
+             datas=[("Resources/lock.bmp", "."),
+			 ("Resources/bitcoin.bmp", "."),
 			 ("Resources/runtime.cfg", ".")
 			 ],
              hiddenimports=[],

