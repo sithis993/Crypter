@@ -215,6 +215,11 @@ class BuilderThread(Thread):
             )
         # Otherwise move the file to the correct location
         else:
+            
+            # Make bin dir if it doesn't exist
+            if not os.path.isdir("..\\bin"):
+                os.makedirs("..\\bin")
+            
             if os.path.isfile("..\\bin\\%s" % dest_filename):
                 os.remove("..\\bin\\%s" % dest_filename)
             os.rename("dist\\Main.exe",
