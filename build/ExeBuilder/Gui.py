@@ -40,6 +40,7 @@ class Gui(MainFrame):
         MainFrame.__init__( self, parent=None )
         self.console = Console(self.ConsoleTextCtrl)
         self.StatusBar.SetStatusText("Ready...")
+        self.SetIcon(wx.IconFromBitmap(wx.Bitmap("ExeBuilder\\static\\builder_logo.bmp", wx.BITMAP_TYPE_ANY)))
         
         # Update GUI Visuals
         self.update_gui_visuals()

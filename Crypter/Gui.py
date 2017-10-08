@@ -375,6 +375,14 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		'''
 		@summary: Method to update the GUI visuals/aesthetics, i.e labels, images etc.
 		'''
+		
+		# Icon
+		self.SetIcon(wx.IconFromBitmap(wx.Bitmap(
+				os.path.join(self.image_path, self.GUI_IMAGE_LOGO),
+				wx.BITMAP_TYPE_ANY
+				)
+			)
+		)
 
 		# Titles
 		self.SetTitle(self.GUI_LABEL_TEXT_TITLE[self.LANG] + " v%s.%s" % (
@@ -382,7 +390,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			self.__config["min_version"]
 			)
 		)
-		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG])
+		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG].upper())
 		
 		# Set flashing text initial label
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
