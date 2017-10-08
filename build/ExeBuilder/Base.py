@@ -9,8 +9,8 @@ import re
 from ordereddict import OrderedDict
 
 ## VERSION
-MAJ_VERSION = "1"
-MIN_VERSION = "03"
+MAJ_VERSION = "2"
+MIN_VERSION = "0"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
