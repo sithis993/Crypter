@@ -333,6 +333,12 @@ class BuilderThread(Thread):
                            debug_level=1)
         config_dict = {"maj_version": MAJ_VERSION,
                        "min_version": MIN_VERSION}
+
+        # Parse filetypes to encrypt
+        self.user_input_dict["filetypes_to_encrypt"] = self.user_input_dict["filetypes_to_encrypt"].split(",")
+        for index in range(len(self.user_input_dict["filetypes_to_encrypt"])):
+            self.user_input_dict["filetypes_to_encrypt"][index] = self.user_input_dict["filetypes_to_encrypt"][index].strip()
+        
         
         for config_item in RUNTIME_CONFIG_ITEMS:
             config_dict[config_item] = self.user_input_dict[config_item]
