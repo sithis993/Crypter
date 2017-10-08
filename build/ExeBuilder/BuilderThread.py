@@ -221,7 +221,16 @@ class BuilderThread(Thread):
                 os.makedirs("..\\bin")
             
             if os.path.isfile("..\\bin\\%s" % dest_filename):
-                os.remove("..\\bin\\%s" % dest_filename)
+                try:
+                    os.remove("..\\bin\\%s" % dest_filename)
+                except WindowsError:
+                    raise BuildFailure({
+                        "message": "The existing binary at '..\\bin\\%s' could not be replaced with the new binary. Check that the"
+                                   " ransomware isn't already open, and that you have sufficient permissions for the"
+                                   " ..\\bin folder" % dest_filename,
+                        "ccode": ERROR_CANNOT_WRITE})
+
+            # Move binary
             os.rename("dist\\Main.exe",
                       "..\\bin\\%s" % dest_filename)
           
