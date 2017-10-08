@@ -39,7 +39,7 @@ class Base():
     GUI_IMAGE_LOGO = "lock.bmp"
     GUI_IMAGE_BUTTON = "bitcoin.bmp"
     GUI_LABEL_TEXT_TITLE = {
-        "eng": "CRYPTER",
+        "eng": "Crypter",
         "ru": u"КРИПТЕР"
         }
     GUI_LABEL_TEXT_FLASHING_ENCRYPTED = {
