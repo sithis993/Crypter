@@ -1152,7 +1152,7 @@
                                                 <property name="gripper">0</property>
                                                 <property name="hidden">0</property>
                                                 <property name="id">wxID_ANY</property>
-                                                <property name="label">The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field&apos;s label.&#x0A;&#x0A;Fields left blank will be set to the default configuration.</property>
+                                                <property name="label">The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field&apos;s label. Fields left blank will be set to the default configuration.&#x0A;&#x0A;To see an example configuration, click the browse button at the top of the app and load the &quot;config_example.cfg&quot; file.</property>
                                                 <property name="max_size"></property>
                                                 <property name="maximize_button">0</property>
                                                 <property name="maximum_size"></property>

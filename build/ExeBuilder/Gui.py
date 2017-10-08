@@ -176,9 +176,12 @@ class Gui(MainFrame):
 
         # Get data from form
         user_input_dict = self.__get_input_data()
-        # Format filetypes to encrypt
-        user_input_dict["filetypes_to_encrypt"] = user_input_dict["filetypes_to_encrypt"].split(",")
         
+        # Parse filetypes to encrypt
+        user_input_dict["filetypes_to_encrypt"] = user_input_dict["filetypes_to_encrypt"].split(",")
+        for index in range(len(user_input_dict["filetypes_to_encrypt"])):
+            user_input_dict["filetypes_to_encrypt"][index] = user_input_dict["filetypes_to_encrypt"][index].strip()
+
         # Try to write the config to file
         try:
             with open(self.config_file_path, "w") as config_file_handle:
