@@ -56,17 +56,17 @@ class MainFrame ( wx.Frame ):
 		self.m_staticline2 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
 		
-		self.m_scrolledWindow2 = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.VSCROLL )
-		self.m_scrolledWindow2.SetScrollRate( 5, 5 )
+		self.ConfigScrollableWindow = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.VSCROLL )
+		self.ConfigScrollableWindow.SetScrollRate( 5, 5 )
 		bSizer2 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_scrolledWindow4 = wx.ScrolledWindow( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.STATIC_BORDER|wx.VSCROLL )
-		self.m_scrolledWindow4.SetScrollRate( 5, 5 )
-		self.m_scrolledWindow4.SetBackgroundColour( wx.Colour( 255, 255, 255 ) )
+		self.GuideScrollableWindow = wx.ScrolledWindow( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.STATIC_BORDER|wx.VSCROLL )
+		self.GuideScrollableWindow.SetScrollRate( 5, 5 )
+		self.GuideScrollableWindow.SetBackgroundColour( wx.Colour( 255, 255, 255 ) )
 		
 		bSizer44 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.TitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Crypter Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.TitleLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Crypter Builder", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
 		self.TitleLabel.Wrap( -1 )
 		self.TitleLabel.SetFont( wx.Font( 22, 75, 90, 92, False, "Courier" ) )
 		self.TitleLabel.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
@@ -74,63 +74,63 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.TitleLabel, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND, 5 )
 		
-		self.SubtitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Created by Sithis993", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+		self.SubtitleLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Created by Sithis993", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
 		self.SubtitleLabel.Wrap( -1 )
 		self.SubtitleLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.SubtitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.LogoBitmap = wx.StaticBitmap( self.m_scrolledWindow4, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.LogoBitmap = wx.StaticBitmap( self.GuideScrollableWindow, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer44.Add( self.LogoBitmap, 0, wx.ALL|wx.EXPAND, 10 )
 		
-		self.QuickBuildTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Quick Build", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.QuickBuildTitleLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Quick Build", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.QuickBuildTitleLabel.Wrap( 359 )
 		self.QuickBuildTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
 		
 		bSizer44.Add( self.QuickBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.QuickBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binay with the default settings", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.QuickBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binay with the default settings", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.QuickBuildDescriptionLabel.Wrap( 359 )
 		self.QuickBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.QuickBuildDescriptionLabel, 0, wx.ALL|wx.EXPAND, 10 )
 		
-		self.CustomisingBuildTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Customising the ransomware", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildTitleLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Customising the ransomware", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.CustomisingBuildTitleLabel.Wrap( 359 )
 		self.CustomisingBuildTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
 		
 		bSizer44.Add( self.CustomisingBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label. Fields left blank will be set to the default configuration.\n\nTo see an example configuration, click the browse button at the top of the app and load the \"config_example.cfg\" file.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label. Fields left blank will be set to the default configuration.\n\nTo see an example configuration, click the browse button at the top of the app and load the \"config_example.cfg\" file.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.CustomisingBuildDescriptionLabel.Wrap( 359 )
 		self.CustomisingBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.CustomisingBuildDescriptionLabel, 0, wx.ALL, 10 )
 		
-		self.ManagingConfigurationsTitleLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Managing Configurations", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ManagingConfigurationsTitleLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Managing Configurations", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.ManagingConfigurationsTitleLabel.Wrap( 359 )
 		self.ManagingConfigurationsTitleLabel.SetFont( wx.Font( 9, 75, 90, 92, True, "Courier" ) )
 		
 		bSizer44.Add( self.ManagingConfigurationsTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.CustomisingBuildDescriptionLabel1 = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"Optionally, if you'd like to save your ransomware configuration click the Save button at the bottom of this form. Existing configurations can be loaded by clicking the Load button at the top of the interface.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.CustomisingBuildDescriptionLabel1.Wrap( 359 )
-		self.CustomisingBuildDescriptionLabel1.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
+		self.ManagingConfigurationsDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Optionally, if you'd like to save your ransomware configuration click the Save button at the bottom of this form. Existing configurations can be loaded by clicking the Load button at the top of the interface.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.ManagingConfigurationsDescriptionLabel.Wrap( 359 )
+		self.ManagingConfigurationsDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
-		bSizer44.Add( self.CustomisingBuildDescriptionLabel1, 0, wx.ALL, 10 )
+		bSizer44.Add( self.ManagingConfigurationsDescriptionLabel, 0, wx.ALL, 10 )
 		
 		
-		self.m_scrolledWindow4.SetSizer( bSizer44 )
-		self.m_scrolledWindow4.Layout()
-		bSizer44.Fit( self.m_scrolledWindow4 )
-		bSizer2.Add( self.m_scrolledWindow4, 6, wx.ALL|wx.EXPAND, 5 )
+		self.GuideScrollableWindow.SetSizer( bSizer44 )
+		self.GuideScrollableWindow.Layout()
+		bSizer44.Fit( self.GuideScrollableWindow )
+		bSizer2.Add( self.GuideScrollableWindow, 6, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_staticline6 = wx.StaticLine( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		self.m_staticline6 = wx.StaticLine( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer2.Add( self.m_staticline6, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		bSizer31 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_panel31 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel31 = wx.Panel( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		LanguageSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel31, wx.ID_ANY, u"Language" ), wx.HORIZONTAL )
 		
 		bSizer202 = wx.BoxSizer( wx.HORIZONTAL )
@@ -159,7 +159,7 @@ class MainFrame ( wx.Frame ):
 		LanguageSettingsSizer.Fit( self.m_panel31 )
 		bSizer31.Add( self.m_panel31, 1, wx.ALL, 5 )
 		
-		self.m_panel311 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel311 = wx.Panel( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		DebugSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel311, wx.ID_ANY, u"Debug" ), wx.HORIZONTAL )
 		
 		bSizer2021 = wx.BoxSizer( wx.HORIZONTAL )
@@ -193,7 +193,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.m_panel41 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel41 = wx.Panel( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		BinarySettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel41, wx.ID_ANY, u"Binary Settings" ), wx.VERTICAL )
 		
 		bSizer391 = wx.BoxSizer( wx.VERTICAL )
@@ -322,7 +322,7 @@ class MainFrame ( wx.Frame ):
 		BinarySettingsSizer.Fit( self.m_panel41 )
 		bSizer12.Add( self.m_panel41, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.m_panel4 = wx.Panel( self.m_scrolledWindow2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel4 = wx.Panel( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		RansomwareSettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel4, wx.ID_ANY, u"Ransomware Settings" ), wx.VERTICAL )
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
@@ -452,13 +452,13 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer39.Add( bSizer4111, 1, wx.EXPAND, 5 )
 		
-		sbSizer10 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Ransom Message" ), wx.VERTICAL )
+		RansomMessageSizer = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Ransom Message" ), wx.VERTICAL )
 		
-		self.RansomMessageTextCtrl = wx.TextCtrl( sbSizer10.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
-		sbSizer10.Add( self.RansomMessageTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
+		self.RansomMessageTextCtrl = wx.TextCtrl( RansomMessageSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
+		RansomMessageSizer.Add( self.RansomMessageTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer39.Add( sbSizer10, 3, wx.EXPAND, 5 )
+		bSizer39.Add( RansomMessageSizer, 3, wx.EXPAND, 5 )
 		
 		
 		RansomwareSettingsSizer.Add( bSizer39, 1, wx.EXPAND, 5 )
@@ -474,23 +474,23 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer50 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.SaveConfigurationLabel = wx.StaticText( self.m_scrolledWindow2, wx.ID_ANY, u"Save configuration", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.SaveConfigurationLabel = wx.StaticText( self.ConfigScrollableWindow, wx.ID_ANY, u"Save configuration", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.SaveConfigurationLabel.Wrap( -1 )
 		self.SaveConfigurationLabel.SetFont( wx.Font( 9, 74, 90, 92, False, "Arial" ) )
 		
 		bSizer50.Add( self.SaveConfigurationLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
-		self.SaveFilePicker = wx.FilePickerCtrl( self.m_scrolledWindow2, wx.ID_ANY, wx.EmptyString, u"Save Configuration", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		self.SaveFilePicker = wx.FilePickerCtrl( self.ConfigScrollableWindow, wx.ID_ANY, wx.EmptyString, u"Save Configuration", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
 		bSizer50.Add( self.SaveFilePicker, 0, wx.ALL, 5 )
 		
 		
 		bSizer2.Add( bSizer50, 1, wx.EXPAND, 5 )
 		
 		
-		self.m_scrolledWindow2.SetSizer( bSizer2 )
-		self.m_scrolledWindow2.Layout()
-		bSizer2.Fit( self.m_scrolledWindow2 )
-		bSizer1.Add( self.m_scrolledWindow2, 8, wx.ALL|wx.EXPAND, 5 )
+		self.ConfigScrollableWindow.SetSizer( bSizer2 )
+		self.ConfigScrollableWindow.Layout()
+		bSizer2.Fit( self.ConfigScrollableWindow )
+		bSizer1.Add( self.ConfigScrollableWindow, 8, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_staticline21 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline21, 0, wx.EXPAND |wx.ALL, 5 )
