@@ -256,18 +256,26 @@ class Crypter(Base.Base):
     '''
 
     # Split filename
-    components = file.split(".")
+    filename_components = file.split(".")
 
     # If no extension, return False
-    if len(components) <= 1:
+    if len(filename_components) <= 1:
       return False
-
-    # Get extension and check if valid
-    extension = components[-1]
-    if extension.lower() in self.__config["filetypes_to_encrypt"]:
-      return True
+    # Otherwise stringify extension
     else:
-      return False
+      full_extension = ".".join(filename_components[1:]).lower()
+
+    # Check if extension is in the list of encryptable extensions
+    for target_extension in self.__config["filetypes_to_encrypt"]:
+        if len(target_extension) <= len(full_extension) and full_extension[-len(target_extension):] == target_extension.lower():
+            return True
+        
+    return False
+        
+
+  
+  
+    return False
 
 
   def set_wallpaper(self):
