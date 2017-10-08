@@ -101,7 +101,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.CustomisingBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label.\n\nFields left blank will be set to the default configuration.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.m_scrolledWindow4, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label. Fields left blank will be set to the default configuration.\n\nTo see an example configuration, click the browse button at the top of the app and load the \"config_example.cfg\" file.", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.CustomisingBuildDescriptionLabel.Wrap( 359 )
 		self.CustomisingBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
