@@ -108,16 +108,6 @@ class Gui(MainFrame):
                 )
         else:
             self.DebugLevelChoice.SetSelection(0)
-        # Filename
-        if "filename" in config_dict:
-            self.FilenameTextCtrl.SetValue(config_dict["filename"])
-        else:
-            self.FilenameTextCtrl.SetValue("")
-        # Extension
-        if "extension" in config_dict:
-            self.ExtensionTextCtrl.SetValue(config_dict["extension"])
-        else:
-            self.ExtensionTextCtrl.SetValue("")
         # PyInstaller AES Key
         if "pyinstaller_aes_key" in config_dict:
             self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
@@ -128,6 +118,11 @@ class Gui(MainFrame):
             self.IconFilePicker.SetPath(config_dict["icon_file"])
         else:
             self.IconFilePicker.SetPath("")
+        # UPX Packer dir
+        if "upx_dir" in config_dict:
+            self.UpxDirPicker.SetPath(config_dict["upx_dir"])
+        else:
+            self.UpxDirPicker.SetPath("")
         # Encrypted File Extension
         if "encrypted_file_extension" in config_dict:
             self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
@@ -360,10 +355,6 @@ class Gui(MainFrame):
         user_input_dict["builder_language"] = self.BuilderLanguageChoice.GetString(
             self.BuilderLanguageChoice.GetSelection()
             )
-        # Filename
-        user_input_dict["filename"] = self.FilenameTextCtrl.GetValue()
-        # Filename
-        user_input_dict["extension"] = self.ExtensionTextCtrl.GetValue()
         # PyInstaller AES Key
         user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
         # PyInstaller AES Key

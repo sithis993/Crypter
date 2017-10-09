@@ -200,6 +200,7 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		  self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_DECRYPTED[self.LANG])
 		  self.FlashingMessageText.SetForegroundColour( wx.Colour(2, 217, 5) )
 		  self.TimeRemainingTime.SetLabelText(self.GUI_LABEL_TEXT_TIME_BLANK[self.LANG])
+		  self.HeaderPanel.Layout() # Recenters the child widgets after text update (this works!)
 		  
 		  # Disable decryption and files list buttons
 		  self.EnterDecryptionKeyButton.Disable()
@@ -329,10 +330,12 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		# Set message to blank
 		if self.set_message_to_null and time_remaining:
 			self.FlashingMessageText.SetLabelText("")
+			self.HeaderPanel.Layout() # Recenters the child widgets after text update (this works!)
 			self.set_message_to_null = False
 		# Set message to text
 		elif time_remaining:
 			self.FlashingMessageText.SetLabelText(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
+			self.HeaderPanel.Layout() # Recenters the child widgets after text update (this works!)
 			self.set_message_to_null = True
 		
 		# If the key has been destroyed, update the menu text
