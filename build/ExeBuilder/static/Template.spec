@@ -8,6 +8,7 @@ a = Analysis(['..\\Crypter\\Main.py'],
              binaries=None,
              datas=[("Resources/lock.bmp", "."),
 			 ("Resources/bitcoin.bmp", "."),
+			 ("Resources/lock.ico", "."),
 			 ("Resources/runtime.cfg", ".")
 			 ],
              hiddenimports=[],

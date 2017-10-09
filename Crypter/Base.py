@@ -38,6 +38,7 @@ class Base():
     # GUI SCHEMA
     GUI_IMAGE_LOGO = "lock.bmp"
     GUI_IMAGE_BUTTON = "bitcoin.bmp"
+    GUI_IMAGE_ICON = "lock.ico"
     GUI_LABEL_TEXT_TITLE = {
         "eng": "Crypter",
         "ru": u"КРИПТЕР"
