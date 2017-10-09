@@ -14,6 +14,7 @@ MIN_VERSION = "0"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
+CRYPTER_FILENAME = "Crypter"
 
 ## LANGUAGE
 SUPPORTED_LANGUAGES = [
@@ -83,30 +84,6 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "input_requirement": "Build process debug level",
             "config_area": "Debug",
             "default": "1 - Low"
-            }
-    ),
-    (
-        "filename", {
-            "label": "Filename",
-            "label_object_name": "FilenameLabel",
-            "input_object_name": "FilenameTextCtrl",
-            "regex": re.compile("^([A-Za-z][A-Za-z0-9_-]*)?$"),
-            "input_requirement": "A series of alphanumeric character(s), beginning with a letter",
-            "example": "invoice_pdf",
-            "default": "ransom",
-            "config_area": "Binary Settings"
-            }
-    ),
-    (
-        "extension", {
-            "label": "Extension",
-            "label_object_name": "ExtensionLabel",
-            "input_object_name": "ExtensionTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]*$"),
-            "example": "pdf",
-            "input_requirement": "A series of alphanumeric character(s)",
-            "default": "pdf",
-            "config_area": "Binary Settings"
             }
     ),
     (
