@@ -138,7 +138,7 @@ class MainFrame ( wx.Frame ):
 		self.BuilderLanguageLabel = wx.StaticText( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Builder Language", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BuilderLanguageLabel.Wrap( -1 )
 		self.BuilderLanguageLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.BuilderLanguageLabel.SetToolTipString( u"Major version number. This will be included in the filename of the produced Crypter binary" )
+		self.BuilderLanguageLabel.SetToolTipString( u"The language of this GUI" )
 		
 		bSizer202.Add( self.BuilderLanguageLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -167,7 +167,7 @@ class MainFrame ( wx.Frame ):
 		self.DebugLevelLabel = wx.StaticText( DebugSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Debug Level", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DebugLevelLabel.Wrap( -1 )
 		self.DebugLevelLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.DebugLevelLabel.SetToolTipString( u"Major version number. This will be included in the filename of the produced Crypter binary" )
+		self.DebugLevelLabel.SetToolTipString( u"The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below." )
 		
 		bSizer2021.Add( self.DebugLevelLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -198,49 +198,6 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer391 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer412 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer203213 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.FilenameLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Filename", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.FilenameLabel.Wrap( -1 )
-		self.FilenameLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.FilenameLabel.SetToolTipString( u"The name of the file (excluding the extension) to use for the produced Crypter binary" )
-		
-		bSizer203213.Add( self.FilenameLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer203213.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.FilenameTextCtrl = wx.TextCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.FilenameTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
-		
-		bSizer203213.Add( self.FilenameTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		bSizer412.Add( bSizer203213, 1, 0, 5 )
-		
-		bSizer2032112 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.ExtensionLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Extension", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.ExtensionLabel.Wrap( -1 )
-		self.ExtensionLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.ExtensionLabel.SetToolTipString( u"The file extension of the Crypter binary, such as pdf or mp3. It is recommended that the extension matches the specified icon file" )
-		
-		bSizer2032112.Add( self.ExtensionLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer2032112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.ExtensionTextCtrl = wx.TextCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer2032112.Add( self.ExtensionTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		bSizer412.Add( bSizer2032112, 1, 0, 5 )
-		
-		
-		bSizer391.Add( bSizer412, 1, wx.EXPAND, 5 )
-		
 		bSizer41111 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer20321211 = wx.BoxSizer( wx.HORIZONTAL )
@@ -263,7 +220,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer203211111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.IconLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Icon", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.IconLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Icon File", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.IconLabel.Wrap( -1 )
 		self.IconLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
 		self.IconLabel.SetToolTipString( u"The icon (.ico) file to use for the binary" )

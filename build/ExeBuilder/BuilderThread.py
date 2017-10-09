@@ -201,10 +201,7 @@ class BuilderThread(Thread):
             raise UserHalt
         
         # Create target binary filename
-        dest_filename = "%s" % self.user_input_dict["filename"]
-        dest_filename += ".%s.exe" % (
-            self.user_input_dict["extension"]
-            )
+        dest_filename = "%s.exe" % CRYPTER_FILENAME
         
         # Check Binary was produced
         if not os.path.isfile("dist\\Main.exe"):
