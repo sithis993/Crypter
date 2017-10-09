@@ -381,12 +381,12 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		
 		# Icon
 		self.SetIcon(wx.IconFromBitmap(wx.Bitmap(
-				os.path.join(self.image_path, self.GUI_IMAGE_LOGO),
-				wx.BITMAP_TYPE_ANY
+				os.path.join(self.image_path, self.GUI_IMAGE_ICON),
+				wx.BITMAP_TYPE_ICO
 				)
 			)
 		)
-
+		
 		# Titles
 		self.SetTitle(self.GUI_LABEL_TEXT_TITLE[self.LANG] + " v%s.%s" % (
 			self.__config["maj_version"],
