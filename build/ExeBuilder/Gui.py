@@ -178,6 +178,9 @@ class Gui(MainFrame):
         user_input_dict["filetypes_to_encrypt"] = user_input_dict["filetypes_to_encrypt"].split(",")
         for index in range(len(user_input_dict["filetypes_to_encrypt"])):
             user_input_dict["filetypes_to_encrypt"][index] = user_input_dict["filetypes_to_encrypt"][index].strip().strip(".")
+            
+        # Parse encrypted file extension
+        user_input_dict["encrypted_file_extension"] = user_input_dict["encrypted_file_extension"].strip(".")
 
         # Try to write the config to file
         try:

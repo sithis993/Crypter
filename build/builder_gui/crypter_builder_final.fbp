@@ -330,7 +330,7 @@
                                                     <property name="style">wxFLP_FILE_MUST_EXIST|wxFLP_OPEN</property>
                                                     <property name="subclass"></property>
                                                     <property name="toolbar_pane">0</property>
-                                                    <property name="tooltip"></property>
+                                                    <property name="tooltip">Load an existing Builder configuration file.</property>
                                                     <property name="validator_data_type"></property>
                                                     <property name="validator_style">wxFILTER_NONE</property>
                                                     <property name="validator_type">wxDefaultValidator</property>
@@ -1152,7 +1152,7 @@
                                                 <property name="gripper">0</property>
                                                 <property name="hidden">0</property>
                                                 <property name="id">wxID_ANY</property>
-                                                <property name="label">The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field&apos;s label. Fields left blank will be set to the default configuration.&#x0A;&#x0A;To see an example configuration, click the browse button at the top of the app and load the &quot;config_example.cfg&quot; file.</property>
+                                                <property name="label">The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, hover the mouse cursor over the field&apos;s label or input box to view its tooltip. &#x0A;Fields left blank will be set to the default configuration.&#x0A;&#x0A;To see an example configuration, click the browse button at the top of the app and load the &quot;config_example.cfg&quot; file.</property>
                                                 <property name="max_size"></property>
                                                 <property name="maximize_button">0</property>
                                                 <property name="maximum_size"></property>
@@ -1177,7 +1177,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
-                                                <property name="wrap">359</property>
+                                                <property name="wrap">340</property>
                                                 <event name="OnChar"></event>
                                                 <event name="OnEnterWindow"></event>
                                                 <event name="OnEraseBackground"></event>
@@ -1343,7 +1343,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
-                                                <property name="wrap">359</property>
+                                                <property name="wrap">340</property>
                                                 <event name="OnChar"></event>
                                                 <event name="OnEnterWindow"></event>
                                                 <event name="OnEraseBackground"></event>
@@ -1610,7 +1610,7 @@
                                                                 <property name="style"></property>
                                                                 <property name="subclass"></property>
                                                                 <property name="toolbar_pane">0</property>
-                                                                <property name="tooltip">The language of this GUI</property>
+                                                                <property name="tooltip">The language of this GUI. Defaults to English.</property>
                                                                 <property name="window_extra_style"></property>
                                                                 <property name="window_name"></property>
                                                                 <property name="window_style"></property>
@@ -1704,7 +1704,7 @@
                                                                 <property name="style"></property>
                                                                 <property name="subclass"></property>
                                                                 <property name="toolbar_pane">0</property>
-                                                                <property name="tooltip"></property>
+                                                                <property name="tooltip">The language of this GUI. Defaults to English.</property>
                                                                 <property name="validator_data_type"></property>
                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -1891,7 +1891,7 @@
                                                                 <property name="style"></property>
                                                                 <property name="subclass"></property>
                                                                 <property name="toolbar_pane">0</property>
-                                                                <property name="tooltip">The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below.</property>
+                                                                <property name="tooltip">The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below.&#x0A;&#x0A;Defaults to 1 which provides a small amount of debug information.</property>
                                                                 <property name="window_extra_style"></property>
                                                                 <property name="window_name"></property>
                                                                 <property name="window_style"></property>
@@ -1979,13 +1979,13 @@
                                                                 <property name="pin_button">1</property>
                                                                 <property name="pos"></property>
                                                                 <property name="resize">Resizable</property>
-                                                                <property name="selection">0</property>
+                                                                <property name="selection">1</property>
                                                                 <property name="show">1</property>
                                                                 <property name="size"></property>
                                                                 <property name="style"></property>
                                                                 <property name="subclass"></property>
                                                                 <property name="toolbar_pane">0</property>
-                                                                <property name="tooltip"></property>
+                                                                <property name="tooltip">The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below.&#x0A;&#x0A;Defaults to 1 which provides a small amount of debug information.</property>
                                                                 <property name="validator_data_type"></property>
                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -2086,7 +2086,7 @@
                                             <property name="size"></property>
                                             <property name="subclass"></property>
                                             <property name="toolbar_pane">0</property>
-                                            <property name="tooltip"></property>
+                                            <property name="tooltip">The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.&#x0A;&#x0A;It is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes.</property>
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style">wxTAB_TRAVERSAL</property>
@@ -2201,7 +2201,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The AES key used by Pyinstaller to encrypt the Crypter script files. This field is optional, but provides Crypter with a layer of obfuscation</property>
+                                                                                <property name="tooltip">The AES key used by Pyinstaller to encrypt the ransomware script files. This field is optional, but provides Crypter with a layer of obfuscation by making it more difficult to reverse engineer. Leave this field blank if you don&apos;t want to use this functionality.</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -2294,7 +2294,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The AES key used by Pyinstaller to encrypt the ransomware script files. This field is optional, but provides Crypter with a layer of obfuscation by making it more difficult to reverse engineer. Leave this field blank if you don&apos;t want to use this functionality.</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -2375,7 +2375,7 @@
                                                                                 <property name="gripper">0</property>
                                                                                 <property name="hidden">0</property>
                                                                                 <property name="id">wxID_ANY</property>
-                                                                                <property name="label">Icon File</property>
+                                                                                <property name="label">File Icon</property>
                                                                                 <property name="max_size"></property>
                                                                                 <property name="maximize_button">0</property>
                                                                                 <property name="maximum_size"></property>
@@ -2396,7 +2396,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The icon (.ico) file to use for the binary</property>
+                                                                                <property name="tooltip">The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon.</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -2489,7 +2489,7 @@
                                                                                 <property name="style">wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_SMALL</property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon.</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -2600,7 +2600,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The path to the UPX Packer directory</property>
+                                                                                <property name="tooltip">The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.&#x0A;&#x0A;It is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes.</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -2693,7 +2693,7 @@
                                                                                 <property name="style">wxDIRP_DEFAULT_STYLE|wxDIRP_SMALL</property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.&#x0A;&#x0A;It is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes.</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -2924,7 +2924,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The file extension to use after encrypting files. For example, &quot;locked&quot; will change the extension of all files to .locked once encrypted.</property>
+                                                                                <property name="tooltip">The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -3017,7 +3017,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3119,7 +3119,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The Bitcoin wallet address to be shown in the GUI following encryption</property>
+                                                                                <property name="tooltip">The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter&apos;s author ;-)</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -3212,7 +3212,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter&apos;s author ;-)</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3325,7 +3325,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The Bitcoin ransom fee to charge. This fee will be shown in the GUI following encryption</property>
+                                                                                <property name="tooltip">The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -3418,7 +3418,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3520,7 +3520,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The Key Destruction time in seconds. This timer will be shown in the GUI following encryption</property>
+                                                                                <property name="tooltip">The time in seconds before the victim&apos;s decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours).</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -3613,7 +3613,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The time in seconds before the victim&apos;s decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours).</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3726,7 +3726,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">The maximum fille size, in megabytes, to encrypt. Files larger than this limit will not be encrypted</property>
+                                                                                <property name="tooltip">The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512.</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -3819,7 +3819,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512.</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3921,7 +3921,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip">A comma separated list of filetypes. Files with these extensions will be encrypted</property>
+                                                                                <property name="tooltip">A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes.</property>
                                                                                 <property name="window_extra_style"></property>
                                                                                 <property name="window_name"></property>
                                                                                 <property name="window_style"></property>
@@ -4014,7 +4014,7 @@
                                                                                 <property name="style"></property>
                                                                                 <property name="subclass"></property>
                                                                                 <property name="toolbar_pane">0</property>
-                                                                                <property name="tooltip"></property>
+                                                                                <property name="tooltip">A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes.</property>
                                                                                 <property name="validator_data_type"></property>
                                                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -4059,7 +4059,7 @@
                                                         <object class="sizeritem" expanded="0">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxEXPAND</property>
-                                                            <property name="proportion">3</property>
+                                                            <property name="proportion">4</property>
                                                             <object class="wxStaticBoxSizer" expanded="0">
                                                                 <property name="id">wxID_ANY</property>
                                                                 <property name="label">Ransom Message</property>
@@ -4121,7 +4121,7 @@
                                                                         <property name="style">wxTE_MULTILINE</property>
                                                                         <property name="subclass"></property>
                                                                         <property name="toolbar_pane">0</property>
-                                                                        <property name="tooltip"></property>
+                                                                        <property name="tooltip">The ransom message to display in the Crypter GUI. Leave this text box blank to use the default ransom message.</property>
                                                                         <property name="validator_data_type"></property>
                                                                         <property name="validator_style">wxFILTER_NONE</property>
                                                                         <property name="validator_type">wxDefaultValidator</property>
@@ -4313,7 +4313,7 @@
                                             <property name="style">wxFLP_OVERWRITE_PROMPT|wxFLP_SAVE</property>
                                             <property name="subclass"></property>
                                             <property name="toolbar_pane">0</property>
-                                            <property name="tooltip"></property>
+                                            <property name="tooltip">Save your configuration to a builder configuration file.</property>
                                             <property name="validator_data_type"></property>
                                             <property name="validator_style">wxFILTER_NONE</property>
                                             <property name="validator_type">wxDefaultValidator</property>
@@ -4965,7 +4965,7 @@
                     <property name="border">10</property>
                     <property name="flag">wxALL|wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxPanel" expanded="0">
+                    <object class="wxPanel" expanded="1">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -5039,7 +5039,7 @@
                         <event name="OnSetFocus"></event>
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
-                        <object class="wxBoxSizer" expanded="0">
+                        <object class="wxBoxSizer" expanded="1">
                             <property name="minimum_size"></property>
                             <property name="name">bSizer171</property>
                             <property name="orient">wxVERTICAL</property>
