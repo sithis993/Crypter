@@ -6,7 +6,7 @@ Welcome to Crypter! a ransomware piece written entirely in Python and compiled t
 
 [Crypter video demonstration](https://youtu.be/r3jaNHmkkXE)
 
- ![Crypter GUI](sample_images/crypter_gui.PNG)
+ ![Crypter GUI](sample_images/crypter_package.png)
  
  
  ## Disclaimer - IMPORTANT
