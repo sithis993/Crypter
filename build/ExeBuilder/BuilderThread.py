@@ -35,6 +35,7 @@ class BuilderThread(Thread):
         self.__build_error = False
         self.__build_success = False
         self.__build_stopped = False
+        self.__binary_location = None
         self.__console_log(msg="Constructor()", debug_level=3)
         self.__stop_event = Event()
         self.user_input_dict = user_input_dict
@@ -230,6 +231,10 @@ class BuilderThread(Thread):
             # Move binary
             os.rename("dist\\Main.exe",
                       "..\\bin\\%s" % dest_filename)
+            self.__binary_location = os.path.join(
+                os.path.abspath("..\\bin"),
+                dest_filename
+            )
           
         
     def __run_pyinstaller(self, spec_path):
@@ -399,5 +404,13 @@ class BuilderThread(Thread):
         '''
         
         self.__stop_event.set()
+        
+        
+    def get_exe_location(self):
+        '''
+        @summary: Returns the location of the Crypter exe that was built
+        '''
+        
+        return self.__binary_location
         
         
