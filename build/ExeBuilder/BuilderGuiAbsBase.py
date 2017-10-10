@@ -39,6 +39,8 @@ class MainFrame ( wx.Frame ):
 		bSizer49.Add( self.LoadConfigFileLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.TOP, 5 )
 		
 		self.LoadFilePicker = wx.FilePickerCtrl( self.m_panel312, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
+		self.LoadFilePicker.SetToolTipString( u"Load an existing Builder configuration file." )
+		
 		bSizer49.Add( self.LoadFilePicker, 0, wx.ALL, 5 )
 		
 		
@@ -101,8 +103,8 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.CustomisingBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, mouse over the field's label. Fields left blank will be set to the default configuration.\n\nTo see an example configuration, click the browse button at the top of the app and load the \"config_example.cfg\" file.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.CustomisingBuildDescriptionLabel.Wrap( 359 )
+		self.CustomisingBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"The ransomware can be easily customised by adjusting any or all of the options below. For more information on each field, including a description and the expected input, hover the mouse cursor over the field's label or input box to view its tooltip. \nFields left blank will be set to the default configuration.\n\nTo see an example configuration, click the browse button at the top of the app and load the \"config_example.cfg\" file.", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CustomisingBuildDescriptionLabel.Wrap( 340 )
 		self.CustomisingBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.CustomisingBuildDescriptionLabel, 0, wx.ALL, 10 )
@@ -114,7 +116,7 @@ class MainFrame ( wx.Frame ):
 		bSizer44.Add( self.ManagingConfigurationsTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.ManagingConfigurationsDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"Optionally, if you'd like to save your ransomware configuration click the Save button at the bottom of this form. Existing configurations can be loaded by clicking the Load button at the top of the interface.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.ManagingConfigurationsDescriptionLabel.Wrap( 359 )
+		self.ManagingConfigurationsDescriptionLabel.Wrap( 340 )
 		self.ManagingConfigurationsDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		
 		bSizer44.Add( self.ManagingConfigurationsDescriptionLabel, 0, wx.ALL, 10 )
@@ -138,7 +140,7 @@ class MainFrame ( wx.Frame ):
 		self.BuilderLanguageLabel = wx.StaticText( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Builder Language", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BuilderLanguageLabel.Wrap( -1 )
 		self.BuilderLanguageLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.BuilderLanguageLabel.SetToolTipString( u"The language of this GUI" )
+		self.BuilderLanguageLabel.SetToolTipString( u"The language of this GUI. Defaults to English." )
 		
 		bSizer202.Add( self.BuilderLanguageLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -148,6 +150,8 @@ class MainFrame ( wx.Frame ):
 		BuilderLanguageChoiceChoices = [ u"English" ]
 		self.BuilderLanguageChoice = wx.Choice( LanguageSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, BuilderLanguageChoiceChoices, 0 )
 		self.BuilderLanguageChoice.SetSelection( 0 )
+		self.BuilderLanguageChoice.SetToolTipString( u"The language of this GUI. Defaults to English." )
+		
 		bSizer202.Add( self.BuilderLanguageChoice, 0, wx.ALL, 5 )
 		
 		
@@ -167,7 +171,7 @@ class MainFrame ( wx.Frame ):
 		self.DebugLevelLabel = wx.StaticText( DebugSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Debug Level", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DebugLevelLabel.Wrap( -1 )
 		self.DebugLevelLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.DebugLevelLabel.SetToolTipString( u"The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below." )
+		self.DebugLevelLabel.SetToolTipString( u"The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below.\n\nDefaults to 1 which provides a small amount of debug information." )
 		
 		bSizer2021.Add( self.DebugLevelLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -176,7 +180,9 @@ class MainFrame ( wx.Frame ):
 		
 		DebugLevelChoiceChoices = [ u"0 - Minimal", u"1 - Low", u"2 - Medium", u"3 - High" ]
 		self.DebugLevelChoice = wx.Choice( DebugSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, DebugLevelChoiceChoices, 0 )
-		self.DebugLevelChoice.SetSelection( 0 )
+		self.DebugLevelChoice.SetSelection( 1 )
+		self.DebugLevelChoice.SetToolTipString( u"The debug level of the build process. Select a higher level to increase the verbosity of the build output shown in the console box below.\n\nDefaults to 1 which provides a small amount of debug information." )
+		
 		bSizer2021.Add( self.DebugLevelChoice, 0, wx.ALL, 5 )
 		
 		
@@ -194,6 +200,8 @@ class MainFrame ( wx.Frame ):
 		bSizer12 = wx.BoxSizer( wx.VERTICAL )
 		
 		self.m_panel41 = wx.Panel( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel41.SetToolTipString( u"The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.\n\nIt is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes." )
+		
 		BinarySettingsSizer = wx.StaticBoxSizer( wx.StaticBox( self.m_panel41, wx.ID_ANY, u"Binary Settings" ), wx.VERTICAL )
 		
 		bSizer391 = wx.BoxSizer( wx.VERTICAL )
@@ -205,7 +213,7 @@ class MainFrame ( wx.Frame ):
 		self.PyinstallerAesKeyLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Pyinstaller AES Key", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.PyinstallerAesKeyLabel.Wrap( -1 )
 		self.PyinstallerAesKeyLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.PyinstallerAesKeyLabel.SetToolTipString( u"The AES key used by Pyinstaller to encrypt the Crypter script files. This field is optional, but provides Crypter with a layer of obfuscation" )
+		self.PyinstallerAesKeyLabel.SetToolTipString( u"The AES key used by Pyinstaller to encrypt the ransomware script files. This field is optional, but provides Crypter with a layer of obfuscation by making it more difficult to reverse engineer. Leave this field blank if you don't want to use this functionality." )
 		
 		bSizer20321211.Add( self.PyinstallerAesKeyLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -213,6 +221,8 @@ class MainFrame ( wx.Frame ):
 		bSizer20321211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.PyInstallerAesKeyTextCtrl = wx.TextCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PyInstallerAesKeyTextCtrl.SetToolTipString( u"The AES key used by Pyinstaller to encrypt the ransomware script files. This field is optional, but provides Crypter with a layer of obfuscation by making it more difficult to reverse engineer. Leave this field blank if you don't want to use this functionality." )
+		
 		bSizer20321211.Add( self.PyInstallerAesKeyTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -220,10 +230,10 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer203211111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.IconLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Icon File", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.IconLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"File Icon", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.IconLabel.Wrap( -1 )
 		self.IconLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.IconLabel.SetToolTipString( u"The icon (.ico) file to use for the binary" )
+		self.IconLabel.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon." )
 		
 		bSizer203211111.Add( self.IconLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -231,6 +241,8 @@ class MainFrame ( wx.Frame ):
 		bSizer203211111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.IconFilePicker = wx.FilePickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.ico", wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE|wx.FLP_FILE_MUST_EXIST|wx.FLP_SMALL )
+		self.IconFilePicker.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon." )
+		
 		bSizer203211111.Add( self.IconFilePicker, 0, wx.ALL, 5 )
 		
 		
@@ -246,7 +258,7 @@ class MainFrame ( wx.Frame ):
 		self.UpxDirLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"UPX Packer Directory", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.UpxDirLabel.Wrap( -1 )
 		self.UpxDirLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.UpxDirLabel.SetToolTipString( u"The path to the UPX Packer directory" )
+		self.UpxDirLabel.SetToolTipString( u"The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.\n\nIt is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes." )
 		
 		bSizer2032111111.Add( self.UpxDirLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -254,6 +266,8 @@ class MainFrame ( wx.Frame ):
 		bSizer2032111111.AddSpacer( ( 0, 0), 1, wx.ALIGN_LEFT|wx.EXPAND, 5 )
 		
 		self.UpxDirPicker = wx.DirPickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select UPX Directory", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DEFAULT_STYLE|wx.DIRP_SMALL )
+		self.UpxDirPicker.SetToolTipString( u"The path to the UPX Packer directory. If left blank, UPX will not be utilised and the executable will not be packed.\n\nIt is recommended that UPX is used as this can reduce the Crypter executable size by several Megabytes." )
+		
 		bSizer2032111111.Add( self.UpxDirPicker, 0, wx.ALL, 5 )
 		
 		
@@ -291,7 +305,7 @@ class MainFrame ( wx.Frame ):
 		self.EncryptedFileExtensionLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Encrypted File Extension", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.EncryptedFileExtensionLabel.Wrap( -1 )
 		self.EncryptedFileExtensionLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.EncryptedFileExtensionLabel.SetToolTipString( u"The file extension to use after encrypting files. For example, \"locked\" will change the extension of all files to .locked once encrypted." )
+		self.EncryptedFileExtensionLabel.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
 		
 		bSizer20321.Add( self.EncryptedFileExtensionLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -299,6 +313,8 @@ class MainFrame ( wx.Frame ):
 		bSizer20321.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.EncryptedFileExtensionTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptedFileExtensionTextCtrl.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
+		
 		bSizer20321.Add( self.EncryptedFileExtensionTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -309,7 +325,7 @@ class MainFrame ( wx.Frame ):
 		self.WalletAddressLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Wallet Address", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.WalletAddressLabel.Wrap( -1 )
 		self.WalletAddressLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.WalletAddressLabel.SetToolTipString( u"The Bitcoin wallet address to be shown in the GUI following encryption" )
+		self.WalletAddressLabel.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
 		
 		bSizer203211.Add( self.WalletAddressLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -317,6 +333,8 @@ class MainFrame ( wx.Frame ):
 		bSizer203211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.WalletAddressTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.WalletAddressTextCtrl.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
+		
 		bSizer203211.Add( self.WalletAddressTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -332,7 +350,7 @@ class MainFrame ( wx.Frame ):
 		self.BitcoinFeeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Bitcoin Fee", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BitcoinFeeLabel.Wrap( -1 )
 		self.BitcoinFeeLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.BitcoinFeeLabel.SetToolTipString( u"The Bitcoin ransom fee to charge. This fee will be shown in the GUI following encryption" )
+		self.BitcoinFeeLabel.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
 		
 		bSizer203212.Add( self.BitcoinFeeLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -340,6 +358,8 @@ class MainFrame ( wx.Frame ):
 		bSizer203212.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.BitcoinFeeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeTextCtrl.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
+		
 		bSizer203212.Add( self.BitcoinFeeTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -350,7 +370,7 @@ class MainFrame ( wx.Frame ):
 		self.KeyDestructionTimeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeLabel.Wrap( -1 )
 		self.KeyDestructionTimeLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.KeyDestructionTimeLabel.SetToolTipString( u"The Key Destruction time in seconds. This timer will be shown in the GUI following encryption" )
+		self.KeyDestructionTimeLabel.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)." )
 		
 		bSizer2032111.Add( self.KeyDestructionTimeLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -359,6 +379,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
+		self.KeyDestructionTimeTextCtrl.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)." )
 		
 		bSizer2032111.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
 		
@@ -375,7 +396,7 @@ class MainFrame ( wx.Frame ):
 		self.MaxFileSizeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Max File Size to Encrypt (MB)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.MaxFileSizeLabel.Wrap( -1 )
 		self.MaxFileSizeLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.MaxFileSizeLabel.SetToolTipString( u"The maximum fille size, in megabytes, to encrypt. Files larger than this limit will not be encrypted" )
+		self.MaxFileSizeLabel.SetToolTipString( u"The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512." )
 		
 		bSizer2032121.Add( self.MaxFileSizeLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -383,6 +404,8 @@ class MainFrame ( wx.Frame ):
 		bSizer2032121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.MaxFileSizeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MaxFileSizeTextCtrl.SetToolTipString( u"The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512." )
+		
 		bSizer2032121.Add( self.MaxFileSizeTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -393,7 +416,7 @@ class MainFrame ( wx.Frame ):
 		self.FiletypesToEncryptLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Filetypes to Encrypt", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.FiletypesToEncryptLabel.Wrap( -1 )
 		self.FiletypesToEncryptLabel.SetFont( wx.Font( 9, 74, 90, 90, False, "Arial Unicode MS" ) )
-		self.FiletypesToEncryptLabel.SetToolTipString( u"A comma separated list of filetypes. Files with these extensions will be encrypted" )
+		self.FiletypesToEncryptLabel.SetToolTipString( u"A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes." )
 		
 		bSizer20321111.Add( self.FiletypesToEncryptLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -401,6 +424,8 @@ class MainFrame ( wx.Frame ):
 		bSizer20321111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.FiletypesToEncryptTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.FiletypesToEncryptTextCtrl.SetToolTipString( u"A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes." )
+		
 		bSizer20321111.Add( self.FiletypesToEncryptTextCtrl, 0, wx.ALL, 5 )
 		
 		
@@ -412,10 +437,12 @@ class MainFrame ( wx.Frame ):
 		RansomMessageSizer = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Ransom Message" ), wx.VERTICAL )
 		
 		self.RansomMessageTextCtrl = wx.TextCtrl( RansomMessageSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
+		self.RansomMessageTextCtrl.SetToolTipString( u"The ransom message to display in the Crypter GUI. Leave this text box blank to use the default ransom message." )
+		
 		RansomMessageSizer.Add( self.RansomMessageTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer39.Add( RansomMessageSizer, 3, wx.EXPAND, 5 )
+		bSizer39.Add( RansomMessageSizer, 4, wx.EXPAND, 5 )
 		
 		
 		RansomwareSettingsSizer.Add( bSizer39, 1, wx.EXPAND, 5 )
@@ -438,6 +465,8 @@ class MainFrame ( wx.Frame ):
 		bSizer50.Add( self.SaveConfigurationLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		self.SaveFilePicker = wx.FilePickerCtrl( self.ConfigScrollableWindow, wx.ID_ANY, wx.EmptyString, u"Save Configuration", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		self.SaveFilePicker.SetToolTipString( u"Save your configuration to a builder configuration file." )
+		
 		bSizer50.Add( self.SaveFilePicker, 0, wx.ALL, 5 )
 		
 		
