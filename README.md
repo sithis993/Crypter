@@ -1,6 +1,6 @@
 # Crypter
 
-Welcome to Crypter! a ransomware piece written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
+Welcome to Crypter! a ransomware and builder package written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
@@ -18,25 +18,19 @@ Consequently, a permanent and irreversible loss of data could occur. To avoid an
 
 Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.**
 
-## Roadmap
-Crypter is an ongoing project with a number of updates, changes and improvements planned for the future. Updates actively under development include:
-
-+ A Graphical User Interface for building Crypter. This will provide a significantly faster and more convenient method to customise the build and allow you to specify options such as the wallet address, ransom fee etc. (See issue [#6](/../../issues/6))
-
-Updates not yet started, but planned for a future release include:
-
-+ Integration within a Python-based Botnet. This will allow Crypter to be rapidly deployed to all infected machines. The Botnet is actively being developed.
-
-Everyone is welcome to contribute ideas, improvements and fixes! See the [Issues](/../../issues) for a more in-depth view of current problems and features being addressed.
-
 ## Repository Structure
 If you're unsure of the components that make up this repository, the following explanation should give you some insight:
 ```
 Crypter
-| -- Crypter (The actual ransomware code)
-| -- build (The build code and configuration used to produce the PyInstaller binary)
-| -- gui (The GUI project files. These can be viewed and edited using wxFormBuilder
-| -- sample_images (Simply contains sample images used in this README)
+| -- Crypter\ (The actual ransomware code)
+| -- build\ (The builder application, configuration and resources used to produce the PyInstaller binary)
+  | -- ExeBuilder\ (The Crypter builder package and application)
+  | -- Resources\ (Holds resources that are bundled with, and used to build, the Crypter executable)
+  | -- builder_gui\ (Contains the wxFormBuilder GUI project, including prototypes, for the Builder)
+  | -- Build.pyw (Launches the builder. Run this script to open the builder application)
+  | -- config_example.cfg (An example configuration file that can be loaded into the Builder)
+| -- gui\ (The Crypter GUI project files. These can be viewed and edited using wxFormBuilder
+| -- sample_images\ (Simply contains sample images used in this README)
 ```
 
 ## Prerequisites
