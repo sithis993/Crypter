@@ -344,7 +344,9 @@ class BuilderThread(Thread):
         self.user_input_dict["filetypes_to_encrypt"] = self.user_input_dict["filetypes_to_encrypt"].split(",")
         for index in range(len(self.user_input_dict["filetypes_to_encrypt"])):
             self.user_input_dict["filetypes_to_encrypt"][index] = self.user_input_dict["filetypes_to_encrypt"][index].strip().strip(".")
-        
+
+        # Parse encrypted file extension
+        self.user_input_dict["encrypted_file_extension"] = self.user_input_dict["encrypted_file_extension"].strip(".")
         
         for config_item in RUNTIME_CONFIG_ITEMS:
             config_dict[config_item] = self.user_input_dict[config_item]
