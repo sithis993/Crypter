@@ -306,6 +306,7 @@ class Gui(MainFrame):
                     self.StatusBar.SetStatusText("Build Failed...")
                 elif self.__builder.finished_with_success():
                     self.console.log(msg="Build successful")
+                    self.console.log(msg="Crypter exe written to '%s'" % self.__builder.get_exe_location())
                     self.StatusBar.SetStatusText("Build Successful...")
                 elif self.__builder.finished_with_stop():
                     self.console.log(msg="Build terminated by user")
