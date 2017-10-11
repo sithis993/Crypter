@@ -12,7 +12,7 @@ Welcome to Crypter! a ransomware and builder package written entirely in Python 
  ## Disclaimer - IMPORTANT
 Crypter is intended for educational and research purposes only. This software should not be used within any system or network for which you do not have permission, nor should it be used for any illegal or illicit purposes. The author takes no responsibility for any damages that may be caused by the software in this repository. 
 
-Once compiled, Crypter WILL encrypt the files on the computer on which it is executed. Whilst this repository provides you with access to the source code of Crypter (enabling you to decrypt any encrypted files), bugs and other issues could, in theory, interrupt or prevent a successful decryption. 
+Once compiled, Crypter WILL encrypt the files on the computer on which it is executed. Whilst Crypter provides you with access to the decryption key (enabling you to decrypt any encrypted files), bugs and other issues could, in theory, interrupt or prevent a successful decryption. 
 
 Consequently, a permanent and irreversible loss of data could occur. To avoid any potential damage, you should only run Crypter on a test machine created for this purpose.
 
@@ -53,12 +53,14 @@ Before cloning the repository and attempting to build Crypter, you must first me
 Finally, once the above software is installed you can build the Crypter binary. This is a very simple process which is detailed in the next section of this README.
 
 ## How can I build Crypter?
-Providing you've met the above prerequisites, building Crypter is straightforward:
+Providing you've met the above prerequisites, building Crypter is now easy thanks to the newly added builder application.
 
-- Run the *Build.py* script in the *build* directory of this repository.
+- Run the *Build.pyw* script in the *build* directory of this repository to launch the builder.
+- Change any desired options or leave the fields as they are the build Crypter with the default configuration.
+- Click the BUILD button at the bottom of the app to launch the builder.
 - Check the *bin* directory (created during the build) in the root of the repository for the produced binary.
 
-A more detailed guide on building Crypter will be added to the repository's Wiki in the future.
+A more detailed guide on building and using the Crypter package will be added to the repository's Wiki in the future.
 
 ## How does Crypter work?
 Crypter's approach is fairly conventional, but the lack of a CnC component does result in different behaviour (see the [Crypter video demonstration](https://youtu.be/r3jaNHmkkXE)). Rather than sending the key to a remote server, Crypter instead writes it to a local file so that the files can be easily decrypted. Once executed, the following steps are taken:
