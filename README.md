@@ -19,6 +19,15 @@ Consequently, a permanent and irreversible loss of data could occur. To avoid an
 
 Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.**
 
+## Roadmap
+Future updates, subprojects and areas of focus, in order of priority:
+ - Improvements to packaging, documentation and general ease-of-use
+ - Additional customisation options for the ransomware
+ - Creation of a CnC component
+ 
+Recently completed updates/subprojects include:
+ - Creation of a builder GUI application for customising and building Crypter
+
 ## Repository Structure
 If you're unsure of the components that make up this repository, the following explanation should give you some insight:
 ```
