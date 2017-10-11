@@ -37,19 +37,19 @@ Crypter
 ## Prerequisites
 Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisites. You'll then have all the tools required to launch the builder and create the executable.
 
-**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the *Releases* page**
+**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the [Releases](../../../releases) page**
 
 **Note:** You should install the software in the exact order shown in the table below, from top to bottom. Without these you wont be able to launch the builder. Errors or issues you may encounter will most likely stem from missing or invalid dependencies.
 
 | Requirement | Supported Versions | Recommended Version |
 | ----------- | ------------------ | ----------- |
-| Microsoft Windows | 7, 8, 10, Server 2K8 and above | 10, or Server 2012 R2 Data Center |
+| Microsoft Windows | 7, 8, 10, Server 2K8 and above | 10 |
 | Python | 2.7.13 (x86) | [2.7.13 (x86)](https://www.python.org/downloads/release/python-2713/) |
 | Pyinstaller | 3.1.1, 3.2.1 | [3.1.1](https://github.com/pyinstaller/pyinstaller/releases/tag/v3.1.1) |
 | Microsoft VC++ for Python | 9.0 | [9.0](https://www.microsoft.com/en-gb/download/details.aspx?id=44266) |
 | pypiwin32 | 219 | [219](https://sourceforge.net/projects/pywin32/files/pywin32/Build%20219/) |
-| PyCrypto | 2.6.1 | 2.6.1 (install via Pip) |
-| WxPython | 3.0 | [3.0](https://wxpython.org/download.php#msw) |
+| PyCrypto | 2.6.1 | [2.6.1](http://www.voidspace.org.uk/python/modules.shtml#pycrypto) |
+| WxPython | 3.0 | [3.0](https://sourceforge.net/projects/wxpython/files/wxPython/3.0.0.0/) |
 | \*UPX | 3.94w | [3.94w](https://github.com/upx/upx/releases/tag/v3.94) |
 
 \*The [UPX Packer](https://upx.github.io/) is an optional, but highly recommended tool that the builder can use to pack the ransomware executable. UPX will allow you to reduce the size of the binary that PyInstaller produces by several Megabytes.
