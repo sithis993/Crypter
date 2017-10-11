@@ -91,7 +91,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer44.Add( self.QuickBuildTitleLabel, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.QuickBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binay with the default settings", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.QuickBuildDescriptionLabel = wx.StaticText( self.GuideScrollableWindow, wx.ID_ANY, u"To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binary with the default settings", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.QuickBuildDescriptionLabel.Wrap( 359 )
 		self.QuickBuildDescriptionLabel.SetFont( wx.Font( 9, 75, 90, 90, False, "Courier" ) )
 		

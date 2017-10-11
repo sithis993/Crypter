@@ -986,7 +986,7 @@
                                                 <property name="gripper">0</property>
                                                 <property name="hidden">0</property>
                                                 <property name="id">wxID_ANY</property>
-                                                <property name="label">To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binay with the default settings</property>
+                                                <property name="label">To create the ransomware binary immediately, leave the fields below blank and click the BUILD button. This will produce the ransomware binary with the default settings</property>
                                                 <property name="max_size"></property>
                                                 <property name="maximize_button">0</property>
                                                 <property name="maximum_size"></property>
