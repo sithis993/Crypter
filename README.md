@@ -57,7 +57,7 @@ Providing you've met the above prerequisites, building Crypter is now easy thank
 
 - Run the *Build.pyw* script in the *build* directory of this repository to launch the builder.
 - Change any desired options or leave the fields as they are the build Crypter with the default configuration.
-- Click the BUILD button at the bottom of the app to launch the builder.
+- Click the BUILD button at the bottom of the app to start the build.
 - Check the *bin* directory (created during the build) in the root of the repository for the produced binary.
 
 A more detailed guide on building and using the Crypter package will be added to the repository's Wiki in the future.
