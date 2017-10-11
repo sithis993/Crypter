@@ -4,7 +4,7 @@ Welcome to Crypter! a ransomware and builder package written entirely in Python 
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
-Click [here](https://youtu.be/r3jaNHmkkXE) for a video demonstration of Crypter and **here** to download the Crypter distributable, which contains the Crypter repository and all of the required dependencies in a single, convenient package.
+Click [here](https://youtu.be/r3jaNHmkkXE) for a video demonstration of Crypter and [here](../../../releases) to download the Crypter distributable release, which contains the Crypter repository and all of the required dependencies in a single, convenient package.
 
  ![Crypter GUI](sample_images/crypter_package.png)
  *Builder application (left) and Crypter ransomware piece (right)*
