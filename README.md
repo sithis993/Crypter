@@ -37,7 +37,7 @@ Crypter
   | -- ExeBuilder\ (The Crypter builder package and application)
   | -- Resources\ (Holds resources that are bundled with, and used to build, the Crypter executable)
   | -- builder_gui\ (Contains the wxFormBuilder GUI project, including prototypes, for the Builder)
-  | -- Build.pyw (Launches the builder. Run this script to open the builder application)
+  | -- Builder.pyw (Launches the builder. Run this script to open the builder application)
   | -- config_example.cfg (An example configuration file that can be loaded into the Builder)
 | -- gui\ (The Crypter GUI project files. These can be viewed and edited using wxFormBuilder
 | -- sample_images\ (Simply contains sample images used in this README)
@@ -68,7 +68,7 @@ Once the above software is installed you will be able to launch the builder.
 ## How can I build Crypter?
 Providing you've met the above prerequisites, building Crypter is now easy thanks to the newly added builder application.
 
-- Run the *Build.pyw* script in the *build* directory of this repository to launch the builder.
+- Run the *Builder.pyw* script in the *build* directory of this repository to launch the builder.
 - Change any desired options, or leave the fields as they are to build Crypter with the default configuration.
 - Click the BUILD button at the bottom of the app to start the build.
 - Check the *bin* directory (created during the build) in the root of the repository for the produced binary.
