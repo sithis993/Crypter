@@ -4,7 +4,7 @@ Welcome to Crypter! a ransomware and builder package written entirely in Python 
 
 **Please note that by making use of this repository you accept and agree with the disclaimer section of this README.**
 
-Click [here](https://youtu.be/r3jaNHmkkXE) for a video demonstration of Crypter and [here](../../../releases) to download the Crypter distributable release, which contains the Crypter repository and all of the required dependencies in a single, convenient package.
+Click [here](https://youtu.be/r3jaNHmkkXE) for a video demonstration of Crypter and ~~[here](../../../releases) to download the Crypter distributable release, which contains the Crypter repository and all of the required dependencies in a single, convenient package.~~(Coming soon upon version 2.0 release)
 
  ![Crypter GUI](sample_images/crypter_package.png)
  *Builder application (left) and Crypter ransomware piece (right)*
@@ -46,7 +46,7 @@ Crypter
 ## Prerequisites
 Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisites. You'll then have all the tools required to launch the builder and create the executable.
 
-**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the [Releases](../../../releases) page**
+~~**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the [Releases](../../../releases) page**~~(Coming soon upon version 2.0 release)
 
 **Note:** You should install the software in the exact order shown in the table below, from top to bottom. Without these you wont be able to launch the builder. Errors or issues you may encounter will most likely stem from missing or invalid dependencies.
 
