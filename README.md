@@ -59,6 +59,7 @@ Before cloning the repository and attempting to build Crypter, you must first me
 | pypiwin32 | 219 | [219](https://sourceforge.net/projects/pywin32/files/pywin32/Build%20219/) |
 | PyCrypto | 2.6.1 | [2.6.1](http://www.voidspace.org.uk/python/modules.shtml#pycrypto) |
 | WxPython | 3.0 | [3.0](https://sourceforge.net/projects/wxpython/files/wxPython/3.0.0.0/) |
+| Ordered Dict | 1.1 | [1.1](https://pypi.python.org/pypi/ordereddict) |
 | \*UPX | 3.94w | [3.94w](https://github.com/upx/upx/releases/tag/v3.94) |
 
 \*The [UPX Packer](https://upx.github.io/) is an optional, but highly recommended tool that the builder can use to pack the ransomware executable. UPX will allow you to reduce the size of the binary that PyInstaller produces by several Megabytes.
