@@ -241,7 +241,6 @@ class BuilderThread(Thread):
         '''
         @summary: Invokes PyInstaller with the generated SPEC file
         @param spec_path: The path the the created PyInstaller SPEC file
-        @todo: Check for errors in the subprocess output
         '''
         # Check for stop
         if self.__stop_event.isSet():
@@ -292,8 +291,6 @@ class BuilderThread(Thread):
     def __create_spec_file(self):
         '''
         @summary: Create the binaries SPEC file
-        @todo: Create and catch SpecFailure/SpecErrors etc. Will these even be generated
-        though?
         '''
         # Check for stop
         if self.__stop_event.isSet():

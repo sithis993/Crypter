@@ -30,7 +30,6 @@ class Gui(MainFrame):
         @summary: Constructor
         @param config_dict: The build configuration, if present
         @param load_config: Handle to a config loader method/object
-        @todo: Catch Frame close event and ensure thread stop is run too
         '''
         self.language = DEFAULT_LANGUAGE
         self.__builder = None
@@ -72,16 +71,6 @@ class Gui(MainFrame):
                 )
             )
    
-        # TODO Set tooltip of each field here too
-        #for input_field in BUILDER_CONFIG_ITEMS:
-            #if BUILDER_CONFIG_ITEMS[input_field]["mandatory"]:
-            #    exec("self.%s.SetLabelText( '%s' )" % (
-            #        BUILDER_CONFIG_ITEMS[input_field]["label_object_name"],
-            #        BUILDER_CONFIG_ITEMS[input_field]["label"] + "*"
-            #        )
-            #    )
-                
-        
     
     def update_config_values(self, config_dict):
         '''
@@ -164,7 +153,6 @@ class Gui(MainFrame):
     def __save_config(self, event):
         '''
         @summary: Saves the configuration/user input data to the configuration file
-        @todo: Test
         '''
         # If not saved, used currently loaded config file path
         if self.SaveFilePicker.GetPath():
