@@ -46,7 +46,7 @@ Crypter
 ## Prerequisites
 Before cloning the repository and attempting to build Crypter, you must first meet the following prerequisites. You'll then have all the tools required to launch the builder and create the executable.
 
-**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the [Releases](../../releases) page**(Coming soon upon version 2.0 release)
+**Due to the confusion and room-for-error surrounding these dependencies, this repository has been packaged with the additional required software shown in the table below, and can be downloaded as a .zip from the [Releases](../../releases) page.**
 
 **Note:** You should install the software in the exact order shown in the table below, from top to bottom. Without these you wont be able to launch the builder. Errors or issues you may encounter will most likely stem from missing or invalid dependencies.
 
