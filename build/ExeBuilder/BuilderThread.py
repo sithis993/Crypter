@@ -91,6 +91,13 @@ class BuilderThread(Thread):
         @summary: Validates the value of the specified input field
         @raise ValidationException: If validation of the input field fails
         '''
+        
+        # If no regex is set, don't validate
+        if BUILDER_CONFIG_ITEMS[input_field]["validate"] is not True:
+            self.__console_log(msg="Skipping validation for '%s'" % BUILDER_CONFIG_ITEMS[input_field]["label"],
+                               debug_level=3)
+            return
+        
         self.__console_log(msg="%s input should match regex '%s'. Got '%s'" % (
             BUILDER_CONFIG_ITEMS[input_field]["label"],
             BUILDER_CONFIG_ITEMS[input_field]["regex"].pattern,
