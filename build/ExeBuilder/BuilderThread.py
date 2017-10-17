@@ -92,7 +92,7 @@ class BuilderThread(Thread):
         @raise ValidationException: If validation of the input field fails
         '''
         
-        # If no regex is set, don't validate
+        # If item doesn't require validating, skip
         if BUILDER_CONFIG_ITEMS[input_field]["validate"] is not True:
             self.__console_log(msg="Skipping validation for '%s'" % BUILDER_CONFIG_ITEMS[input_field]["label"],
                                debug_level=3)
