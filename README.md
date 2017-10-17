@@ -81,13 +81,8 @@ Crypter's approach is fairly conventional, but the lack of a CnC component does 
 
 1. Generates an AES-256 bit key and writes it to key.txt in the current directory
     - You can use this key in the Crypter GUI to decrypt your files
-2. Searches the following directories for files to encrypt:
-    - [USER_HOME_DIR]\Desktop
-    - [USER_HOME_DIR]\Documents
-    - [USER_HOME_DIR]\Downloads
-    - [USER_HOME_DIR]\Music
-    - [USER_HOME_DIR]\Pictures
-    - [USER_HOME_DIR]\Videos    
+2. Searches relevant locations (network drives, user directories, etc.) for matching files
+    - Locations searched depend on the configuration you specify in the Builder.
 3. Encrypts all matching files
 4. Displays the Crypter GUI to the victim
 
