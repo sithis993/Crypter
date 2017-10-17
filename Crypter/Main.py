@@ -205,7 +205,7 @@ class Crypter(Base.Base):
         encrypted_files.append(file)
 
     # Write out list of encrypted files
-    if encrypted_files:
+    if encrypted_files or (not self.__config["encrypt_user_home"] and not self.__config["encrypt_attached_drives"]):
       fh = open(self.encrypted_file_list, "w")
       for encrypted_file in encrypted_files:
         fh.write(encrypted_file)
