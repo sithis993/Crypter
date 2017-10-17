@@ -76,11 +76,10 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "label": "Builder Language",
             "label_object_name": "BuilderLanguageLabel",
             "input_object_name": "BuilderLanguageChoice",
-            "regex": re.compile(ur"^%s$" % "|".join(SUPPORTED_LANGUAGES)), # Choice box so validation not required
             "example": "English or Русский",
             "input_requirement": "One of the supported languages",
             "config_area": "Language",
-            "validate": True,
+            "validate": False,
             "default": "English"
             }
     ),

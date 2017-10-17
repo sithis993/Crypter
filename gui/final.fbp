@@ -41,11 +41,11 @@
             <property name="hidden">0</property>
             <property name="id">wxID_ANY</property>
             <property name="maximum_size">-1,-1</property>
-            <property name="minimum_size">940,780</property>
+            <property name="minimum_size">-1,-1</property>
             <property name="name">MainFrame</property>
             <property name="pos"></property>
-            <property name="size">-1,-1</property>
-            <property name="style">wxCAPTION|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU</property>
+            <property name="size">940,800</property>
+            <property name="style">wxCAPTION|wxCLOSE_BOX|wxMINIMIZE_BOX|wxRESIZE_BORDER|wxSYSTEM_MENU</property>
             <property name="subclass"></property>
             <property name="title">Crypter</property>
             <property name="tooltip"></property>
@@ -1260,11 +1260,11 @@
                                     <property name="parent">1</property>
                                     <property name="permission">none</property>
                                     <event name="OnUpdateUI"></event>
-                                    <object class="sizeritem" expanded="1">
+                                    <object class="sizeritem" expanded="0">
                                         <property name="border">5</property>
                                         <property name="flag">wxALL|wxEXPAND</property>
                                         <property name="proportion">1</property>
-                                        <object class="wxPanel" expanded="1">
+                                        <object class="wxPanel" expanded="0">
                                             <property name="BottomDockable">1</property>
                                             <property name="LeftDockable">1</property>
                                             <property name="RightDockable">1</property>
@@ -1702,35 +1702,35 @@
                                                     <property name="flag">wxALIGN_RIGHT|wxEXPAND</property>
                                                     <property name="proportion">2</property>
                                                     <object class="wxBoxSizer" expanded="0">
-                                                        <property name="minimum_size"></property>
+                                                        <property name="minimum_size">-1,40</property>
                                                         <property name="name">bSizer19</property>
                                                         <property name="orient">wxHORIZONTAL</property>
                                                         <property name="permission">none</property>
-                                                        <object class="sizeritem" expanded="0">
+                                                        <object class="sizeritem" expanded="1">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxEXPAND</property>
                                                             <property name="proportion">1</property>
-                                                            <object class="spacer" expanded="0">
+                                                            <object class="spacer" expanded="1">
                                                                 <property name="height">0</property>
                                                                 <property name="permission">protected</property>
                                                                 <property name="width">0</property>
                                                             </object>
                                                         </object>
-                                                        <object class="sizeritem" expanded="0">
+                                                        <object class="sizeritem" expanded="1">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxEXPAND</property>
                                                             <property name="proportion">1</property>
-                                                            <object class="spacer" expanded="0">
+                                                            <object class="spacer" expanded="1">
                                                                 <property name="height">0</property>
                                                                 <property name="permission">protected</property>
                                                                 <property name="width">0</property>
                                                             </object>
                                                         </object>
-                                                        <object class="sizeritem" expanded="0">
+                                                        <object class="sizeritem" expanded="1">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxALL|wxEXPAND</property>
                                                             <property name="proportion">1</property>
-                                                            <object class="wxButton" expanded="0">
+                                                            <object class="wxButton" expanded="1">
                                                                 <property name="BottomDockable">1</property>
                                                                 <property name="LeftDockable">1</property>
                                                                 <property name="RightDockable">1</property>
@@ -1765,7 +1765,7 @@
                                                                 <property name="maximum_size"></property>
                                                                 <property name="min_size"></property>
                                                                 <property name="minimize_button">0</property>
-                                                                <property name="minimum_size">30,30</property>
+                                                                <property name="minimum_size">-1,-1</property>
                                                                 <property name="moveable">1</property>
                                                                 <property name="name">ViewEncryptedFilesButton</property>
                                                                 <property name="pane_border">1</property>
@@ -1814,11 +1814,11 @@
                                                                 <event name="OnUpdateUI"></event>
                                                             </object>
                                                         </object>
-                                                        <object class="sizeritem" expanded="0">
+                                                        <object class="sizeritem" expanded="1">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxALL|wxEXPAND</property>
                                                             <property name="proportion">1</property>
-                                                            <object class="wxButton" expanded="0">
+                                                            <object class="wxButton" expanded="1">
                                                                 <property name="BottomDockable">1</property>
                                                                 <property name="LeftDockable">1</property>
                                                                 <property name="RightDockable">1</property>
@@ -1853,7 +1853,7 @@
                                                                 <property name="maximum_size"></property>
                                                                 <property name="min_size"></property>
                                                                 <property name="minimize_button">0</property>
-                                                                <property name="minimum_size"></property>
+                                                                <property name="minimum_size">-1,-1</property>
                                                                 <property name="moveable">1</property>
                                                                 <property name="name">EnterDecryptionKeyButton</property>
                                                                 <property name="pane_border">1</property>
