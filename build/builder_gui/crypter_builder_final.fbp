@@ -45,7 +45,7 @@
             <property name="name">MainFrame</property>
             <property name="pos"></property>
             <property name="size">640,850</property>
-            <property name="style">wxCAPTION|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSYSTEM_MENU</property>
+            <property name="style">wxCAPTION|wxCLOSE_BOX|wxMINIMIZE_BOX|wxRESIZE_BORDER|wxSYSTEM_MENU</property>
             <property name="subclass"></property>
             <property name="title">Crypter Builder</property>
             <property name="tooltip"></property>
