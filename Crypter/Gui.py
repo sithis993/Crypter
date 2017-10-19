@@ -285,12 +285,14 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_INVALID_KEY[self.LANG])
 			return
 		else:
-			self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING[self.LANG])
+			self.decryption_dialog.StatusText.SetLabelText(
+				self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_DECRYPTING[self.LANG] + " (0%)"
+				)
 
 		# Disable dialog buttons
 		self.decryption_dialog.OkCancelSizerOK.Disable()
 		self.decryption_dialog.OkCancelSizerCancel.Disable()
-		
+
 		# Start the decryption thread
 		self.decryption_thread = DecryptionThread(self.encrypted_files_list, self.decrypted_files_list,
 												self, self.decrypter, key_contents)
