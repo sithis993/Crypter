@@ -173,6 +173,20 @@ class BuilderThread(Thread):
             # Validation success
             if not self.__build_error and not self.__build_stopped:
                 self.__console_log(msg="Validation successful", debug_level=1)
+                # Encryption type debug message
+                if self.user_input_dict["encrypt_user_home"] and self.user_input_dict["encrypt_attached_drives"]:
+                    self.__console_log(msg="Encryption will target attached drives and the user's home directory",
+                                       debug_level=1)
+                elif self.user_input_dict["encrypt_user_home"] and not self.user_input_dict["encrypt_attached_drives"]:
+                    self.__console_log(msg="Encryption will only target the user's home directory",
+                                       debug_level=1)
+                elif not self.user_input_dict["encrypt_user_home"] and self.user_input_dict["encrypt_attached_drives"]:
+                    self.__console_log(msg="Encryption will only target attached drives",
+                                       debug_level=1)
+                else:
+                    self.__console_log(msg="(warning): Not set to encrypt attached drives or user's home directory."
+                                           " The encryption process will be skipped",
+                                           debug_level=1)
                 self.__create_runtime_config()
                 spec_path = self.__create_spec_file()
                 self.__run_pyinstaller(spec_path)
