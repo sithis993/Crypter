@@ -17,7 +17,7 @@ import wx.xrc
 class MainFrame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 640,850 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.RESIZE_BORDER|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Crypter Builder", pos = wx.DefaultPosition, size = wx.Size( 650,850 ), style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.RESIZE_BORDER|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
@@ -125,7 +125,7 @@ class MainFrame ( wx.Frame ):
 		self.GuideScrollableWindow.SetSizer( bSizer44 )
 		self.GuideScrollableWindow.Layout()
 		bSizer44.Fit( self.GuideScrollableWindow )
-		bSizer2.Add( self.GuideScrollableWindow, 6, wx.ALL|wx.EXPAND, 5 )
+		bSizer2.Add( self.GuideScrollableWindow, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_staticline6 = wx.StaticLine( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer2.Add( self.m_staticline6, 0, wx.EXPAND |wx.ALL, 5 )
@@ -298,87 +298,13 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer39 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer412 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer203213 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.EncryptAttachedDrivesCheckbox = wx.CheckBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Encrypt Attached Drives", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.EncryptAttachedDrivesCheckbox.SetToolTipString( u"If ticked, all drives attached to the machine will be encrypted. This includes mapped network drives, as well as external and internal hard disks, but excludes C:." )
-		
-		bSizer203213.Add( self.EncryptAttachedDrivesCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		
-		bSizer412.Add( bSizer203213, 2, wx.EXPAND, 5 )
-		
-		
-		bSizer412.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		bSizer2032131 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.EncryptUserHomeCheckbox = wx.CheckBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Encrypt User Home", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.EncryptUserHomeCheckbox.SetToolTipString( u"If ticked, all files and folders in the victim's home directory (such as Downloads, Documents and Pictures) will be encrypted." )
-		
-		bSizer2032131.Add( self.EncryptUserHomeCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		
-		bSizer412.Add( bSizer2032131, 2, wx.EXPAND, 5 )
-		
-		
-		bSizer39.Add( bSizer412, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		self.m_staticline7 = wx.StaticLine( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer39.Add( self.m_staticline7, 0, wx.EXPAND |wx.ALL, 5 )
-		
-		bSizer41 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer20321 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.EncryptedFileExtensionLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Encrypted File Extension", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.EncryptedFileExtensionLabel.Wrap( -1 )
-		self.EncryptedFileExtensionLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
-		self.EncryptedFileExtensionLabel.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
-		
-		bSizer20321.Add( self.EncryptedFileExtensionLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer20321.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.EncryptedFileExtensionTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.EncryptedFileExtensionTextCtrl.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
-		
-		bSizer20321.Add( self.EncryptedFileExtensionTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		bSizer41.Add( bSizer20321, 1, wx.EXPAND, 5 )
-		
-		bSizer203211 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		self.WalletAddressLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Wallet Address", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.WalletAddressLabel.Wrap( -1 )
-		self.WalletAddressLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
-		self.WalletAddressLabel.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
-		
-		bSizer203211.Add( self.WalletAddressLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer203211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.WalletAddressTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.WalletAddressTextCtrl.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
-		
-		bSizer203211.Add( self.WalletAddressTextCtrl, 0, wx.ALL, 5 )
-		
-		
-		bSizer41.Add( bSizer203211, 1, wx.EXPAND, 5 )
-		
-		
-		bSizer39.Add( bSizer41, 1, wx.EXPAND, 5 )
+		sbSizer13 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"General" ), wx.VERTICAL )
 		
 		bSizer411 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer203212 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.BitcoinFeeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Bitcoin Fee", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Bitcoin Fee", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BitcoinFeeLabel.Wrap( -1 )
 		self.BitcoinFeeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
 		self.BitcoinFeeLabel.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
@@ -388,7 +314,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer203212.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.BitcoinFeeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BitcoinFeeTextCtrl.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
 		
 		bSizer203212.Add( self.BitcoinFeeTextCtrl, 0, wx.ALL, 5 )
@@ -398,7 +324,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2032111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.KeyDestructionTimeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTimeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeLabel.Wrap( -1 )
 		self.KeyDestructionTimeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
 		self.KeyDestructionTimeLabel.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)." )
@@ -408,7 +334,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2032111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
 		self.KeyDestructionTimeTextCtrl.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the timer runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)." )
 		
@@ -418,13 +344,92 @@ class MainFrame ( wx.Frame ):
 		bSizer411.Add( bSizer2032111, 1, wx.EXPAND, 5 )
 		
 		
-		bSizer39.Add( bSizer411, 1, wx.EXPAND, 5 )
+		sbSizer13.Add( bSizer411, 1, wx.EXPAND, 5 )
+		
+		bSizer412 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer2032112 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.WalletAddressLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Wallet Address", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.WalletAddressLabel.Wrap( -1 )
+		self.WalletAddressLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
+		self.WalletAddressLabel.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
+		
+		bSizer2032112.Add( self.WalletAddressLabel, 0, wx.ALL|wx.TOP, 7 )
+		
+		
+		bSizer2032112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.WalletAddressTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.WalletAddressTextCtrl.SetToolTipString( u"The Bitcoin wallet address that the victim should pay the ransom to. This will be displayed in the Crypter GUI. Defaults to the bitcoin wallet of Crypter's author ;-)" )
+		
+		bSizer2032112.Add( self.WalletAddressTextCtrl, 0, wx.ALL, 5 )
+		
+		
+		bSizer412.Add( bSizer2032112, 1, wx.EXPAND, 5 )
+		
+		bSizer203213 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer203213.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		bSizer412.Add( bSizer203213, 1, wx.EXPAND, 5 )
+		
+		
+		sbSizer13.Add( bSizer412, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer39.Add( sbSizer13, 0, wx.EXPAND, 1 )
+		
+		sbSizer11 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Encryption" ), wx.VERTICAL )
+		
+		bSizer4122 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer2032133 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.EncryptAttachedDrivesLabel = wx.StaticText( sbSizer11.GetStaticBox(), wx.ID_ANY, u"Encrypt Attached Drives", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptAttachedDrivesLabel.Wrap( -1 )
+		bSizer2032133.Add( self.EncryptAttachedDrivesLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer2032133.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.EncryptAttachedDrivesCheckbox = wx.CheckBox( sbSizer11.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptAttachedDrivesCheckbox.SetValue(True) 
+		self.EncryptAttachedDrivesCheckbox.SetToolTipString( u"If ticked, all drives attached to the machine will be encrypted. This includes mapped network drives, as well as external and internal hard disks, but excludes C:." )
+		
+		bSizer2032133.Add( self.EncryptAttachedDrivesCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer4122.Add( bSizer2032133, 2, wx.EXPAND, 5 )
+		
+		bSizer20321312 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.EncryptUserHomeLabel = wx.StaticText( sbSizer11.GetStaticBox(), wx.ID_ANY, u"Encrypt User Home", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptUserHomeLabel.Wrap( -1 )
+		bSizer20321312.Add( self.EncryptUserHomeLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer20321312.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.EncryptUserHomeCheckbox = wx.CheckBox( sbSizer11.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptUserHomeCheckbox.SetValue(True) 
+		self.EncryptUserHomeCheckbox.SetToolTipString( u"If ticked, all files and folders in the victim's home directory (such as Downloads, Documents and Pictures) will be encrypted." )
+		
+		bSizer20321312.Add( self.EncryptUserHomeCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer4122.Add( bSizer20321312, 2, wx.EXPAND, 5 )
+		
+		
+		sbSizer11.Add( bSizer4122, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		bSizer4111 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer2032121 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.MaxFileSizeLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Max File Size to Encrypt (MB)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MaxFileSizeLabel = wx.StaticText( sbSizer11.GetStaticBox(), wx.ID_ANY, u"Max File Size to Encrypt (MB)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.MaxFileSizeLabel.Wrap( -1 )
 		self.MaxFileSizeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
 		self.MaxFileSizeLabel.SetToolTipString( u"The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512." )
@@ -434,7 +439,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer2032121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.MaxFileSizeTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MaxFileSizeTextCtrl = wx.TextCtrl( sbSizer11.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.MaxFileSizeTextCtrl.SetToolTipString( u"The maximum size, in Megabytes, of a file that Crypter should encrypt. Any file that exceeds this limit will not be encrypted. Defaults to 512." )
 		
 		bSizer2032121.Add( self.MaxFileSizeTextCtrl, 0, wx.ALL, 5 )
@@ -444,7 +449,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer20321111 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.FiletypesToEncryptLabel = wx.StaticText( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Filetypes to Encrypt", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.FiletypesToEncryptLabel = wx.StaticText( sbSizer11.GetStaticBox(), wx.ID_ANY, u"Filetypes to Encrypt", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.FiletypesToEncryptLabel.Wrap( -1 )
 		self.FiletypesToEncryptLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
 		self.FiletypesToEncryptLabel.SetToolTipString( u"A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes." )
@@ -454,7 +459,7 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer20321111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.FiletypesToEncryptTextCtrl = wx.TextCtrl( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.FiletypesToEncryptTextCtrl = wx.TextCtrl( sbSizer11.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.FiletypesToEncryptTextCtrl.SetToolTipString( u"A comma separated list of filetypes to encrypt. Files with these extensions will be encrypted. Leave this field blank to use the default set of common filetypes." )
 		
 		bSizer20321111.Add( self.FiletypesToEncryptTextCtrl, 0, wx.ALL, 5 )
@@ -463,7 +468,157 @@ class MainFrame ( wx.Frame ):
 		bSizer4111.Add( bSizer20321111, 1, wx.EXPAND, 5 )
 		
 		
-		bSizer39.Add( bSizer4111, 1, wx.EXPAND, 5 )
+		sbSizer11.Add( bSizer4111, 1, wx.EXPAND, 5 )
+		
+		bSizer41 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer20321 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.EncryptedFileExtensionLabel = wx.StaticText( sbSizer11.GetStaticBox(), wx.ID_ANY, u"Encrypted File Extension", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptedFileExtensionLabel.Wrap( -1 )
+		self.EncryptedFileExtensionLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
+		self.EncryptedFileExtensionLabel.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
+		
+		bSizer20321.Add( self.EncryptedFileExtensionLabel, 0, wx.ALL|wx.TOP, 7 )
+		
+		
+		bSizer20321.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.EncryptedFileExtensionTextCtrl = wx.TextCtrl( sbSizer11.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.EncryptedFileExtensionTextCtrl.SetToolTipString( u"The file extension to use for encrypted files. If left blank, files encrypted by Crypter will be given a .locked extension" )
+		
+		bSizer20321.Add( self.EncryptedFileExtensionTextCtrl, 0, wx.ALL, 5 )
+		
+		
+		bSizer41.Add( bSizer20321, 1, wx.EXPAND, 5 )
+		
+		bSizer203211 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer203211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		bSizer41.Add( bSizer203211, 1, wx.EXPAND, 5 )
+		
+		
+		sbSizer11.Add( bSizer41, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer39.Add( sbSizer11, 1, wx.EXPAND, 1 )
+		
+		sbSizer12 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Graphical User Interface" ), wx.VERTICAL )
+		
+		bSizer41221 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer20321331 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.MakeGuiResizeableLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Make GUI Resizeable", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MakeGuiResizeableLabel.Wrap( -1 )
+		bSizer20321331.Add( self.MakeGuiResizeableLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer20321331.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.MakeGuiResizeableCheckbox = wx.CheckBox( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.MakeGuiResizeableCheckbox.SetToolTipString( u"If ticked, all drives attached to the machine will be encrypted. This includes mapped network drives, as well as external and internal hard disks, but excludes C:." )
+		
+		bSizer20321331.Add( self.MakeGuiResizeableCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer41221.Add( bSizer20321331, 2, wx.EXPAND, 5 )
+		
+		bSizer203213121 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.AlwaysOnTopLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Always On Top", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.AlwaysOnTopLabel.Wrap( -1 )
+		bSizer203213121.Add( self.AlwaysOnTopLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer203213121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.AlwaysOnTopCheckbox = wx.CheckBox( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.AlwaysOnTopCheckbox.SetToolTipString( u"If ticked, all files and folders in the victim's home directory (such as Downloads, Documents and Pictures) will be encrypted." )
+		
+		bSizer203213121.Add( self.AlwaysOnTopCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		
+		bSizer41221.Add( bSizer203213121, 2, wx.EXPAND, 5 )
+		
+		
+		sbSizer12.Add( bSizer41221, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
+		
+		bSizer412211 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer203213311 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.BackgroundColourLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Background Colour", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BackgroundColourLabel.Wrap( -1 )
+		bSizer203213311.Add( self.BackgroundColourLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer203213311.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.BackgroundColourPicker = wx.ColourPickerCtrl( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.Colour( 177, 7, 14 ), wx.DefaultPosition, wx.DefaultSize, wx.CLRP_DEFAULT_STYLE )
+		bSizer203213311.Add( self.BackgroundColourPicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer412211.Add( bSizer203213311, 2, wx.EXPAND, 5 )
+		
+		bSizer2032131211 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.HeadingFontColourLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Heading Font Colour", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.HeadingFontColourLabel.Wrap( -1 )
+		bSizer2032131211.Add( self.HeadingFontColourLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer2032131211.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.HeadingFontColourPicker = wx.ColourPickerCtrl( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.Colour( 0, 0, 0 ), wx.DefaultPosition, wx.DefaultSize, wx.CLRP_DEFAULT_STYLE )
+		bSizer2032131211.Add( self.HeadingFontColourPicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer412211.Add( bSizer2032131211, 2, wx.EXPAND, 5 )
+		
+		
+		sbSizer12.Add( bSizer412211, 1, wx.EXPAND, 5 )
+		
+		bSizer4122111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer2032133111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.PrimaryFontColourLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Primary Font Colour", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.PrimaryFontColourLabel.Wrap( -1 )
+		bSizer2032133111.Add( self.PrimaryFontColourLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer2032133111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.PrimaryFontColourPicker = wx.ColourPickerCtrl( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.Colour( 255, 255, 0 ), wx.DefaultPosition, wx.DefaultSize, wx.CLRP_DEFAULT_STYLE )
+		bSizer2032133111.Add( self.PrimaryFontColourPicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer4122111.Add( bSizer2032133111, 2, wx.EXPAND, 5 )
+		
+		bSizer20321312111 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.SecondaryFontColourLabel = wx.StaticText( sbSizer12.GetStaticBox(), wx.ID_ANY, u"Seconday Font Colour", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.SecondaryFontColourLabel.Wrap( -1 )
+		bSizer20321312111.Add( self.SecondaryFontColourLabel, 0, wx.ALL, 7 )
+		
+		
+		bSizer20321312111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.SecondaryFontColourPicker = wx.ColourPickerCtrl( sbSizer12.GetStaticBox(), wx.ID_ANY, wx.Colour( 255, 255, 255 ), wx.DefaultPosition, wx.DefaultSize, wx.CLRP_DEFAULT_STYLE )
+		bSizer20321312111.Add( self.SecondaryFontColourPicker, 0, wx.ALL, 5 )
+		
+		
+		bSizer4122111.Add( bSizer20321312111, 2, wx.EXPAND, 5 )
+		
+		
+		sbSizer12.Add( bSizer4122111, 1, wx.EXPAND, 5 )
+		
+		
+		bSizer39.Add( sbSizer12, 0, wx.EXPAND, 1 )
 		
 		RansomMessageSizer = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"Ransom Message" ), wx.VERTICAL )
 		
@@ -473,15 +628,7 @@ class MainFrame ( wx.Frame ):
 		RansomMessageSizer.Add( self.RansomMessageTextCtrl, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer39.Add( RansomMessageSizer, 4, wx.EXPAND, 5 )
-		
-		bSizer40 = wx.BoxSizer( wx.VERTICAL )
-		
-		
-		bSizer39.Add( bSizer40, 1, wx.EXPAND, 5 )
-		
-		self.m_staticline61 = wx.StaticLine( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer39.Add( self.m_staticline61, 0, wx.EXPAND |wx.ALL, 5 )
+		bSizer39.Add( RansomMessageSizer, 1, wx.EXPAND, 10 )
 		
 		
 		RansomwareSettingsSizer.Add( bSizer39, 1, wx.EXPAND, 5 )
@@ -490,10 +637,13 @@ class MainFrame ( wx.Frame ):
 		self.m_panel4.SetSizer( RansomwareSettingsSizer )
 		self.m_panel4.Layout()
 		RansomwareSettingsSizer.Fit( self.m_panel4 )
-		bSizer12.Add( self.m_panel4, 0, wx.EXPAND |wx.ALL, 5 )
+		bSizer12.Add( self.m_panel4, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
-		bSizer2.Add( bSizer12, 0, wx.EXPAND, 5 )
+		bSizer2.Add( bSizer12, 2, wx.EXPAND, 5 )
+		
+		self.m_staticline13 = wx.StaticLine( self.ConfigScrollableWindow, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		bSizer2.Add( self.m_staticline13, 0, wx.EXPAND |wx.ALL, 5 )
 		
 		bSizer50 = wx.BoxSizer( wx.HORIZONTAL )
 		
@@ -506,16 +656,16 @@ class MainFrame ( wx.Frame ):
 		self.SaveFilePicker = wx.FilePickerCtrl( self.ConfigScrollableWindow, wx.ID_ANY, wx.EmptyString, u"Save Configuration", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
 		self.SaveFilePicker.SetToolTipString( u"Save your configuration to a builder configuration file." )
 		
-		bSizer50.Add( self.SaveFilePicker, 0, wx.ALL, 5 )
+		bSizer50.Add( self.SaveFilePicker, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		
-		bSizer2.Add( bSizer50, 1, wx.EXPAND, 5 )
+		bSizer2.Add( bSizer50, 0, wx.EXPAND, 5 )
 		
 		
 		self.ConfigScrollableWindow.SetSizer( bSizer2 )
 		self.ConfigScrollableWindow.Layout()
 		bSizer2.Fit( self.ConfigScrollableWindow )
-		bSizer1.Add( self.ConfigScrollableWindow, 8, wx.ALL|wx.EXPAND, 5 )
+		bSizer1.Add( self.ConfigScrollableWindow, 2, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_staticline21 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline21, 0, wx.EXPAND |wx.ALL, 5 )
@@ -558,7 +708,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel411.SetSizer( bSizer17 )
 		self.m_panel411.Layout()
 		bSizer17.Fit( self.m_panel411 )
-		bSizer1.Add( self.m_panel411, 4, wx.EXPAND |wx.ALL, 5 )
+		bSizer1.Add( self.m_panel411, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
 		bSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
@@ -577,7 +727,7 @@ class MainFrame ( wx.Frame ):
 		self.m_panel4111.SetSizer( bSizer171 )
 		self.m_panel4111.Layout()
 		bSizer171.Fit( self.m_panel4111 )
-		bSizer1.Add( self.m_panel4111, 1, wx.ALL|wx.EXPAND, 10 )
+		bSizer1.Add( self.m_panel4111, 0, wx.ALL|wx.EXPAND, 10 )
 		
 		
 		self.SetSizer( bSizer1 )

