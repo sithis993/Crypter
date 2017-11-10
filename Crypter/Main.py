@@ -1,7 +1,7 @@
 '''
 @summary: Crypter: Ransomware written entirely in python.
 @author: MLS
-@version: 2.10
+@version: 2.20
 '''
 
 # Import libs

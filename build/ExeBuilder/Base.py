@@ -10,7 +10,7 @@ from ordereddict import OrderedDict
 
 ## VERSION
 MAJ_VERSION = "2"
-MIN_VERSION = "10"
+MIN_VERSION = "20"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
