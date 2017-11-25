@@ -109,6 +109,11 @@ class Base():
     FILES_TO_EXCLUDE = [
         "key.txt"
         ]
+    
+    DIRS_TO_EXCLUDE = [
+        # Don't encrypt burn directory (temp store for files to be burned to disc)
+        "burn" 
+        ]
 
     def is_optical_drive(self, drive_letter):
         '''

