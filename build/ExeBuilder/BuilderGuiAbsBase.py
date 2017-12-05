@@ -300,13 +300,46 @@ class MainFrame ( wx.Frame ):
 		
 		sbSizer13 = wx.StaticBoxSizer( wx.StaticBox( RansomwareSettingsSizer.GetStaticBox(), wx.ID_ANY, u"General" ), wx.VERTICAL )
 		
+		bSizer4112 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer20321311 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		self.GuiTitleLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"GUI Title", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.GuiTitleLabel.Wrap( -1 )
+		self.GuiTitleLabel.SetToolTipString( u"The title to display in the GUI. Defaults to \"CRYPTER\".\n\nNote: This field is limited to a maximum of 20 characters to prevent window stretching" )
+		
+		bSizer20321311.Add( self.GuiTitleLabel, 0, wx.ALL, 5 )
+		
+		
+		bSizer20321311.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.GuiTitleTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.GuiTitleTextCtrl.SetMaxLength( 20 ) 
+		self.GuiTitleTextCtrl.SetToolTipString( u"The title to display in the GUI. Defaults to \"CRYPTER\".\n\nNote: This field is limited to a maximum of 20 characters to prevent window stretching" )
+		
+		bSizer20321311.Add( self.GuiTitleTextCtrl, 0, wx.ALL, 5 )
+		
+		
+		bSizer4112.Add( bSizer20321311, 1, wx.EXPAND, 5 )
+		
+		bSizer203211121 = wx.BoxSizer( wx.HORIZONTAL )
+		
+		
+		bSizer203211121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		
+		bSizer4112.Add( bSizer203211121, 1, wx.EXPAND, 5 )
+		
+		
+		sbSizer13.Add( bSizer4112, 1, wx.EXPAND, 5 )
+		
 		bSizer411 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		bSizer2032131 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.DeleteShadowCopiesLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Delete Shadow Copies", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DeleteShadowCopiesLabel.Wrap( -1 )
-		self.DeleteShadowCopiesLabel.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key." )
+		self.DeleteShadowCopiesLabel.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nNote: This operation will fail silently if the user does not have sufficient privileges" )
 		
 		bSizer2032131.Add( self.DeleteShadowCopiesLabel, 0, wx.ALL, 5 )
 		
@@ -315,7 +348,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.DeleteShadowCopiesCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DeleteShadowCopiesCheckbox.SetValue(True) 
-		self.DeleteShadowCopiesCheckbox.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key." )
+		self.DeleteShadowCopiesCheckbox.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nNote: This operation will fail silently if the user does not have sufficient privileges" )
 		
 		bSizer2032131.Add( self.DeleteShadowCopiesCheckbox, 0, wx.ALL, 5 )
 		
