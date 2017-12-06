@@ -9,6 +9,7 @@ import wx
 import datetime
 import time
 import json
+import subprocess
 from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 
@@ -70,7 +71,7 @@ class Gui(MainFrame):
                 BUILDER_CONFIG_ITEMS["debug_level"]["default"]
                 )
             )
-   
+        
     
     def update_config_values(self, config_dict):
         '''
@@ -292,6 +293,14 @@ class Gui(MainFrame):
             
         self.CurrentConfigFile.SetLabel(formatted_path)
         self.HeaderPanel.Layout()
+        
+        
+    def __open_containing_folder(self, event):
+        '''
+        @summary: Opens explorer in the "bin" directory where the Crypter binary is written
+        '''
+        
+        subprocess.Popen(r'explorer "..\bin"')
 
         
     def set_events(self):
@@ -312,6 +321,9 @@ class Gui(MainFrame):
         # Mainframe close
         self.Bind(wx.EVT_CLOSE, self.__close_builder, self)
         
+        # Disable Open Containing Folder Button and bind event
+        self.OpenContainingFolderButton.Disable()
+        self.Bind(wx.EVT_BUTTON, self.__open_containing_folder, self.OpenContainingFolderButton)
         
     
     def __close_builder(self, event):
@@ -370,6 +382,8 @@ class Gui(MainFrame):
                     self.console.log(msg="Build successful")
                     self.console.log(msg="Crypter exe written to '%s'" % self.__builder.get_exe_location())
                     self.StatusBar.SetStatusText("Build Successful...")
+                    # Enable "Open Containing Folder" Button
+                    self.OpenContainingFolderButton.Enable()
                 elif self.__builder.finished_with_stop():
                     self.console.log(msg="Build terminated by user")
                     self.StatusBar.SetStatusText("Build Terminated...")
@@ -496,6 +510,7 @@ class Gui(MainFrame):
             
         # Clear the Console and setup debug
         self.console.clear()
+        self.OpenContainingFolderButton.Disable()
         self.Bind(wx.EVT_BUTTON, self.__stop_build, self.BuildButton)
         self.BuildButton.SetLabel("STOP")
         self.console.log(msg="Build Launched")

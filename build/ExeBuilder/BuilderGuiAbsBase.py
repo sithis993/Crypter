@@ -798,12 +798,18 @@ class MainFrame ( wx.Frame ):
 		self.m_panel4111 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.DOUBLE_BORDER|wx.TAB_TRAVERSAL )
 		self.m_panel4111.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 		
-		bSizer171 = wx.BoxSizer( wx.VERTICAL )
+		bSizer171 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.BuildButton = wx.Button( self.m_panel4111, wx.ID_ANY, u"BUILD", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BuildButton.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+		self.BuildButton.SetToolTipString( u"Build Crypter to the specified configuration" )
 		
 		bSizer171.Add( self.BuildButton, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		self.OpenContainingFolderButton = wx.Button( self.m_panel4111, wx.ID_ANY, u"Open Containing Folder", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.OpenContainingFolderButton.SetToolTipString( u"Open the folder containing the produced Crypter executable" )
+		
+		bSizer171.Add( self.OpenContainingFolderButton, 0, wx.ALL, 5 )
 		
 		
 		self.m_panel4111.SetSizer( bSizer171 )
