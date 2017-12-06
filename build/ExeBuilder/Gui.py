@@ -235,6 +235,7 @@ class Gui(MainFrame):
                                  % self.config_file_path)
                 self.StatusBar.SetStatusText("Config Saved To %s" % self.config_file_path)
                 self.__build_config_file = self.config_file_path
+                self.__update_loaded_config_file()
         except Exception as ex:
             self.console.log(msg="The configuration could not be saved to %s: %s"
                              % (self.config_file_path, ex),
@@ -263,6 +264,7 @@ class Gui(MainFrame):
                                  % self.config_file_path)
                 self.StatusBar.SetStatusText("Config Loaded From %s" % self.config_file_path)
                 self.__build_config_file = self.config_file_path
+                self.__update_loaded_config_file()
         except Exception as ex:
             self.console.log(msg="The specified configuration file at %s could not be loaded: %s" 
                              % (self.config_file_path, ex),
@@ -275,6 +277,21 @@ class Gui(MainFrame):
         self.update_config_values(config_dict)
         
         return config_dict
+    
+    
+    def __update_loaded_config_file(self):
+        '''
+        @summary: Updates the value of the "Loaded Config"
+        '''
+        
+        # Truncate path if too long
+        if len(self.__build_config_file) >= 30:
+            formatted_path = "..." + self.__build_config_file[-27:]
+        else:
+            formatted_path = self.__build_config_file
+            
+        self.CurrentConfigFile.SetLabel(formatted_path)
+        self.HeaderPanel.Layout()
 
         
     def set_events(self):

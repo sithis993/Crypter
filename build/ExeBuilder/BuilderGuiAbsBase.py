@@ -27,30 +27,43 @@ class MainFrame ( wx.Frame ):
 		bSizer1.SetMinSize( wx.Size( 640,850 ) ) 
 		bSizer311 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_panel312 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.HeaderPanel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer48 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer49 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.LoadConfigFileLabel = wx.StaticText( self.m_panel312, wx.ID_ANY, u"Load Config file", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.LoadConfigFileLabel = wx.StaticText( self.HeaderPanel, wx.ID_ANY, u"Load Config file", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.LoadConfigFileLabel.Wrap( -1 )
 		self.LoadConfigFileLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
 		
 		bSizer49.Add( self.LoadConfigFileLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.TOP, 5 )
 		
-		self.LoadFilePicker = wx.FilePickerCtrl( self.m_panel312, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
+		self.LoadFilePicker = wx.FilePickerCtrl( self.HeaderPanel, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
 		self.LoadFilePicker.SetToolTipString( u"Load an existing configuration file" )
 		
 		bSizer49.Add( self.LoadFilePicker, 0, wx.ALL, 5 )
 		
 		
+		bSizer49.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.CurrentConfigFileLabel = wx.StaticText( self.HeaderPanel, wx.ID_ANY, u"Current Config File:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CurrentConfigFileLabel.Wrap( -1 )
+		self.CurrentConfigFileLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
+		
+		bSizer49.Add( self.CurrentConfigFileLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.TOP, 5 )
+		
+		self.CurrentConfigFile = wx.StaticText( self.HeaderPanel, wx.ID_ANY, u"None", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.CurrentConfigFile.Wrap( -1 )
+		bSizer49.Add( self.CurrentConfigFile, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL|wx.TOP, 5 )
+		
+		
 		bSizer48.Add( bSizer49, 0, wx.EXPAND, 5 )
 		
 		
-		self.m_panel312.SetSizer( bSizer48 )
-		self.m_panel312.Layout()
-		bSizer48.Fit( self.m_panel312 )
-		bSizer311.Add( self.m_panel312, 1, wx.EXPAND |wx.ALL, 5 )
+		self.HeaderPanel.SetSizer( bSizer48 )
+		self.HeaderPanel.Layout()
+		bSizer48.Fit( self.HeaderPanel )
+		bSizer311.Add( self.HeaderPanel, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		
 		bSizer1.Add( bSizer311, 0, wx.EXPAND, 5 )
