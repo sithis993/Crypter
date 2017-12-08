@@ -337,8 +337,21 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer203211121 = wx.BoxSizer( wx.HORIZONTAL )
 		
+		self.KeyDestructionTimeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTimeLabel.Wrap( -1 )
+		self.KeyDestructionTimeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
+		self.KeyDestructionTimeLabel.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
+		
+		bSizer203211121.Add( self.KeyDestructionTimeLabel, 0, wx.ALL|wx.TOP, 7 )
+		
 		
 		bSizer203211121.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
+		
+		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
+		self.KeyDestructionTimeTextCtrl.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
+		
+		bSizer203211121.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
 		
 		
 		bSizer4112.Add( bSizer203211121, 1, wx.EXPAND, 5 )
@@ -370,21 +383,19 @@ class MainFrame ( wx.Frame ):
 		
 		bSizer20321112 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.KeyDestructionTimeLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Key Destruction Time (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.KeyDestructionTimeLabel.Wrap( -1 )
-		self.KeyDestructionTimeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
-		self.KeyDestructionTimeLabel.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
+		self.DisableTaskManagerLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Disable Task Manager", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DisableTaskManagerLabel.Wrap( -1 )
+		self.DisableTaskManagerLabel.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nNote: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
 		
-		bSizer20321112.Add( self.KeyDestructionTimeLabel, 0, wx.ALL|wx.TOP, 7 )
+		bSizer20321112.Add( self.DisableTaskManagerLabel, 0, wx.ALL, 5 )
 		
 		
 		bSizer20321112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
-		self.KeyDestructionTimeTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.KeyDestructionTimeTextCtrl.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOWTEXT ) )
-		self.KeyDestructionTimeTextCtrl.SetToolTipString( u"The time in seconds before the victim's decryption key is destroyed. Once the time runs out, the victim will no longer be able to decrypt their files. Defaults to 259200 (72 hours)" )
+		self.DisableTaskManagerCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DisableTaskManagerCheckbox.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nNote: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
 		
-		bSizer20321112.Add( self.KeyDestructionTimeTextCtrl, 0, wx.ALL, 5 )
+		bSizer20321112.Add( self.DisableTaskManagerCheckbox, 0, wx.ALL, 5 )
 		
 		
 		bSizer411.Add( bSizer20321112, 1, wx.EXPAND, 5 )

