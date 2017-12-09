@@ -59,6 +59,7 @@ class DecryptionThread(Thread):
 		@summary: Performs decryption of the encrypted files
 		'''
 		self.in_progress = True
+		time.sleep(0.5)
 		
 		# Iterate encrypted files
 		for i in range(len(self.encrypted_files_list)):

