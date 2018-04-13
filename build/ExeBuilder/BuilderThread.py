@@ -6,6 +6,7 @@
 # Import libs
 import time
 import os
+import sys
 import json
 import subprocess
 from threading import Thread, Event
@@ -268,10 +269,13 @@ class BuilderThread(Thread):
             raise UserHalt
 
         self.__console_log(msg="Calling PyInstaller. Please wait...")
-        
+
+        # Get PyInstaller location
+        pyinstaller_path = os.path.join(os.path.dirname(sys.executable), "pyinstaller.exe")
+
         # Build command
         cmd = [
-            "pyinstaller",
+            pyinstaller_path,
             "--noconsole",
             "--clean",
             "-F"
@@ -288,12 +292,16 @@ class BuilderThread(Thread):
                            
         
         # Call PyInstaller subprocess
-        build = subprocess.Popen(cmd,
-                      stdout=subprocess.PIPE,
-                      stderr=subprocess.STDOUT,
-                      creationflags=0x08000000 # To prevent console window opening
-                      )
-        
+        try:
+            build = subprocess.Popen(cmd,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT,
+                          creationflags=0x08000000 # To prevent console window opening
+                        )
+        except WindowsError as we:
+            raise BuildFailure({"message":"Could not find PyInstaller at '%s'. Check that PyInstaller is installed" % pyinstaller_path,
+                               "ccode":ERROR_FILE_NOT_FOUND})
+
         while True:
             # Check for stop
             if self.__stop_event.isSet():

