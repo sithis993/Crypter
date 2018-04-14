@@ -230,7 +230,7 @@ class BuilderThread(Thread):
         if not os.path.isfile("dist\\Main.exe"):
             raise BuildFailure({
                 "message": "PyInstaller produced binary was not found. The PyInstaller build probably failed."
-                            " Check The PyInstaller output for more details",
+                            " Check The PyInstaller output for more details, and ensure a valid PyInstaller install exists.",
                 "ccode": ERROR_FILE_NOT_FOUND}
             )
         # Otherwise move the file to the correct location
@@ -272,6 +272,13 @@ class BuilderThread(Thread):
 
         # Get PyInstaller location
         pyinstaller_path = os.path.join(os.path.dirname(sys.executable), "pyinstaller.exe")
+        if not os.path.isfile(pyinstaller_path):
+            self.__console_log("PyInstaller not found at '%s'. Making system wide call instead" % pyinstaller_path,
+                               debug_level=2)
+            pyinstaller_path = "pyinstaller"
+        else:
+            self.__console_log("PyInstaller found at '%s'" % pyinstaller_path,
+                               debug_level=2)
 
         # Build command
         cmd = [
@@ -299,7 +306,8 @@ class BuilderThread(Thread):
                           creationflags=0x08000000 # To prevent console window opening
                         )
         except WindowsError as we:
-            raise BuildFailure({"message":"Could not find PyInstaller at '%s'. Check that PyInstaller is installed" % pyinstaller_path,
+            raise BuildFailure({"message":"Call to PyInstaller failed. Check that PyInstaller is installed and can be"
+                                   " found on the system path",
                                "ccode":ERROR_FILE_NOT_FOUND})
 
         while True:
