@@ -1,6 +1,6 @@
 # Crypter
 
-*Update: Please note that as of December 15th 2017, the direction and purpose of this project has changed due to legal and ethical concerns. Consequently, It's **extremely important** that you read both the **Disclaimer** and **Project Direction Update** sections of this README.*
+*Update: Please note that as of December 15th 2017, the direction and purpose of this project has changed. Consequently, It's **extremely important** that you read both the **Disclaimer** and **Project Direction Update** sections of this README.*
 
 Welcome to Crypter! a ransomware and builder package written entirely in Python and compiled to a Windows executable using [PyInstaller](http://www.pyinstaller.org/). This README will provide you with all of the information necessary to understand, build and use this software.
 
@@ -27,11 +27,10 @@ Once again, **the author accepts no responsibility for any damages that may occu
 ## Project Direction Update
 In recent weeks a number of ethical and legal concerns around this project have been raised. Please note that it is **not** my intention to provide criminals with a tool for destructive or harmful purposes. In its current state, Crypter allows users to easily decrypt their files. Once opened, the 256-bit AES key used for encryption is written to a local file in the same directory with the filename **key.txt**. This key can then be used to decrypt all of the encrypted files. It is not hidden from the user, nor is it ever sent to a remote server, Email address etc. In order to truly utilise Crypter for malicious purposes it would likely need to be expanded upon considerably.
 
-Nevertheless, if I continue to develop this project then I may be in risk of breaking local laws by providing a tool that can be used to commit an offense. Consequently, from December 15th 2017 onwards active development of Crypter will cease, and I will no longer be providing direct support.
+Nevertheless, if I continue to develop this project then I may be in risk of breaking local laws by providing a tool that can be used to commit an offense. Consequently, from December 15th 2017 onwards I will continue to provide support on this project to fix bugs and answer quries, but I will not be continuing with active development, nor will I be addressing feature requests.
 
-To clarify exactly what this means, I will fix bugs when highlighted or identified and I may expand upon documentation in the future, but the following will no longer be addressed:
+To clarify exactly what this means, I will address issues when highlighted or identified and I may expand upon documentation in the future, but the following will no longer be addressed:
 - Development of a remote Command and Control component
-- Direct support with regards to feature requests
 - Further functionality additions
 
 It's been an interesting and pretty fun journey, but active development on the project should be considered finished from this point onwards.
