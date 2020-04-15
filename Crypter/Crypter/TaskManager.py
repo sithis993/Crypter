@@ -4,7 +4,7 @@
 '''
 
 # Import libs
-import _winreg
+import winreg
 
 
 class TaskManager(object):

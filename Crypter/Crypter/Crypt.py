@@ -11,7 +11,7 @@ from Crypto.Random import random
 import os
 
 # Import classes
-import Base
+from . import Base
 
 ######################
 ## Symmetric Crypto ##
@@ -21,9 +21,12 @@ class SymmetricCrypto(Base.Base):
 
   def __init__(self, key=None):
     # Init object
-    self.pad = lambda s: s + (self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE) * chr(self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE)
-    self.unpad = lambda s : s[0:-ord(s[-1])]
+    #self.pad = lambda s: s + (self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE) * chr(self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE)
+    self.unpad = lambda s : s[0:-s[-1]]
 
+
+  def pad(self, s):
+    return s + bytes((self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE) * chr(self.PADDING_BLOCK_SIZE - len(s) % self.PADDING_BLOCK_SIZE), encoding="utf-8")
       
   def init_keys(self, key=None):
       '''
@@ -32,8 +35,10 @@ class SymmetricCrypto(Base.Base):
       '''
       
       if not key:
+        print("Loading a key")
         self.load_symmetric_key()
       else:
+        print("using existing key: %s" % key)
         self.key = key
       
 
@@ -44,11 +49,14 @@ class SymmetricCrypto(Base.Base):
         fh = open("key.txt", "r")
         self.key = fh.read()
         fh.close()
+        print("Key file already here. Using + " + self.key)
       else:
+        print("No key file. Generating")
         self.key = self.generate_key()
 
   def generate_key(self):
     # Function to generate a random key for encryption
+    print("writing out key to " + os.getcwd())
 
     key = ''.join(random.choice('0123456789ABCDEF') for i in range(32))
     # DEV - Write to file
@@ -104,6 +112,7 @@ class SymmetricCrypto(Base.Base):
     # Get file details and check for errors
     file_details = self.process_file(file, "decrypt", extension)
     if file_details['error']:
+      print("Some kind of error getting file details")
       return
 
     # Open file reading and writing handles
@@ -111,6 +120,7 @@ class SymmetricCrypto(Base.Base):
       fh_read = open(file_details["locked_path"], "rb")
       fh_write = open(file_details["full_path"], "wb")
     except IOError:
+      print("Got IO Error below fh read and write")
       return False
 
     # Read blocks and decrypt
@@ -125,7 +135,7 @@ class SymmetricCrypto(Base.Base):
       ciphertext = block
       iv = ciphertext[:self.IV_SIZE]
       ciphertext = ciphertext[self.IV_SIZE:]
-      cipher = AES.new(decryption_key, AES.MODE_CBC, iv)
+      cipher = AES.new(bytes(decryption_key, encoding="utf-8"), AES.MODE_CBC, iv)
       cleartext = self.unpad(cipher.decrypt(ciphertext))
 
       # Write decrypted block
@@ -173,7 +183,7 @@ class SymmetricCrypto(Base.Base):
 
 
       iv = Random.new().read(AES.block_size)
-      cipher = AES.new(self.key, AES.MODE_CBC, iv)
+      cipher = AES.new(bytes(self.key, encoding="utf-8"), AES.MODE_CBC, iv)
       try:
         # Create ciphertext. Length is now 4096 + 32 (block + iv + padding)
         ciphertext = (iv + cipher.encrypt(to_encrypt))
