@@ -31,7 +31,6 @@ if __name__ == "__main__":
     ## START
     try:
         mutex = Mutex()
-        raise Exception("Got here")
         go = Crypter()
     # Could not acquire mutex
     except MutexAlreadyAcquired as maa:
