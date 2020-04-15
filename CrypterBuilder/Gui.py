@@ -305,7 +305,7 @@ class Gui(MainFrame):
         @summary: Opens explorer in the "bin" directory where the Crypter binary is written
         '''
         
-        subprocess.Popen(r'explorer "..\bin"')
+        subprocess.Popen(r'explorer ".\bin"')
 
         
     def set_events(self):
