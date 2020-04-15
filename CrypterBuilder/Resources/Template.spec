@@ -30,6 +30,6 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           console=False,
-		  uac_admin=True,
+		  uac_admin=False,
 		  icon=None
 		  )
