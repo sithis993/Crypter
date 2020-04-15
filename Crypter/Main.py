@@ -38,6 +38,7 @@ if __name__ == "__main__":
         sys.exit()
     # Exception
     except Exception as ex:
-        showErrorDialog(ex)
-        sys.exit()
+        if "--debug" in sys.argv:
+            showErrorDialog(ex)
+            sys.exit()
 
