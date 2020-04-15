@@ -7,6 +7,7 @@ key.txt
 *.swo
 *.swp
 *~
+CrypterBuilder/Resources/runtime.cfg
 
 # DIRS
 Crypter/.settings/
