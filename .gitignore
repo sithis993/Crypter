@@ -1,7 +1,17 @@
-.idea/
+# FILES
+Main.spec
+todo.txt
+key.txt
 *.pyc
 *.swn
 *.swo
 *.swp
-key.txt
 *~
+
+# DIRS
+Crypter/.settings/
+bin/
+build/
+dist/
+venv/
+.idea/
