@@ -10,8 +10,7 @@ import datetime
 import time
 import json
 import subprocess
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
+from pubsub import pub
 
 # Import package modules
 from .BuilderGuiAbsBase import MainFrame
@@ -40,7 +39,10 @@ class Gui(MainFrame):
         MainFrame.__init__( self, parent=None )
         self.console = Console(self.ConsoleTextCtrl)
         self.StatusBar.SetStatusText("Ready...")
-        self.SetIcon(wx.IconFromBitmap(wx.Bitmap("ExeBuilder\\static\\builder_logo.bmp", wx.BITMAP_TYPE_ANY)))
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap("CrypterBuilder\\Resources\\builder_logo.bmp", wx.BITMAP_TYPE_ANY))
+
+        self.SetIcon(icon)
         
         # Update GUI Visuals
         self.update_gui_visuals()
@@ -62,7 +64,7 @@ class Gui(MainFrame):
         # Set Logo Image
         self.LogoBitmap.SetBitmap(
             wx.Bitmap(
-                "ExeBuilder\\static\\builder_logo.bmp"
+                "CrypterBuilder\\Resources\\builder_logo.bmp"
                 )
             )
         # Set debug to default level
@@ -82,15 +84,7 @@ class Gui(MainFrame):
         
         # Parse values
         # Builder Language
-        if "builder_language" in config_dict:
-            if unicode(config_dict["builder_language"]) not in SUPPORTED_LANGUAGES:
-                self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
-            else:
-                self.BuilderLanguageChoice.SetString(0, config_dict["builder_language"])
-                if config_dict["builder_language"] != self.language:
-                    self.update_language(None, language=config_dict["builder_language"])
-        else:
-            self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
+        self.BuilderLanguageChoice.SetString(0, DEFAULT_LANGUAGE)
         # Debug Level
         if "debug_level" in config_dict:
             self.DebugLevelChoice.SetSelection(
@@ -367,17 +361,17 @@ class Gui(MainFrame):
         '''
             
         # Log output message to the Console
-        self.console.log(debug_level=msg.data["debug_level"],
-                         _class=msg.data["_class"], 
-                         msg=msg.data["msg"],
-                         ccode=msg.data["ccode"],
-                         timestamp=msg.data["timestamp"])
+        self.console.log(debug_level=msg["debug_level"],
+                         _class=msg["_class"],
+                         msg=msg["msg"],
+                         ccode=msg["ccode"],
+                         timestamp=msg["timestamp"])
 
         # CHECK FOR ERRORS
         # If there was a validation error, highlight culprit field label
-        if msg.data["ccode"] == ERROR_INVALID_DATA:
+        if msg["ccode"] == ERROR_INVALID_DATA:
             # Set input field label FG to red
-            label_object_name = BUILDER_CONFIG_ITEMS[msg.data["invalid_input_field"]]["label_object_name"]
+            label_object_name = BUILDER_CONFIG_ITEMS[msg["invalid_input_field"]]["label_object_name"]
             self.__set_label_colour(label_object_name, colour="red")
 
         # If build is not in progress, Reset BUILD Button and set outcome message
@@ -534,7 +528,7 @@ class Gui(MainFrame):
         
         
         # Create listeners and Launch the Build thread
-        Publisher.subscribe(self.__update_progress, "update")
+        pub.subscribe(self.__update_progress, "update")
         self.__builder = BuilderThread(user_input_dict)
         
         

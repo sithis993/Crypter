@@ -3,13 +3,13 @@
 block_cipher=None
 
 
-a = Analysis(['..\\Crypter\\Main.py'],
+a = Analysis(['Crypter\\Main.py'],
              pathex=['.\\build'],
              binaries=None,
-             datas=[("Resources/lock.bmp", "."),
-			 ("Resources/bitcoin.bmp", "."),
-			 ("Resources/lock.ico", "."),
-			 ("Resources/runtime.cfg", ".")
+             datas=[("CrypterBuilder/Resources/lock.bmp", "."),
+			 ("CrypterBuilder/Resources/bitcoin.bmp", "."),
+			 ("CrypterBuilder/Resources/lock.ico", "."),
+			 ("CrypterBuilder/Resources/runtime.cfg", ".")
 			 ],
              hiddenimports=[],
              hookspath=[],

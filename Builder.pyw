@@ -5,6 +5,8 @@
 '''
 
 # Import libs
-import ExeBuilder
+import win32api
+from CrypterBuilder import Builder
 
-go = ExeBuilder.ExeBuilder()
+builder = Builder()
+builder.launch()

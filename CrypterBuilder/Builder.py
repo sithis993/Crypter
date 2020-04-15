@@ -1,6 +1,6 @@
 '''
-@summary: Crypter Exe Builder: Main
-@author: MLS
+Crypter Builder
+@author: Sithis
 '''
 
 # Import libs
@@ -16,19 +16,26 @@ from .Base import *
 ###################
 ## BUILDER CLASS ##
 ###################
-class ExeBuilder():
+class Builder():
     '''
-    @summary: Provides the main Builder object. Controls calls to all other areas
+    Crypter Builder
     '''
     
     def __init__(self):
         '''
-        @summary: Constructor
+        Constructor
         '''
         
         # Initialise the Builder GUI
-        app = wx.App()
-        builder_gui = Gui()
-        builder_gui.Show()
-        app.MainLoop()
-        
+        self.__app = wx.App()
+        self.__builder_gui = Gui()
+
+
+    def launch(self):
+        '''
+        Launches the Builder GUI
+        '''
+
+
+        self.__builder_gui.Show()
+        self.__app.MainLoop()

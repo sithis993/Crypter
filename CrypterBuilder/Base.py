@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 '''
-@summary: Crypter Exe Builder: Base schema and config
+@summary: Crypter Builder: Base schema and config
 @author: MLS
 '''
 
 # Import libs
 import re
-from ordereddict import OrderedDict
+import os
+from collections import OrderedDict
 
 ## VERSION
 MAJ_VERSION = "2"
@@ -363,7 +364,7 @@ RUNTIME_CONFIG_ITEMS = [
     "delete_shadow_copies"
     ]
 
-RUNTIME_CONFIG_PATH = "Resources/runtime.cfg"
+RUNTIME_CONFIG_PATH = os.path.join("CrypterBuilder", "Resources", "runtime.cfg")
 
 # ERRORS
 ERROR_INVALID_DATA = 13

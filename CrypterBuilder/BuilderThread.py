@@ -1,5 +1,5 @@
 '''
-@summary: Crypter Exe Builder: Build Thread
+@summary: Crypter Builder: Build Thread
 @author: MLS
 '''
 
@@ -10,8 +10,7 @@ import sys
 import json
 import subprocess
 from threading import Thread, Event
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
+from pubsub import pub
 
 # Import package modules
 from .Base import *
@@ -80,11 +79,11 @@ class BuilderThread(Thread):
             "ccode": ccode,
             "timestamp": timestamp
             }
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             update_data_dict[key] = value
         
         # Send update data
-        Publisher.sendMessage("update", update_data_dict)
+        pub.sendMessage("update", msg=update_data_dict)
         
         
     def validate_input(self, input_field, input_value):
@@ -204,8 +203,9 @@ class BuilderThread(Thread):
         # Build failed
         except BuildFailure as be:
             self.__build_error = True
-            self.__console_log(msg=be[0]["message"], ccode=be[0]["ccode"])
-            
+            # self.__console_log(msg=be[0]["message"], ccode=be[0]["ccode"])
+            self.__console_log(msg=be, ccode=be.get_code())
+
         # Build thread finished. Log and Reset build status to prevent further console updates
         self.__in_progress = False
         self.__console_log("Build process thread finished", debug_level=3)
@@ -228,33 +228,34 @@ class BuilderThread(Thread):
         
         # Check Binary was produced
         if not os.path.isfile("dist\\Main.exe"):
-            raise BuildFailure({
-                "message": "PyInstaller produced binary was not found. The PyInstaller build probably failed."
-                            " Check The PyInstaller output for more details, and ensure a valid PyInstaller install exists.",
-                "ccode": ERROR_FILE_NOT_FOUND}
+            raise BuildFailure(
+                ERROR_FILE_NOT_FOUND,
+                "PyInstaller produced binary was not found. The PyInstaller build probably failed."
+                " Check The PyInstaller output for more details, and ensure a valid PyInstaller install exists.",
             )
         # Otherwise move the file to the correct location
         else:
             
             # Make bin dir if it doesn't exist
-            if not os.path.isdir("..\\bin"):
-                os.makedirs("..\\bin")
+            if not os.path.isdir("bin"):
+                os.makedirs("bin")
             
-            if os.path.isfile("..\\bin\\%s" % dest_filename):
+            if os.path.isfile("bin\\%s" % dest_filename):
                 try:
-                    os.remove("..\\bin\\%s" % dest_filename)
+                    os.remove("bin\\%s" % dest_filename)
                 except WindowsError:
-                    raise BuildFailure({
-                        "message": "The existing binary at '..\\bin\\%s' could not be replaced with the new binary. Check that the"
-                                   " ransomware isn't already open, and that you have sufficient permissions for the"
-                                   " ..\\bin folder" % dest_filename,
-                        "ccode": ERROR_CANNOT_WRITE})
+                    raise BuildFailure(
+                        ERROR_CANNOT_WRITE,
+                        "The existing binary at 'bin\\%s' could not be replaced with the new binary. Check that the"
+                        " ransomware isn't already open, and that you have sufficient permissions for the"
+                        " bin folder" % dest_filename,
+                    )
 
             # Move binary
             os.rename("dist\\Main.exe",
-                      "..\\bin\\%s" % dest_filename)
+                      "bin\\%s" % dest_filename)
             self.__binary_location = os.path.join(
-                os.path.abspath("..\\bin"),
+                os.path.abspath("bin"),
                 dest_filename
             )
           
@@ -306,9 +307,11 @@ class BuilderThread(Thread):
                           creationflags=0x08000000 # To prevent console window opening
                         )
         except WindowsError as we:
-            raise BuildFailure({"message":"Call to PyInstaller failed. Check that PyInstaller is installed and can be"
-                                   " found on the system path",
-                               "ccode":ERROR_FILE_NOT_FOUND})
+            raise BuildFailure(
+                ERROR_FILE_NOT_FOUND,
+                "Call to PyInstaller failed. Check that PyInstaller is installed and can be found"
+                " on the system path"
+            )
 
         while True:
             # Check for stop

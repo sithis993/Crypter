@@ -1,12 +1,12 @@
 '''
-@summary: Crypter Exe Builder: PyInstaller SPEC File Creator
+@summary: Crypter Builder: PyInstaller SPEC File Creator
 @author: MLS
 '''
 
 # Import libs
 import re
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
+import os
+from pubsub import pub
 
 # Import package modules
 
@@ -19,7 +19,7 @@ class Spec():
     @summary: Provides a SPEC file object
     '''
     
-    SPEC_TEMPLATE_PATH = "ExeBuilder/static/Template.spec"
+    SPEC_TEMPLATE_PATH = os.path.join("CrypterBuilder", "Resources", "Template.spec")
     SPEC_OUT_PATH = "Main.spec"
     
     def __init__(self):
@@ -131,9 +131,10 @@ class Spec():
             "ccode": ccode,
             "timestamp": timestamp
             }
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             update_data_dict[key] = value
         
         # Send update data
-        Publisher.sendMessage("update", update_data_dict)
+        pub.sendMessage("update", msg=update_data_dict)
+
             
