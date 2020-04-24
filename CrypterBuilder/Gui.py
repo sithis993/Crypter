@@ -9,6 +9,7 @@ import wx
 import datetime
 import time
 import json
+import os
 import subprocess
 from pubsub import pub
 
@@ -40,7 +41,7 @@ class Gui(MainFrame):
         self.console = Console(self.ConsoleTextCtrl)
         self.StatusBar.SetStatusText("Ready...")
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap("CrypterBuilder\\Resources\\builder_logo.bmp", wx.BITMAP_TYPE_ANY))
+        icon.CopyFromBitmap(wx.Bitmap(os.path.join(self.__get_resources_path(), "builder_logo.bmp"), wx.BITMAP_TYPE_ANY))
 
         self.SetIcon(icon)
         
@@ -49,6 +50,15 @@ class Gui(MainFrame):
         
         # Set initial event handlers
         self.set_events()
+
+
+    def __get_resources_path(self):
+        '''
+        Gets the path to the resources directory
+        @return: Resources directory path
+        '''
+
+        return os.path.join(os.path.dirname(__file__), "Resources")
         
     
     def update_gui_visuals(self):
@@ -64,7 +74,7 @@ class Gui(MainFrame):
         # Set Logo Image
         self.LogoBitmap.SetBitmap(
             wx.Bitmap(
-                "CrypterBuilder\\Resources\\builder_logo.bmp"
+                os.path.join(self.__get_resources_path(), "builder_logo.bmp")
                 )
             )
         # Set debug to default level
