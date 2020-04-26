@@ -10,6 +10,18 @@ If you're looking to dive straight in then head to the section on <a href="#gett
 
 <b>Note: </b>By making use of repository and/or the content within, you agree that you have read and accepted the terms of the <a href="#disclaimer">Disclaimer</a>
 
+<h2 align="center">Contents</h2>
+
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+- [What's New](#whats-new-v30)
+- [Disclaimer](#disclaimer)
+- [Screenshots](#screenshots)
+- [Getting Started](#getting-started)
+- [How Does it Work?](#how-does-it-work)
+- [FAQs](#faqs)
+<!-- /TOC -->
+
+
 <h2 align="center">What's New? (v3.0)</h2>
 <ul>
     <li>Overhaul to support Python 3.6 and above</li>
