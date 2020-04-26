@@ -1,7 +1,7 @@
 <h1 align="center">Crypter</h1>
 <p align="center">
     <img src="repo_images/crypter_logo.png" alt="Crypter Logo"><br>
-    A Ransomware Builder for Windows written purely in Python
+    A Ransomware and Ransomware Builder for Windows written purely in Python
 </p><hr>
 
 Created for security researchers, enthusiasts and educators, Crypter allows you to experience ransomware first hand. The newly released v3.0 is a complete overhaul that drastically simplifies setup and brings the package up-to-date to work with Python 3.6 and above. 
