@@ -36,7 +36,7 @@ Crypter is intended for educational and research purposes only. This software sh
 Once compiled, Crypter WILL encrypt the files on the computer on which it is executed. Whilst Crypter provides you with access to the decryption key, enabling you to decrypt any encrypted files, bugs and other issues could, in theory, interrupt or prevent a successful decryption. Consequently, a permanent and irreversible loss of data could occur. To avoid any potential damage, <b>you should only run Crypter on a test machine created for this purpose</b>.
 </p>
 <p>
-Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.**
+Once again,<b>the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.</b>
 </p>
 
 <h2 align="center">Screenshots</h2>
