@@ -8,7 +8,7 @@ Created for security researchers, enthusiasts and educators, Crypter allows you 
 
 If you're looking to dive straight in then head to the section on <a href="#getting-started">Getting Started</a>. Otherwise continue reading to learn more about Crypter.
 
-<b>Note: </b>By making use of repository and/or the content within, you agree that you have read and accepted the terms of the <a href="#disclaimer">Disclaimer</a>
+<b>Note: </b>By making use of this repository and/or the content within, you agree that you have read and accepted the terms of the <a href="#disclaimer">Disclaimer</a>
 
 <h2 align="center">Contents</h2>
 
