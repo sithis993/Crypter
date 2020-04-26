@@ -73,7 +73,7 @@ Traditionally, malware is written in compiled languages like C and C++. As a sec
 Crypter was made publically available to enable security researchers and enthusiasts to gain a better understanding of Ransomware. While there are plenty of guides and videos on the topic, they usually don't provide the understanding that can be gained by experiencing something first hand.
 </p>
 
-#### 2. But couldn't it be used by criminals for malicious purposes?!
+#### 3. But couldn't it be used by criminals for malicious purposes?!
 <p>
 While Crypter can be used to simulate a real Ransomware attack, steps have been taken to allow users to reverse any damage, and to prevent use by criminals in the wild. Ransomware is only useful to a criminal if they have the ability to decrypt the user's files and the user does not. Traditionally this is done by sending the encryption key to a remote Command & Control (CnC) server controlled by an attack once the user's files have been encrypted. The victim then pays a ransom fee to retrieve access to the key that will decrypt their files.
 </p>
@@ -87,7 +87,7 @@ While Crypter can be used to simulate a real Ransomware attack, steps have been 
     It is certainly possible to further develop Crypter and implement the missing CnC capabilities. However, this requires expertise and knowledge in programming as well as malware tactics and techniques. Anyone motivated and knowledgeable enough to add these components would most likely create a piece of Ransomware from scratch, and  not make use of an existing, open source and publically available package as the basis for their attacks.
 </p>
 
-#### 3. Can you add a feature for me?
+#### 5. Can you add a feature for me?
 <p>
     Firstly, if you're going to ask me if I can add CnC functionality, or implement some method for sending the encryption key to remote server, Email etc. please don't waste you time. This is <b>not</b> something I'm willing to do, as it would provide script kiddies with a ready made Ransomware tool that would almost certainly be used for nefarious purposes. Again, this project was created purely for research and educational purposes.
 </p>
