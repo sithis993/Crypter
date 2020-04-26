@@ -16,6 +16,9 @@ If you're looking to dive straight in then head to the section on <a href="#gett
 - [What's New](#whats-new-v30)
 - [Disclaimer](#disclaimer)
 - [Screenshots](#screenshots)
+- [How Does it Work?](#how-does-it-work)
+    - [Builder](#builder)
+    - [Ransomware](#ransomware)
 - [Getting Started](#getting-started)
 - [FAQs](#faqs)
 <!-- /TOC -->
@@ -53,6 +56,31 @@ From version 3.0 onwards, getting started is now easier than ever:
     <li>Run Builder.pyw to open the Builder and start building!</li>
 </ol>
 It's really that simple.
+
+<h2 align="center">How Does it Work?</h2>
+
+### Builder
+The builder is the application that allows you to customise and build the Crypter Ransomware. Some of the options you can set include:
+
+- Binary Executable File Icon
+- GUI Title/Heading
+- GUI Font and Background Colour
+- Bitcoin Wallet Address
+- Ransom Fee
+- Ransom Message
+- Payment Time Limit 
+- File Shadow Copy Deletion
+- Filetypes to Encrypt
+
+and many more. After setting these options simply hit the <b>BUILD</b> button the build the executable.
+
+### Ransomware
+Once executed, Crypter will take the following steps:
+
+- Generate an AES-256 bit encryption/decryption key and write it to key.txt in the current directory
+- Search relevant locations (network drives, user directories, etc.) for matching files
+- Encrypt all matching files
+- Display the Crypter GUI to the victim
 
 <h2 align="center">FAQs</h2>
 
