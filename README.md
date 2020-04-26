@@ -17,25 +17,27 @@ If you're looking to dive straight in then head to the section on <a href="#gett
 </ul>
 
 <h2 align="center">Disclaimer</h2>
-Crypter is intended for educational and research purposes only. This software should not be used within any system or network for which you do not have permission, nor should it be used for any illegal or illicit purposes. The author takes no responsibility for any damages that may be caused by the software in this repository.
+Crypter is intended for educational and research purposes only. This software should not be used within any system or network for which you do not have permission, nor should it be used for any illegal or illicit purposes. The author takes no responsibility for any damages that may be caused by the software in this repository.<br>
 
-Once compiled, Crypter WILL encrypt the files on the computer on which it is executed. Whilst Crypter provides you with access to the decryption key, enabling you to decrypt any encrypted files, bugs and other issues could, in theory, interrupt or prevent a successful decryption. 
-
-Consequently, a permanent and irreversible loss of data could occur. To avoid any potential damage, <b>you should only run Crypter on a test machine created for this purpose</b>.
+Once compiled, Crypter WILL encrypt the files on the computer on which it is executed. Whilst Crypter provides you with access to the decryption key, enabling you to decrypt any encrypted files, bugs and other issues could, in theory, interrupt or prevent a successful decryption. Consequently, a permanent and irreversible loss of data could occur. To avoid any potential damage, <b>you should only run Crypter on a test machine created for this purpose</b>.
 
 Once again, **the author accepts no responsibility for any damages that may occur, and by downloading this software you accept and agree to this disclaimer.**
 
 <h2 align="center">Screenshots</h2>
 <p align="center">
     <img src="repo_images/crypter_example.png" alt="Crypter Builder and Ransomware Example" width="100%"><br>
+    Builder application (left) for customising and building the Crypter Ransomware (right)
 </p>
 
-## Getting Started
+<h2 align="center">Getting Started</h2>
+From version 3.0, getting started is now easier than ever:
+<br>
+<ol>
+    <li>Download or clone this repository</li>
+    <li>Run pip -r requirements.txt to install the dependencies</li>
+    <li>Run Builder.pyw to open the Builder and start building!</li>
+</ol>
+<br>
+It's really that simple.
 
-## Components
-********
-## Purpose
-
-## How does Crypter work
-
-## Ethical Concerns
+<h2> align="center">FAQs</h2>
