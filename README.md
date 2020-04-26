@@ -1,6 +1,6 @@
 <h1 align="center">Crypter</h1>
 <p align="center">
-    <img src="repo_images/crypter_logo.png"><br>
+    <img src="repo_images/crypter_example.png"><br>
     A Ransomware and Builder package for Windows written purely in Python
 </p><hr>
 
