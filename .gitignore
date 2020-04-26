@@ -1,7 +1,19 @@
-.idea/
+# FILES
+Main.spec
+todo.txt
+key.txt
 *.pyc
 *.swn
 *.swo
 *.swp
-key.txt
 *~
+CrypterBuilder/Resources/runtime.cfg
+
+# DIRS
+Crypter.egg-info/*
+Crypter/.settings/
+bin/
+build/
+dist/
+venv/
+.idea/
