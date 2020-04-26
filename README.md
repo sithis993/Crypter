@@ -17,7 +17,6 @@ If you're looking to dive straight in then head to the section on <a href="#gett
 - [Disclaimer](#disclaimer)
 - [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
-- [How Does it Work?](#how-does-it-work)
 - [FAQs](#faqs)
 <!-- /TOC -->
 
@@ -55,8 +54,6 @@ From version 3.0 onwards, getting started is now easier than ever:
 </ol>
 It's really that simple.
 
-<h2 align="center">How does it work?</h2>
-TBC
 <h2 align="center">FAQs</h2>
 
 #### 1. Why did you create this?</li>
