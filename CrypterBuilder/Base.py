@@ -10,8 +10,8 @@ import os
 from collections import OrderedDict
 
 ## VERSION
-MAJ_VERSION = "2"
-MIN_VERSION = "40"
+MAJ_VERSION = "3"
+MIN_VERSION = "0"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
