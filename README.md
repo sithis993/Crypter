@@ -30,11 +30,11 @@ Once again, **the author accepts no responsibility for any damages that may occu
 </p>
 
 <h1 align="center">Getting Started</h1>
-From version 3.0, getting started is now easier than ever:
-<br>
+From version 3.0 onwards, getting started is now easier than ever:
+<br><br>
 <ol>
     <li>Download or clone this repository</li>
-    <li>Install the dependencies by running <div class="highlight"><pre>pip -r requirements.txt</pre></div></li>
+    <li>Install the dependencies by running: <div class="highlight"><pre>pip -r requirements.txt</pre></div></li>
     <li>Run Builder.pyw to open the Builder and start building!</li>
 </ol>
 <br>
