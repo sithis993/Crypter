@@ -10,6 +10,7 @@ import winerror
 import wx
 import os
 import sys
+import traceback
 
 # Import Package Libs
 from Crypter import Crypter
@@ -39,6 +40,11 @@ if __name__ == "__main__":
     # Exception
     except Exception as ex:
         if "--debug" in sys.argv:
-            showErrorDialog(ex)
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            msg = "Exception encountered!\n\n"
+            msg += "Exception: %s\n" % ex
+            msg += "Type: %s\n" % exc_type.__name__
+            msg += "Traceback: %s" % "".join(traceback.format_tb(exc_tb))
+            showErrorDialog(msg)
             sys.exit()
 
