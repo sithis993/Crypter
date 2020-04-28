@@ -26,6 +26,7 @@ If you're looking to dive straight in then head to the section on <a href="#gett
 
 <h2 align="center">What's New? (v3.0)</h2>
 <ul>
+    <li>Decryption key validation check before attempting decryption</li>
     <li>Overhaul to support Python 3.6 and above</li>
     <li>Drastically simplified dependency installation</li>
 </ul>

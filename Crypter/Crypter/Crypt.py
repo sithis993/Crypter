@@ -119,8 +119,8 @@ class SymmetricCrypto(Base.Base):
     try:
       fh_read = open(file_details["locked_path"], "rb")
       fh_write = open(file_details["full_path"], "wb")
-    except IOError:
-      print("Got IO Error below fh read and write")
+    except IOError as io:
+      print("Got IO Error below fh read and write: %s" % io)
       return False
 
     # Read blocks and decrypt

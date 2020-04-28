@@ -11,7 +11,7 @@ from collections import OrderedDict
 
 ## VERSION
 MAJ_VERSION = "3"
-MIN_VERSION = "1"
+MIN_VERSION = "2"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
