@@ -111,7 +111,8 @@ class Base():
     }
     
     FILES_TO_EXCLUDE = [
-        "key.txt"
+        "key.txt",
+        "enc_test.txt"
         ]
     
     DIRS_TO_EXCLUDE = [

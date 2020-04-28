@@ -272,10 +272,14 @@ class Gui(MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.Ba
         @summary: Called once the "OK" button is hit. Starts the decryption process (inits the thread)
         '''
 
-        # Check for valid key
         key_contents = self.decryption_dialog.DecryptionKeyTextCtrl.GetLineText(0)
+        # Check key is valid
         if len(key_contents) < 32:
             self.decryption_dialog.StatusText.SetLabelText(self.GUI_DECRYPTION_DIALOG_LABEL_TEXT_INVALID_KEY[self.LANG])
+            return
+        # Check key is correct
+        elif not self.__is_correct_decryption_key(key_contents):
+            self.decryption_dialog.StatusText.SetLabelText("Incorrect Decryption Key!")
             return
         else:
             self.decryption_dialog.StatusText.SetLabelText(
@@ -289,6 +293,36 @@ class Gui(MainFrame, ViewEncryptedFilesDialog, EnterDecryptionKeyDialog, Base.Ba
         # Start the decryption thread
         self.decryption_thread = DecryptionThread(self.encrypted_files_list, self.decrypted_files_list,
                                                   self, self.decrypter, key_contents)
+
+    def __is_correct_decryption_key(self, key):
+        '''
+        Checks if the provided decryption key is correct
+        @param key: The decryption key to check
+        @return: True if the decryption key is valid, otherwise False
+        '''
+        correct_key = False
+        encryption_test_file_path = self.decrypter.encryption_test_file + "." + self.__config["encrypted_file_extension"]
+
+        # Read test file encrypted contents
+        with open(encryption_test_file_path, "rb") as encrypted_test_file:
+            encrypted_contents = encrypted_test_file.read()
+
+        # Test decryption
+        self.decrypter.decrypt_file(self.decrypter.encryption_test_file, key)
+
+        # Check for success
+        with open(self.decrypter.encryption_test_file, "rb") as encrypted_test_file:
+            contents = encrypted_test_file.read().decode("utf-8")
+            if contents == "Encryption test":
+                correct_key = True
+
+        # write old encrypted contents back
+        with open(encryption_test_file_path, "wb") as encrypted_test_file:
+            encrypted_test_file.write(encrypted_contents)
+        os.remove(self.decrypter.encryption_test_file)
+
+        return correct_key
+
 
     def show_encrypted_files(self, event):
         '''
