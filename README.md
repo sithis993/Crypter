@@ -53,7 +53,7 @@ From version 3.0 onwards, getting started is now easier than ever:
 <br><br>
 <ol>
     <li>Download or clone this repository</li>
-    <li>Install the dependencies by running pip -r requirements.txt</li>
+    <li>Install the dependencies by running pip install -r requirements.txt</li>
     <li>Run Builder.pyw to open the Builder and start building!</li>
 </ol>
 It's really that simple.
