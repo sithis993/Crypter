@@ -364,7 +364,7 @@ RUNTIME_CONFIG_ITEMS = [
     "delete_shadow_copies"
     ]
 
-RUNTIME_CONFIG_PATH = os.path.join("CrypterBuilder", "Resources", "runtime.cfg")
+RUNTIME_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "Resources", "runtime.cfg")
 
 # ERRORS
 ERROR_INVALID_DATA = 13
