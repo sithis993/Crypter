@@ -11,7 +11,7 @@ from collections import OrderedDict
 
 ## VERSION
 MAJ_VERSION = "3"
-MIN_VERSION = "2"
+MIN_VERSION = "3"
 
 # TITLE
 TITLE = "Crypter Builder v%s.%s" % (MAJ_VERSION, MIN_VERSION)
@@ -364,7 +364,7 @@ RUNTIME_CONFIG_ITEMS = [
     "delete_shadow_copies"
     ]
 
-RUNTIME_CONFIG_PATH = os.path.join("CrypterBuilder", "Resources", "runtime.cfg")
+RUNTIME_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "Resources", "runtime.cfg")
 
 # ERRORS
 ERROR_INVALID_DATA = 13

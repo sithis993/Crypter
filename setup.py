@@ -13,7 +13,7 @@ from setuptools import setup
 
 setup(
     name='Crypter',
-    version='3.2',
+    version='3.3',
     install_requires=[
         "altgraph==0.17",
         "future==0.18.2",
