@@ -364,7 +364,8 @@ RUNTIME_CONFIG_ITEMS = [
     "delete_shadow_copies"
     ]
 
-RUNTIME_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "Resources", "runtime.cfg")
+PACKAGE_DIR = os.path.dirname(__file__)
+RUNTIME_CONFIG_PATH = os.path.join(PACKAGE_DIR, "Resources", "runtime.cfg")
 
 # ERRORS
 ERROR_INVALID_DATA = 13
