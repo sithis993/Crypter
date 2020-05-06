@@ -18,7 +18,7 @@
         <property name="internationalize">0</property>
         <property name="name">CrypterBuilder</property>
         <property name="namespace"></property>
-        <property name="path">C:\dev\py\Crypter\build\ExeBuilder</property>
+        <property name="path">C:\dev\py\Crypter\CrypterBuilder</property>
         <property name="precompiled_header"></property>
         <property name="relative_path">1</property>
         <property name="skip_lua_events">1</property>
@@ -586,7 +586,7 @@
                                         <property name="permission">none</property>
                                         <object class="sizeritem" expanded="0">
                                             <property name="border">5</property>
-                                            <property name="flag">wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND</property>
+                                            <property name="flag">wxALIGN_CENTER_HORIZONTAL|wxALL</property>
                                             <property name="proportion">0</property>
                                             <object class="wxStaticText" expanded="0">
                                                 <property name="BottomDockable">1</property>
