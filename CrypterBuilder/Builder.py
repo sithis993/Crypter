@@ -5,13 +5,9 @@ Crypter Builder
 
 # Import libs
 import wx
-import json
-import time
 
 # Import package modules
 from .Gui import Gui
-from .Exceptions import *
-from .Base import *
 
 ###################
 ## BUILDER CLASS ##
@@ -35,7 +31,6 @@ class Builder():
         '''
         Launches the Builder GUI
         '''
-
 
         self.__builder_gui.Show()
         self.__app.MainLoop()
