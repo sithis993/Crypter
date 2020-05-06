@@ -9,7 +9,7 @@ import os
 from pubsub import pub
 
 # Import package modules
-
+from . import Base
 
 ################
 ## SPEC CLASS ##
@@ -19,7 +19,7 @@ class Spec():
     @summary: Provides a SPEC file object
     '''
     
-    SPEC_TEMPLATE_PATH = os.path.join("CrypterBuilder", "Resources", "Template.spec")
+    SPEC_TEMPLATE_PATH = os.path.join(Base.PACKAGE_DIR, "Resources", "Template.spec")
     SPEC_OUT_PATH = "Main.spec"
     
     def __init__(self):
