@@ -148,6 +148,16 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "time_delay", {
+            "label": "Time Delay (s)",
+            "input_object_name": "TimeDelayTextCtrl",
+            "regex": re.compile("^\d*$"),
+            "config_area": "Ransomware Settings",
+            "validate": True,
+            "default": "0"
+        }
+    ),
+    (
         "delete_shadow_copies", {
             "label": "Delete Shadow Copies",
             "input_object_name": "DeleteShadowCopiesCheckbox",
@@ -349,6 +359,7 @@ RUNTIME_CONFIG_ITEMS = [
     "encrypted_file_extension",
     "disable_task_manager",
     "open_gui_on_login",
+    "time_delay",
     "wallet_address",
     "bitcoin_fee",
     "key_destruction_time",

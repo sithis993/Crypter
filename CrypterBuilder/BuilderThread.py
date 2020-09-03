@@ -358,7 +358,7 @@ class BuilderThread(Thread):
                                " It is recommended that UPX is used as this can reduce the binary size by several"
                                " Megabytes"
                                )
-            
+
         # Write the SPEC
         if not self.__stop_event.isSet():
             spec_path = spec.save_spec()

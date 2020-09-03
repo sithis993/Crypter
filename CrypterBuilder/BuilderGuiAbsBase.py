@@ -354,8 +354,21 @@ class MainFrame ( wx.Frame ):
 
 		bSizer61 = wx.BoxSizer( wx.HORIZONTAL )
 
+		self.TimeDelayLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Time Delay (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.TimeDelayLabel.Wrap( -1 )
+
+		self.TimeDelayLabel.SetToolTip( u"If ticked, the GUI will be launched each time the user logs in.\n\nWarning: Enabling this option may significantly increase the rate of Anti-Virus detection" )
+
+		bSizer61.Add( self.TimeDelayLabel, 0, wx.ALL, 5 )
+
 
 		bSizer61.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.TimeDelayTextCtrl = wx.TextCtrl( sbSizer13.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.TimeDelayTextCtrl.SetMaxLength( 20 )
+		self.TimeDelayTextCtrl.SetToolTip( u"The number of seconds to wait after the file is opened before ransomware execution begins. Useful for AV evasion" )
+
+		bSizer61.Add( self.TimeDelayTextCtrl, 0, wx.ALL, 5 )
 
 
 		bSizer59.Add( bSizer61, 1, wx.EXPAND, 5 )
