@@ -37,14 +37,3 @@ if __name__ == "__main__":
     except MutexAlreadyAcquired as maa:
         showErrorDialog("The file is corrupt and cannot be opened")
         sys.exit()
-    # Exception
-    except Exception as ex:
-        if "--debug" in sys.argv:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            msg = "Exception encountered!\n\n"
-            msg += "Exception: %s\n" % ex
-            msg += "Type: %s\n" % exc_type.__name__
-            msg += "Traceback: %s" % "".join(traceback.format_tb(exc_tb))
-            showErrorDialog(msg)
-            sys.exit()
-
