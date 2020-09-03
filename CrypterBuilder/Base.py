@@ -139,6 +139,15 @@ BUILDER_CONFIG_ITEMS = OrderedDict([
             }
     ),
     (
+        "debug_mode", {
+            "label": "Debug Mode",
+            "input_object_name": "DebugModeCheckbox",
+            "default": False,
+            "validate": False,
+            "config_area": "Binary Settings"
+        }
+    ),
+    (
         "open_gui_on_login", {
             "label": "Open GUI on Login",
             "input_object_name": "OpenGuiOnLoginCheckbox",

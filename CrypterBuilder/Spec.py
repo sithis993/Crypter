@@ -78,6 +78,14 @@ class Spec():
                                               "upx=True")
         self.__console_log(msg="UPX Set to True in SPEC file", debug_level=3)
 
+    def enable_debug_mode(self):
+        '''
+        Enables Debug mode for the ransomware
+        '''
+        self.__console_log(msg="Enabling Ransomware Debug Mode", debug_level=3)
+        self.contents = self.contents.replace("console=False", "console=True")
+        self.__console_log(msg="Debug Mode set to Enabled", debug_level=3)
+
     
     def set_icon(self, file_path):
         '''

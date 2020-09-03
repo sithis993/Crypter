@@ -116,6 +116,11 @@ class Gui(MainFrame):
             self.UpxDirPicker.SetPath(config_dict["upx_dir"])
         else:
             self.UpxDirPicker.SetPath("")
+        # Debug Mode
+        if "debug_mode" in config_dict:
+            self.DebugModeCheckbox.SetValue(config_dict["debug_mode"])
+        else:
+            self.DebugModeCheckbox.SetValue(BUILDER_CONFIG_ITEMS["debug_mode"]["default"])
         # Open GUI On Login
         if "open_gui_on_login" in config_dict:
             self.OpenGuiOnLoginCheckbox.SetValue(config_dict["open_gui_on_login"])
@@ -466,6 +471,8 @@ class Gui(MainFrame):
         user_input_dict["gui_title"] = self.GuiTitleTextCtrl.GetValue()
         # UPX Packer Dir
         user_input_dict["upx_dir"] = self.UpxDirPicker.GetPath()
+        # Debug Mode
+        user_input_dict["debug_mode"] = self.DebugModeCheckbox.IsChecked()
         # Delete Shadow Copies
         user_input_dict["delete_shadow_copies"] = self.DeleteShadowCopiesCheckbox.IsChecked()
         # Disable Task Manager
