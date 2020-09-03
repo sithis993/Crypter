@@ -567,7 +567,7 @@ class MainFrame ( wx.Frame ):
 		bSizer4122.Add( bSizer20321312, 2, wx.EXPAND, 5 )
 
 
-		sbSizer11.Add( bSizer4122, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
+		sbSizer11.Add( bSizer4122, 1, wx.EXPAND, 5 )
 
 		bSizer4111 = wx.BoxSizer( wx.HORIZONTAL )
 
