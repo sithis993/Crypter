@@ -284,7 +284,6 @@ class BuilderThread(Thread):
         # Build command
         cmd = [
             pyinstaller_path,
-            "--noconsole",
             "--clean",
             "-F"
             ]
