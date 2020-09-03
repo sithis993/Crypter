@@ -304,8 +304,21 @@ class MainFrame ( wx.Frame ):
 
 		bSizer2032111112 = wx.BoxSizer( wx.HORIZONTAL )
 
+		self.DebugModeLabel = wx.StaticText( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, u"Debug Mode", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DebugModeLabel.Wrap( -1 )
+
+		self.DebugModeLabel.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial Unicode MS" ) )
+		self.DebugModeLabel.SetToolTip( u"Whether or not Debug Mode should be enabled for the Ransomware. If ticked, the executabe will launch alongside a console window and all error and debug messages will be shown within. This should be used to troubleshoot any runtime errors" )
+
+		bSizer2032111112.Add( self.DebugModeLabel, 0, wx.ALL|wx.TOP, 7 )
+
 
 		bSizer2032111112.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+		self.DebugModeCheckbox = wx.CheckBox( BinarySettingsSizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.DebugModeCheckbox.SetToolTip( u"Whether or not Debug Mode should be enabled for the Ransomware. If ticked, the executabe will launch alongside a console window and all error and debug messages will be shown within. This should be used to troubleshoot any runtime errors" )
+
+		bSizer2032111112.Add( self.DebugModeCheckbox, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
 
 		bSizer411111.Add( bSizer2032111112, 1, wx.EXPAND, 5 )
@@ -357,7 +370,7 @@ class MainFrame ( wx.Frame ):
 		self.TimeDelayLabel = wx.StaticText( sbSizer13.GetStaticBox(), wx.ID_ANY, u"Time Delay (s)", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.TimeDelayLabel.Wrap( -1 )
 
-		self.TimeDelayLabel.SetToolTip( u"If ticked, the GUI will be launched each time the user logs in.\n\nWarning: Enabling this option may significantly increase the rate of Anti-Virus detection" )
+		self.TimeDelayLabel.SetToolTip( u"The number of seconds to wait after the file is opened before ransomware execution begins. Useful for AV evasion" )
 
 		bSizer61.Add( self.TimeDelayLabel, 0, wx.ALL, 5 )
 

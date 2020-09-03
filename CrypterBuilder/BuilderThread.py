@@ -357,6 +357,11 @@ class BuilderThread(Thread):
                                " It is recommended that UPX is used as this can reduce the binary size by several"
                                " Megabytes"
                                )
+        # Debug Mode
+        if self.user_input_dict["debug_mode"] and not self.__stop_event.isSet():
+            spec.enable_debug_mode()
+        elif self.__stop_event.isSet():
+            raise UserHalt
 
         # Write the SPEC
         if not self.__stop_event.isSet():
