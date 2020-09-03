@@ -29,6 +29,10 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=False,
+		  upx_exclude=[
+			"vcruntime140.dll",
+			"msvcp140.dll"
+			],
           console=False,
 		  uac_admin=False,
 		  icon=None
