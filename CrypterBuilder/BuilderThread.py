@@ -285,7 +285,8 @@ class BuilderThread(Thread):
         cmd = [
             pyinstaller_path,
             "--clean",
-            "-F"
+            "-F",
+            "--hidden-import=pkg_resources.py2_warn"
             ]
         if self.user_input_dict["upx_dir"]:
             cmd.append("--upx-dir")
