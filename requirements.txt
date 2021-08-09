@@ -7,7 +7,7 @@ Pillow==7.0.0
 pycryptodome==3.9.7
 PyInstaller==3.6
 Pypubsub==4.0.3
-pywin32==227
+pywin32==301
 pywin32-ctypes==0.2.0
 six==1.14.0
 wxPython==4.0.7
