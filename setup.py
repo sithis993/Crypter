@@ -18,7 +18,7 @@ setup(
         "altgraph==0.17",
         "future==0.18.2",
         "macholib==1.14",
-        "numpy==1.18.2",
+        "numpy==1.22.0",
         "pefile==2019.4.18",
         "pycryptodome==3.9.7",
         "PyInstaller==3.6",
